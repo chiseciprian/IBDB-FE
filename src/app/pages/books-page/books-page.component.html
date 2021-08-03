@@ -1,0 +1,10 @@
+<div *ngFor="let book of books" class="card" style="width: 18rem;">
+  <img class="card-img-top"
+       src="https://images-na.ssl-images-amazon.com/images/I/418eG69n1rL._SX258_BO1,204,203,200_.jpg"
+       alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{book.title}}</h5>
+    <p class="card-text">{{book.description}}</p>
+    <a [routerLink]="['/books',book.bookId]" class="btn btn-primary">Details</a>
+  </div>
+</div>
