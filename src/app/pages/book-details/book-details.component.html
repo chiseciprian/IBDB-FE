@@ -7,3 +7,14 @@
     <p class="card-text">{{book.description}}</p>
   </div>
 </div>
+
+<h3>Ratings</h3>
+
+<div *ngIf="ratings.length>0" class="card" style="width: 18rem;">
+  <div *ngFor="let rating of ratings" class="card-body">
+    <h5 class="card-title">{{rating.title}}</h5>
+    <p class="card-text">{{rating.message}}</p>
+  </div>
+</div>
+
+<p *ngIf="ratings.length==0">No ratings added yet</p>
