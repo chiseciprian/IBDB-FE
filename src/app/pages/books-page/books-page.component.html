@@ -1,3 +1,11 @@
+<div class="row">
+  <div class="col">
+    <button type="button" class="btn btn-primary" (click)="triggerModal(modalData)">
+      Add Book
+    </button>
+  </div>
+</div>
+
 <div *ngFor="let book of books" class="card" style="width: 18rem;">
   <img class="card-img-top"
        src="https://images-na.ssl-images-amazon.com/images/I/418eG69n1rL._SX258_BO1,204,203,200_.jpg"
@@ -8,3 +16,42 @@
     <a [routerLink]="['/books',book.bookId]" class="btn btn-primary">Details</a>
   </div>
 </div>
+
+<ng-template #modalData let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add book</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(modal)">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="mb-3">
+      <label for="titleFormControlInput" class="form-label">Title</label>
+      <input type="text" class="form-control" id="titleFormControlInput" placeholder="Book Title"
+             [(ngModel)]="bookRequest.title">
+    </div>
+    <div class="mb-3">
+      <label for="descriptionFormControlTextarea" class="form-label">Description</label>
+      <textarea class="form-control" id="descriptionFormControlTextarea" rows="3"
+                [(ngModel)]="bookRequest.description"></textarea>
+    </div>
+    <div class="mb-3" *ngFor="let author of bookRequest.authors; let i = index;trackBy:trackByIdx">
+      <label [for]="'authorsFormControlInput'+i" class="form-label">Authors {{ i+1 }}</label>
+      <input type="text" class="form-control" [id]="'authorsFormControlInput'+i" placeholder="Authors"
+             [(ngModel)]="bookRequest.authors[i]">
+      <button type="button" class="btn btn-danger" (click)="removeValue(bookRequest.authors,i)">Remove</button>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="addValue(bookRequest.authors)">ADD AUTHOR</button>
+    <div class="mb-3" *ngFor="let genres of bookRequest.genres; let i = index;trackBy:trackByIdx">
+      <label [for]="'genresFormControlInput'+i" class="form-label">Genres {{ i+1 }}</label>
+      <input type="text" class="form-control" [id]="'genresFormControlInput'+i" placeholder="Genres"
+             [(ngModel)]="bookRequest.genres[i]">
+      <button type="button" class="btn btn-danger" (click)="removeValue(bookRequest.genres,i)">Remove</button>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="addValue(bookRequest.genres)">ADD Genres</button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="closeModal(modal)">Close</button>
+    <button type="button" class="btn btn-primary" (click)="addBook(modal)">Add</button>
+  </div>
+</ng-template>

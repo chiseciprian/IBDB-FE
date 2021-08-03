@@ -1,21 +1,25 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {Book} from "../models/Book";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { Book } from "../models/Book";
+import { BookRequest } from "../models/BookRequest";
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class BooksService {
-  headers = {
-    'Content-Type': 'application/json'
-  }
-
   baseURL = "http://localhost:8080";
   endpoints = {
     getAllBooks: () => this.baseURL + "/books",
-    getBookById: (bookId: string) => this.baseURL + "/books/" + bookId
+    getBookById: (bookId: string) => this.baseURL + "/books/" + bookId,
+    addBook: () => this.baseURL + "/books"
   }
 
   constructor(private http: HttpClient) {
@@ -27,5 +31,9 @@ export class BooksService {
 
   getBookById(bookId: string): Observable<Book> {
     return this.http.get<Book>(this.endpoints.getBookById(bookId));
+  }
+
+  addBook(bookRequest: BookRequest) {
+    return this.http.post(this.endpoints.addBook(), bookRequest, httpOptions)
   }
 }

@@ -11,6 +11,7 @@ import { BooksPageComponent } from './pages/books-page/books-page.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import { BookDetailsComponent } from './pages/book-details/book-details.component';
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -22,12 +23,13 @@ import { BookDetailsComponent } from './pages/book-details/book-details.componen
     ErrorPageComponent,
     BookDetailsComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    NgbModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        NgbModule,
+        FormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
