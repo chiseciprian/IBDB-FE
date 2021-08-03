@@ -19,7 +19,8 @@ export class BooksService {
   endpoints = {
     getAllBooks: () => this.baseURL + "/books",
     getBookById: (bookId: string) => this.baseURL + "/books/" + bookId,
-    addBook: () => this.baseURL + "/books"
+    addBook: () => this.baseURL + "/books",
+    deleteBook: (bookId: string) => this.baseURL + "/books/" + bookId
   }
 
   constructor(private http: HttpClient) {
@@ -35,5 +36,9 @@ export class BooksService {
 
   addBook(bookRequest: BookRequest) {
     return this.http.post(this.endpoints.addBook(), bookRequest, httpOptions)
+  }
+
+  deleteBook(bookId: string) {
+    return this.http.delete(this.endpoints.deleteBook(bookId));
   }
 }

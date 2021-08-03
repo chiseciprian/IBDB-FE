@@ -11,7 +11,7 @@ import { BookRequest } from "../../models/BookRequest";
 })
 export class BooksPageComponent implements OnInit {
   books: Book[] = [];
-  bookRequest: BookRequest = new BookRequest('', '', [''], [''], null);
+  bookRequest: BookRequest = new BookRequest('bookId', '', '', [''], [''], null);
 
   constructor(
     private booksService: BooksService,
@@ -29,12 +29,17 @@ export class BooksPageComponent implements OnInit {
   }
 
   addBook(modalReference: any) {
-    // this.booksService.addBook(this.bookRequest).subscribe((response) => {
-    //   this.getAllBooks();
-    // });
-    console.log(this.bookRequest);
+    this.booksService.addBook(this.bookRequest).subscribe((response) => {
+      this.getAllBooks();
+    });
     this.clearInvoiceRequest();
     modalReference.close();
+  }
+
+  deleteBook(bookId: string) {
+    this.booksService.deleteBook(bookId).subscribe(() => {
+      this.getAllBooks();
+    });
   }
 
   removeValue(field: any, i: number) {
@@ -59,6 +64,6 @@ export class BooksPageComponent implements OnInit {
   }
 
   private clearInvoiceRequest() {
-    this.bookRequest = new BookRequest('', '', [''], [''], null);
+    this.bookRequest = new BookRequest('bookId', '', '', [''], [''], null);
   }
 }

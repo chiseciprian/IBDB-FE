@@ -1,20 +1,30 @@
-<div class="card" style="width: 18rem;">
-  <img class="card-img-top"
-       src="https://images-na.ssl-images-amazon.com/images/I/418eG69n1rL._SX258_BO1,204,203,200_.jpg"
-       alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">{{book.title}}</h5>
-    <p class="card-text">{{book.description}}</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top"
+             src="https://images-na.ssl-images-amazon.com/images/I/418eG69n1rL._SX258_BO1,204,203,200_.jpg"
+             alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{book.title}}</h5>
+          <p class="card-text">{{book.description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h3>Ratings</h3>
+
+      <div *ngIf="ratings.length>0" class="card" style="width: 18rem;">
+        <div *ngFor="let rating of ratings" class="card-body">
+          <h5 class="card-title">{{rating.title}}</h5>
+          <p class="card-text">{{rating.message}}</p>
+        </div>
+      </div>
+
+      <p *ngIf="ratings.length==0">No ratings added yet</p>
+    </div>
   </div>
 </div>
-
-<h3>Ratings</h3>
-
-<div *ngIf="ratings.length>0" class="card" style="width: 18rem;">
-  <div *ngFor="let rating of ratings" class="card-body">
-    <h5 class="card-title">{{rating.title}}</h5>
-    <p class="card-text">{{rating.message}}</p>
-  </div>
-</div>
-
-<p *ngIf="ratings.length==0">No ratings added yet</p>

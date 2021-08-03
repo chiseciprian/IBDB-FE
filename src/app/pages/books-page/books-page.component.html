@@ -1,19 +1,27 @@
-<div class="row">
-  <div class="col">
-    <button type="button" class="btn btn-primary" (click)="triggerModal(modalData)">
-      Add Book
-    </button>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <h1>The Book List</h1>
+      <button type="button" class="btn btn-primary mb-2" (click)="triggerModal(modalData)">
+        Add Book
+      </button>
+    </div>
   </div>
-</div>
 
-<div *ngFor="let book of books" class="card" style="width: 18rem;">
-  <img class="card-img-top"
-       src="https://images-na.ssl-images-amazon.com/images/I/418eG69n1rL._SX258_BO1,204,203,200_.jpg"
-       alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">{{book.title}}</h5>
-    <p class="card-text">{{book.description}}</p>
-    <a [routerLink]="['/books',book.bookId]" class="btn btn-primary">Details</a>
+  <div class="row">
+    <div class="col">
+      <div *ngFor="let book of books" class="card d-inline-flex mr-2" style="width: 18rem;">
+        <img class="card-img-top"
+             src="https://images-na.ssl-images-amazon.com/images/I/418eG69n1rL._SX258_BO1,204,203,200_.jpg"
+             alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{book.title}}</h5>
+          <p class="card-text">{{book.description}}</p>
+          <a class="btn btn-primary" [routerLink]="['/books',book.bookId]">Details</a>
+          <a class="btn btn-danger ml-1" (click)="deleteBook(book.bookId)">Delete</a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

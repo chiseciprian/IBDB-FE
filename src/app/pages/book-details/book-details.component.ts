@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {BooksService} from "../../services/books.service";
 import {RatingsService} from "../../services/ratings.service";
 import {Rating} from "../../models/Rating";
+import { Book } from "../../models/Book";
 
 @Component({
   selector: 'app-book-details',
@@ -10,7 +11,7 @@ import {Rating} from "../../models/Rating";
   styleUrls: ['./book-details.component.scss']
 })
 export class BookDetailsComponent implements OnInit {
-  book: any;
+  book = new Book('','','',[],[],null);
   ratings: Rating[] = [];
 
   constructor(
@@ -18,9 +19,6 @@ export class BookDetailsComponent implements OnInit {
     private booksService: BooksService,
     private ratingService: RatingsService
   ) {
-  }
-
-  ngOnInit(): void {
     const bookId = this.route.snapshot.paramMap.get('bookId');
     if (bookId) {
       this.getBookById(bookId);
@@ -28,10 +26,12 @@ export class BookDetailsComponent implements OnInit {
     }
   }
 
+  ngOnInit(): void {
+  }
+
   getBookById(bookId: string) {
     return this.booksService.getBookById(bookId).subscribe((response) => {
       this.book = response;
-      console.log(response);
     })
   }
 
