@@ -8,6 +8,7 @@
         <div class="card-body">
           <h5 class="card-title">{{book.title}}</h5>
           <p class="card-text">{{book.description}}</p>
+          <a class="btn btn-danger" (click)="deleteBook(book.bookId)">Delete</a>
         </div>
       </div>
     </div>
@@ -21,6 +22,7 @@
         <div *ngFor="let rating of ratings" class="card-body">
           <h5 class="card-title">{{rating.title}}</h5>
           <p class="card-text">{{rating.message}}</p>
+          <a class="btn btn-danger" (click)="deleteRating(rating.ratingId)">Delete</a>
         </div>
       </div>
 

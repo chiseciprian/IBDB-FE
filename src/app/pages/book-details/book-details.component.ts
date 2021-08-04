@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {BooksService} from "../../services/books.service";
-import {RatingsService} from "../../services/ratings.service";
-import {Rating} from "../../models/Rating";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { BooksService } from "../../services/books.service";
+import { RatingsService } from "../../services/ratings.service";
+import { Rating } from "../../models/Rating";
 import { Book } from "../../models/Book";
 
 @Component({
@@ -11,18 +11,20 @@ import { Book } from "../../models/Book";
   styleUrls: ['./book-details.component.scss']
 })
 export class BookDetailsComponent implements OnInit {
-  book = new Book('','','',[],[],null);
+  book = new Book('', '', '', [], [], null);
   ratings: Rating[] = [];
+  bookId: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private booksService: BooksService,
     private ratingService: RatingsService
   ) {
-    const bookId = this.route.snapshot.paramMap.get('bookId');
-    if (bookId) {
-      this.getBookById(bookId);
-      this.getRatingsByBookId(bookId);
+    const bookIdParam = this.route.snapshot.paramMap.get('bookId');
+    if (bookIdParam) {
+      this.bookId = bookIdParam;
+      this.getBookById(this.bookId);
+      this.getRatingsByBookId(this.bookId);
     }
   }
 
@@ -39,5 +41,17 @@ export class BookDetailsComponent implements OnInit {
     return this.ratingService.getAllRatingsByBookId(bookId).subscribe((response) => {
       this.ratings = response;
     })
+  }
+
+  deleteRating(ratingId: string) {
+    this.booksService.deleteBook(ratingId).subscribe(() => {
+      this.getRatingsByBookId(this.bookId);
+    });
+  }
+
+  deleteBook(bookId: string) {
+    this.booksService.deleteBook(bookId).subscribe(() => {
+      this.getBookById(this.bookId)
+    });
   }
 }

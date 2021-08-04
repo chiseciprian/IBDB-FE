@@ -42,15 +42,15 @@ export class BooksPageComponent implements OnInit {
     });
   }
 
-  removeValue(field: any, i: number) {
+  removeInput(field: any, i: number) {
     field.splice(i, 1);
   }
 
-  addValue(field: any) {
+  addInput(field: any) {
     field.push("");
   }
 
-  trackByIdx(index: number, obj: any): any {
+  trackByIndex(index: number, obj: any): any {
     return index;
   }
 

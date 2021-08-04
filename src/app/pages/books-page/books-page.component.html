@@ -43,20 +43,51 @@
       <textarea class="form-control" id="descriptionFormControlTextarea" rows="3"
                 [(ngModel)]="bookRequest.description"></textarea>
     </div>
-    <div class="mb-3" *ngFor="let author of bookRequest.authors; let i = index;trackBy:trackByIdx">
-      <label [for]="'authorsFormControlInput'+i" class="form-label">Authors {{ i+1 }}</label>
-      <input type="text" class="form-control" [id]="'authorsFormControlInput'+i" placeholder="Authors"
-             [(ngModel)]="bookRequest.authors[i]">
-      <button type="button" class="btn btn-danger" (click)="removeValue(bookRequest.authors,i)">Remove</button>
+    <div class="mb-3">
+      <div class="row">
+        <div class="col d-flex justify-content-between align-items-center mb-2">
+          <label class="form-label">Authors</label>
+          <button type="button" class="btn btn-primary" (click)="addInput(bookRequest.authors)">
+            Add Author
+          </button>
+        </div>
+      </div>
+      <div class="row" *ngFor="let author of bookRequest.authors; let i = index;trackBy:trackByIndex">
+        <div class="col-10">
+          <input type="text" class="form-control mb-1" [id]="'authorsFormControlInput'+i"
+                 [placeholder]="'Authors '+ (i+1)"
+                 [(ngModel)]="bookRequest.authors[i]">
+        </div>
+        <div class="col-2">
+          <button type="button" class="btn btn-danger" (click)="removeInput(bookRequest.authors,i)">
+            <i class="fas fa-minus"></i>
+          </button>
+        </div>
+      </div>
     </div>
-    <button type="button" class="btn btn-primary" (click)="addValue(bookRequest.authors)">ADD AUTHOR</button>
-    <div class="mb-3" *ngFor="let genres of bookRequest.genres; let i = index;trackBy:trackByIdx">
-      <label [for]="'genresFormControlInput'+i" class="form-label">Genres {{ i+1 }}</label>
-      <input type="text" class="form-control" [id]="'genresFormControlInput'+i" placeholder="Genres"
-             [(ngModel)]="bookRequest.genres[i]">
-      <button type="button" class="btn btn-danger" (click)="removeValue(bookRequest.genres,i)">Remove</button>
+    <div class="mb-3">
+      <div class="row">
+        <div class="col d-flex justify-content-between align-items-center mb-2">
+          <label class="form-label">Genres</label>
+          <button type="button" class="btn btn-primary"
+                  (click)="addInput(bookRequest.genres)">
+            Add Genres
+          </button>
+        </div>
+      </div>
+      <div class="row" *ngFor="let genres of bookRequest.genres; let i = index;trackBy:trackByIndex">
+        <div class="col-10">
+          <input type="text" class="form-control mb-1" [id]="'genresFormControlInput'+i"
+                 [placeholder]="'Genres ' + (i+1)"
+                 [(ngModel)]="bookRequest.genres[i]">
+        </div>
+        <div class="col-2">
+          <button type="button" class="btn btn-danger" (click)="removeInput(bookRequest.genres,i)">
+            <i class="fas fa-minus"></i>
+          </button>
+        </div>
+      </div>
     </div>
-    <button type="button" class="btn btn-primary" (click)="addValue(bookRequest.genres)">ADD Genres</button>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-danger" (click)="closeModal(modal)">Close</button>
