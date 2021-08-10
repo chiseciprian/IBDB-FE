@@ -27,6 +27,6 @@ export class RatingsService {
   }
 
   deleteRating(ratingId: string) {
-    return this.http.delete(this.endpoints.deleteRating(ratingId));
+    return this.http.delete(this.endpoints.deleteRating(ratingId),httpOptions);
   }
 }

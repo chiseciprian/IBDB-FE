@@ -39,6 +39,6 @@ export class BooksService {
   }
 
   deleteBook(bookId: string) {
-    return this.http.delete(this.endpoints.deleteBook(bookId));
+    return this.http.delete(this.endpoints.deleteBook(bookId),httpOptions);
   }
 }

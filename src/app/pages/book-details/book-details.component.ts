@@ -44,7 +44,7 @@ export class BookDetailsComponent implements OnInit {
   }
 
   deleteRating(ratingId: string) {
-    this.booksService.deleteBook(ratingId).subscribe(() => {
+    this.ratingService.deleteRating(ratingId).subscribe(() => {
       this.getRatingsByBookId(this.bookId);
     });
   }
