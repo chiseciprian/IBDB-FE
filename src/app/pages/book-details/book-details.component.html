@@ -34,11 +34,16 @@
     <div class="col">
       <h3>Ratings</h3>
 
-      <div *ngIf="ratings.length>0" class="card" style="width: 18rem;">
-        <div *ngFor="let rating of ratings" class="card-body">
-          <h5 class="card-title">{{rating.title}}</h5>
-          <p class="card-text">{{rating.message}}</p>
-          <a class="btn btn-danger" (click)="deleteRating(rating.ratingId)">Delete</a>
+      <div *ngIf="ratings.length>0">
+        <div *ngFor="let rating of ratings" class="card mb-2" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">{{ rating.title }}</h5>
+            <p class="card-text">{{ rating.message }}</p>
+            <ngb-rating class="rating-stars" id="starsFormControlTextarea" [rate]="rating.stars"
+                        [readonly]="true"></ngb-rating>
+            <p class="card-text">Posted by {{ rating.userName }} on {{ rating.date | date:'M/d/yy, h:mm a' }}</p>
+            <a class="btn btn-danger" (click)="deleteRating(rating.ratingId)">Delete</a>
+          </div>
         </div>
       </div>
 
