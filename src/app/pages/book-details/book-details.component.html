@@ -1,6 +1,11 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col">
+      <h1>Book Details</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
       <a [routerLink]="['/books']" style="font-size: 40px"><i class="fas fa-chevron-circle-left"></i></a>
     </div>
   </div>
@@ -18,7 +23,13 @@
       </div>
     </div>
   </div>
-
+  <div class="row mt-2">
+    <div class="col">
+      <button type="button" class="btn btn-primary mb-2" (click)="triggerModal(modalData)">
+        Add Rating
+      </button>
+    </div>
+  </div>
   <div class="row">
     <div class="col">
       <h3>Ratings</h3>
@@ -35,3 +46,33 @@
     </div>
   </div>
 </div>
+
+<ng-template #modalData let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add Rating</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(modal)">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="mb-3">
+      <label for="titleFormControlInput" class="form-label">Title</label>
+      <input type="text" class="form-control" id="titleFormControlInput" placeholder="Rating Title"
+             [(ngModel)]="ratingRequest.title">
+    </div>
+    <div class="mb-3">
+      <label for="descriptionFormControlTextarea" class="form-label">Message</label>
+      <textarea class="form-control" id="descriptionFormControlTextarea" rows="3"
+                [(ngModel)]="ratingRequest.message"></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="starsFormControlTextarea" class="form-label">Rating</label>
+      <br>
+      <ngb-rating class="rating-stars" id="starsFormControlTextarea" [(ngModel)]="ratingRequest.stars"></ngb-rating>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="closeModal(modal)">Close</button>
+    <button type="button" class="btn btn-primary" (click)="addRating(modal)">Add</button>
+  </div>
+</ng-template>
