@@ -3,6 +3,7 @@ import { BooksService } from "../../services/books.service";
 import { Book } from "../../models/Book";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { BookRequest } from "../../models/BookRequest";
+import { Genres } from "../../models/Genres";
 
 @Component({
   selector: 'app-books-page',
@@ -11,7 +12,10 @@ import { BookRequest } from "../../models/BookRequest";
 })
 export class BooksPageComponent implements OnInit {
   books: Book[] = [];
+  booksToDisplay: Book[] = [];
   bookRequest: BookRequest = new BookRequest('bookId', '', '', [''], [''], null);
+  genres = Genres;
+  selectedGenre = '';
 
   constructor(
     private booksService: BooksService,
@@ -25,6 +29,7 @@ export class BooksPageComponent implements OnInit {
   getAllBooks() {
     this.booksService.getAllBooks().subscribe((response) => {
       this.books = response;
+      this.booksToDisplay = response;
     })
   }
 
@@ -32,8 +37,10 @@ export class BooksPageComponent implements OnInit {
     this.booksService.addBook(this.bookRequest).subscribe((response) => {
       this.getAllBooks();
     });
-    this.clearInvoiceRequest();
     modalReference.close();
+    setTimeout(() => {
+      this.clearInvoiceRequest();
+    }, 200)
   }
 
   deleteBook(bookId: string) {
@@ -55,12 +62,24 @@ export class BooksPageComponent implements OnInit {
   }
 
   closeModal(modalReference: any) {
-    this.clearInvoiceRequest();
     modalReference.close()
+    setTimeout(() => {
+      this.clearInvoiceRequest();
+    }, 200)
   }
 
   triggerModal(content: any) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+  }
+
+  filterBooksByGenre(genre: string) {
+    this.selectedGenre = genre;
+    this.booksToDisplay = this.books.filter((book) => book.genres.indexOf(genre) != -1);
+  }
+
+  displayAllBooks() {
+    this.selectedGenre = '';
+    this.booksToDisplay = this.books;
   }
 
   private clearInvoiceRequest() {

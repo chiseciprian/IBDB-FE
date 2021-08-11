@@ -39,7 +39,9 @@
           <div class="card-body">
             <h5 class="card-title">{{ rating.title }}</h5>
             <p class="card-text">{{ rating.message }}</p>
-            <ngb-rating class="rating-stars" id="starsFormControlTextarea" [rate]="rating.stars"
+            <ngb-rating class="rating-stars"
+                        id="starsFormControlTextarea"
+                        [rate]="rating.stars"
                         [readonly]="true"></ngb-rating>
             <p class="card-text">Posted by {{ rating.userName }} on {{ rating.date | date:'M/d/yy, h:mm a' }}</p>
             <a class="btn btn-danger" (click)="deleteRating(rating.ratingId)">Delete</a>
@@ -60,24 +62,61 @@
     </button>
   </div>
   <div class="modal-body">
-    <div class="mb-3">
-      <label for="titleFormControlInput" class="form-label">Title</label>
-      <input type="text" class="form-control" id="titleFormControlInput" placeholder="Rating Title"
-             [(ngModel)]="ratingRequest.title">
-    </div>
-    <div class="mb-3">
-      <label for="descriptionFormControlTextarea" class="form-label">Message</label>
-      <textarea class="form-control" id="descriptionFormControlTextarea" rows="3"
-                [(ngModel)]="ratingRequest.message"></textarea>
-    </div>
-    <div class="mb-3">
-      <label for="starsFormControlTextarea" class="form-label">Rating</label>
-      <br>
-      <ngb-rating class="rating-stars" id="starsFormControlTextarea" [(ngModel)]="ratingRequest.stars"></ngb-rating>
-    </div>
+    <form #ratingForm="ngForm">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text"
+               class="form-control"
+               id="title"
+               name="title"
+               placeholder="Rating Title"
+               [(ngModel)]="ratingRequest.title"
+               #title="ngModel"
+               [ngClass]="{ 'is-invalid': title.invalid && (title.dirty || title.touched) }"
+               required
+               minlength="4">
+
+        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger">
+          <div *ngIf="title.errors?.required">
+            Title is required.
+          </div>
+          <div *ngIf="title.errors?.minlength">
+            Title must be at least 4 characters long.
+          </div>
+        </div>
+
+      </div>
+      <div class="mb-3">
+        <label for="message" class="form-label">Message</label>
+        <textarea class="form-control"
+                  id="message"
+                  name="message"
+                  rows="3"
+                  [(ngModel)]="ratingRequest.message"
+                  #message="ngModel"
+                  [ngClass]="{ 'is-invalid': message.invalid && (message.dirty || message.touched) }"
+                  required
+                  minlength="10"></textarea>
+
+        <div *ngIf="message.invalid && (message.dirty || message.touched)" class="alert alert-danger">
+          <div *ngIf="message.errors?.required">
+            Message is required.
+          </div>
+          <div *ngIf="message.errors?.minlength">
+            Message must be at least 10 characters long.
+          </div>
+        </div>
+
+      </div>
+      <div class="mb-3">
+        <label for="stars" class="form-label">Rating</label>
+        <br>
+        <ngb-rating class="rating-stars" id="stars" name="stars" [(ngModel)]="ratingRequest.stars"></ngb-rating>
+      </div>
+    </form>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-danger" (click)="closeModal(modal)">Close</button>
-    <button type="button" class="btn btn-primary" (click)="addRating(modal)">Add</button>
+    <button type="button" class="btn btn-primary" (click)="addRating(modal)" [disabled]="!ratingForm.valid">Add</button>
   </div>
 </ng-template>

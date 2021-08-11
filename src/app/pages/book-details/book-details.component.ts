@@ -30,7 +30,7 @@ export class BookDetailsComponent implements OnInit {
     const bookIdParam = this.route.snapshot.paramMap.get('bookId');
     if (bookIdParam) {
       this.bookId = bookIdParam;
-      this.ratingRequest = new RatingRequest('ratingId', this.bookId, 'Cipri', '', '', Math.floor(Date.now() / 1000), -1);
+      this.ratingRequest = new RatingRequest('ratingId', this.bookId, 'Cipri', '', '', Math.floor(Date.now() / 1000), 1);
       this.getBookById(this.bookId);
       this.getRatingsByBookId(this.bookId);
     }
@@ -43,8 +43,10 @@ export class BookDetailsComponent implements OnInit {
     this.ratingService.addRating(this.ratingRequest).subscribe((response) => {
       this.getRatingsByBookId(this.bookId);
     });
-    this.clearInvoiceRequest();
     modalReference.close();
+    setTimeout(() => {
+      this.clearRatingRequest();
+    }, 200);
   }
 
   getBookById(bookId: string) {
@@ -72,15 +74,17 @@ export class BookDetailsComponent implements OnInit {
   }
 
   closeModal(modalReference: any) {
-    this.clearInvoiceRequest();
-    modalReference.close()
+    modalReference.close();
+    setTimeout(() => {
+      this.clearRatingRequest();
+    }, 200);
   }
 
   triggerModal(content: any) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
   }
 
-  private clearInvoiceRequest() {
-    this.ratingRequest = new RatingRequest('ratingId', this.bookId, 'Cipri', '', '', Math.floor(Date.now() / 1000), -1);
+  private clearRatingRequest() {
+    this.ratingRequest = new RatingRequest('ratingId', this.bookId, 'Cipri', '', '', Math.floor(Date.now() / 1000), 1);
   }
 }
