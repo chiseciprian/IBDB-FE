@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Book } from "../models/Book";
-import { BookRequest } from "../models/BookRequest";
+import { Book } from "../../models/Book";
+import { BookRequest } from "../../models/BookRequest";
 
 const httpOptions = {
   headers: new HttpHeaders({
