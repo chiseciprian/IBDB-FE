@@ -1,16 +1,8 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col">
+    <div class="col-4">
       <h1>Book Details</h1>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
       <a [routerLink]="['/books']" style="font-size: 40px"><i class="fas fa-chevron-circle-left"></i></a>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
       <div class="card" style="width: 18rem;">
         <img class="card-img-top"
              src="https://images-na.ssl-images-amazon.com/images/I/418eG69n1rL._SX258_BO1,204,203,200_.jpg"
@@ -22,34 +14,41 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="row mt-2">
-    <div class="col">
+
+    <div class="col-8 ratings-container">
+      <h1>Ratings</h1>
       <button type="button" class="btn btn-primary mb-2" (click)="triggerModal(modalData)">
         Add Rating
       </button>
-    </div>
-  </div>
-  <div class="row ratings-container">
-    <div class="col">
-      <h3>Ratings</h3>
 
-      <div *ngIf="ratings.length>0">
-        <div *ngFor="let rating of ratings" class="card mb-2" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">{{ rating.title }}</h5>
-            <p class="card-text">{{ rating.message }}</p>
-            <ngb-rating class="rating-stars"
-                        id="starsFormControlTextarea"
-                        [rate]="rating.stars"
-                        [readonly]="true"></ngb-rating>
-            <p class="card-text">Posted by {{ rating.userName }} on {{ rating.date | date:'M/d/yy, h:mm a' }}</p>
-            <a class="btn btn-danger" (click)="deleteRating(rating.ratingId)">Delete</a>
+      <p *ngIf="ratings.length==0">No ratings added yet</p>
+
+      <div class="card mb-1" *ngFor="let rating of ratings">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-2">
+              <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
+              <p class="text-secondary text-center">{{ rating.userName }}</p>
+            </div>
+            <div class="col-md-10">
+              <p>
+                <a class="float-left"><strong>{{ rating.title }}</strong></a>
+                <ngb-rating class="float-right rating-stars"
+                            [rate]="rating.stars"
+                            [readonly]="true"></ngb-rating>
+
+              </p>
+              <div class="clearfix"></div>
+              <p>{{ rating.message }}</p>
+              <p class="mt-1">Posted on {{ rating.date | date:'M/d/yy, h:mm a' }}</p>
+              <p>
+                <a class="float-right btn text-white btn-danger" (click)="deleteRating(rating.ratingId)">Delete</a>
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
-      <p *ngIf="ratings.length==0">No ratings added yet</p>
     </div>
   </div>
 </div>
