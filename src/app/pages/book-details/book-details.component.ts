@@ -46,19 +46,12 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  addRating(modalReference: any) {
-    this.ratingService.addRating(this.ratingRequest).subscribe();
-    modalReference.close();
-    setTimeout(() => {
-      this.clearRatingRequest();
-    }, 200);
+  onEditPress(modalReference: any, rating: any) {
+    this.triggerModal(modalReference);
+    this.ratingRequest = {...rating};
   }
 
-  editRating(modalReference: any) {
-    this.ratingService.editRating(this.ratingRequest).subscribe(() => {
-      this.getBookById(this.bookId);
-      this.getRatingsByBookId(this.bookId);
-    });
+  closeModal(modalReference: any) {
     modalReference.close();
     setTimeout(() => {
       this.clearRatingRequest();
@@ -77,6 +70,25 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     })
   }
 
+  addRating(modalReference: any) {
+    this.ratingService.addRating(this.ratingRequest).subscribe();
+    modalReference.close();
+    setTimeout(() => {
+      this.clearRatingRequest();
+    }, 200);
+  }
+
+  updateRating(modalReference: any) {
+    this.ratingService.updateRating(this.ratingRequest).subscribe(() => {
+      this.getBookById(this.bookId);
+      this.getRatingsByBookId(this.bookId);
+    });
+    modalReference.close();
+    setTimeout(() => {
+      this.clearRatingRequest();
+    }, 200);
+  }
+
   deleteRating(ratingId: string) {
     this.ratingService.deleteRating(ratingId).subscribe();
   }
@@ -87,27 +99,15 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  onEditPress(modalReference: any, rating: any) {
-    this.triggerModal(modalReference);
-    this.ratingRequest = {...rating};
-  }
-
-  closeModal(modalReference: any) {
-    modalReference.close();
-    setTimeout(() => {
-      this.clearRatingRequest();
-    }, 200);
-  }
-
   triggerModal(content: any) {
     this.modalService.open(content, {centered: true, scrollable: true});
   }
 
-  private clearRatingRequest() {
-    this.ratingRequest = new RatingRequest('ratingId', this.bookId, 'Cipri', '', '', Math.floor(Date.now() / 1000), 1);
-  }
-
   ngOnDestroy(): void {
     this.ws.disconnect();
+  }
+
+  private clearRatingRequest() {
+    this.ratingRequest = new RatingRequest('ratingId', this.bookId, 'Cipri', '', '', Math.floor(Date.now() / 1000), 1);
   }
 }
