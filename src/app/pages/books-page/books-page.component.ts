@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BooksService } from "../../services/books-service/books.service";
 import { Book } from "../../models/Book";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal, NgbRatingConfig } from "@ng-bootstrap/ng-bootstrap";
 import { BookRequest } from "../../models/BookRequest";
 import { Genres } from "../../models/Genres";
 
@@ -19,7 +19,8 @@ export class BooksPageComponent implements OnInit {
 
   constructor(
     private booksService: BooksService,
-    private modalService: NgbModal) {
+    private modalService: NgbModal
+  ) {
   }
 
   ngOnInit(): void {
@@ -44,7 +45,9 @@ export class BooksPageComponent implements OnInit {
   }
 
   editBook(modalReference: any) {
-    this.booksService.editBook(this.bookRequest).subscribe();
+    this.booksService.editBook(this.bookRequest).subscribe(() => {
+      this.getAllBooks();
+    });
     modalReference.close();
     setTimeout(() => {
       this.clearBookRequest();

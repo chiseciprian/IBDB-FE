@@ -14,7 +14,7 @@ import { WebsocketService } from "../../services/websocket-service/websocket.ser
   styleUrls: ['./book-details.component.scss']
 })
 export class BookDetailsComponent implements OnInit, OnDestroy {
-  book = new Book('', '', '', [], [], null);
+  book = new Book('', '', '', [], [], null, 0);
   ratings: Rating[] = [];
   bookId: string = '';
   ratingRequest: any;
@@ -55,7 +55,10 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   }
 
   editRating(modalReference: any) {
-    this.ratingService.editRating(this.ratingRequest).subscribe();
+    this.ratingService.editRating(this.ratingRequest).subscribe(() => {
+      this.getBookById(this.bookId);
+      this.getRatingsByBookId(this.bookId);
+    });
     modalReference.close();
     setTimeout(() => {
       this.clearRatingRequest();

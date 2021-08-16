@@ -12,10 +12,12 @@
     <div class="col">
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link active" [ngClass]="{ 'active': selectedGenre === '' }" (click)="displayAllBooks()">All book</a>
+          <a class="nav-link active" [ngClass]="{ 'active': selectedGenre === '' }" (click)="displayAllBooks()">All
+            book</a>
         </li>
         <li class="nav-item" *ngFor="let genre of genres | keyvalue">
-          <a class="nav-link" [ngClass]="{ 'active': selectedGenre === genre.key }" (click)="filterBooksByGenre(genre.key)">{{ genre.value }}</a>
+          <a class="nav-link" [ngClass]="{ 'active': selectedGenre === genre.key }"
+             (click)="filterBooksByGenre(genre.key)">{{ genre.value }}</a>
         </li>
       </ul>
     </div>
@@ -30,6 +32,15 @@
         <div class="card-body">
           <h5 class="card-title">{{book.title}}</h5>
           <p class="card-text">{{book.description}}</p>
+          <h5 class="card-text">
+            <ng-template #t let-fill="fill">
+            <span class="star" [class.full]="fill === 100">
+              <span class="half" [style.width.%]="fill">&hearts;</span>&hearts;
+            </span>
+            </ng-template>
+
+            <ngb-rating [(rate)]="book.ratingAverage" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
+          </h5>
           <a class="btn btn-secondary mr-1" (click)="onEditPress(editModal, book)">Edit</a>
           <a class="btn btn-primary mr-1" [routerLink]="['/books',book.bookId]">Details</a>
           <a class="btn btn-danger" (click)="deleteBook(book.bookId)">Delete</a>
