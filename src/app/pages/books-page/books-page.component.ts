@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BooksService } from "../../services/books-service/books.service";
 import { Book } from "../../models/Book";
-import { NgbModal, NgbRatingConfig } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { BookRequest } from "../../models/BookRequest";
 import { Genres } from "../../models/Genres";
 
@@ -44,8 +44,8 @@ export class BooksPageComponent implements OnInit {
     }, 200)
   }
 
-  editBook(modalReference: any) {
-    this.booksService.editBook(this.bookRequest).subscribe(() => {
+  updateBook(modalReference: any) {
+    this.booksService.updateBook(this.bookRequest).subscribe(() => {
       this.getAllBooks();
     });
     modalReference.close();
