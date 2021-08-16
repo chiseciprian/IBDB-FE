@@ -17,7 +17,7 @@
 
     <div class="col-8">
       <h1>Ratings</h1>
-      <button type="button" class="btn btn-primary mb-2" (click)="triggerModal(modalData)">
+      <button type="button" class="btn btn-primary mb-2" (click)="triggerModal(addModal)">
         Add Rating
       </button>
 
@@ -41,9 +41,13 @@
               <div class="clearfix"></div>
               <p>{{ rating.message }}</p>
               <p class="mt-1">Posted on {{ rating.date | date:'M/d/yy, h:mm a' }}</p>
-              <p>
-                <a class="float-right btn text-white btn-danger" (click)="deleteRating(rating.ratingId)">Delete</a>
-              </p>
+              <button type="button" class="btn btn-danger mb-2 float-right" (click)="deleteRating(rating.ratingId)">
+                Delete
+              </button>
+
+              <button type="button" class="btn btn-primary mb-2 mr-2 float-right" (click)="onEditPress(editModal, rating)">
+                Edit
+              </button>
             </div>
           </div>
         </div>
@@ -53,7 +57,7 @@
   </div>
 </div>
 
-<ng-template #modalData let-modal>
+<ng-template #addModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Add Rating</h4>
     <button type="button" class="close" aria-label="Close" (click)="closeModal(modal)">
@@ -117,5 +121,75 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-danger" (click)="closeModal(modal)">Close</button>
     <button type="button" class="btn btn-primary" (click)="addRating(modal)" [disabled]="!ratingForm.valid">Add</button>
+  </div>
+</ng-template>
+
+
+<ng-template #editModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-edit-title">Edit Rating</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(modal)">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #ratingForm="ngForm">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text"
+               class="form-control"
+               id="edit-title"
+               name="edit-title"
+               placeholder="Rating Title"
+               [(ngModel)]="ratingRequest.title"
+               #title="ngModel"
+               [ngClass]="{ 'is-invalid': title.invalid && (title.dirty || title.touched) }"
+               required
+               minlength="4">
+
+        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger">
+          <div *ngIf="title.errors?.required">
+            Title is required.
+          </div>
+          <div *ngIf="title.errors?.minlength">
+            Title must be at least 4 characters long.
+          </div>
+        </div>
+
+      </div>
+      <div class="mb-3">
+        <label for="message" class="form-label">Message</label>
+        <textarea class="form-control"
+                  id="edit-message"
+                  name="edit-message"
+                  rows="3"
+                  [(ngModel)]="ratingRequest.message"
+                  #message="ngModel"
+                  [ngClass]="{ 'is-invalid': message.invalid && (message.dirty || message.touched) }"
+                  required
+                  minlength="10"></textarea>
+
+        <div *ngIf="message.invalid && (message.dirty || message.touched)" class="alert alert-danger">
+          <div *ngIf="message.errors?.required">
+            Message is required.
+          </div>
+          <div *ngIf="message.errors?.minlength">
+            Message must be at least 10 characters long.
+          </div>
+        </div>
+
+      </div>
+      <div class="mb-3">
+        <label for="stars" class="form-label">Rating</label>
+        <br>
+        <ngb-rating class="rating-stars" id="edit-stars" name="edit-stars"
+                    [(ngModel)]="ratingRequest.stars"></ngb-rating>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="closeModal(modal)">Close</button>
+    <button type="button" class="btn btn-primary" (click)="editRating(modal)" [disabled]="!ratingForm.valid">Edit
+    </button>
   </div>
 </ng-template>

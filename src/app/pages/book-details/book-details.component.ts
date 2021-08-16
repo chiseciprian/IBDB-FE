@@ -54,6 +54,14 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     }, 200);
   }
 
+  editRating(modalReference: any) {
+    this.ratingService.editRating(this.ratingRequest).subscribe();
+    modalReference.close();
+    setTimeout(() => {
+      this.clearRatingRequest();
+    }, 200);
+  }
+
   getBookById(bookId: string) {
     return this.booksService.getBookById(bookId).subscribe((response) => {
       this.book = response;
@@ -76,6 +84,11 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  onEditPress(modalReference: any, rating: any) {
+    this.triggerModal(modalReference);
+    this.ratingRequest = {...rating};
+  }
+
   closeModal(modalReference: any) {
     modalReference.close();
     setTimeout(() => {
@@ -84,7 +97,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   }
 
   triggerModal(content: any) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.modalService.open(content, {centered: true, scrollable: true});
   }
 
   private clearRatingRequest() {

@@ -39,8 +39,16 @@ export class BooksPageComponent implements OnInit {
     });
     modalReference.close();
     setTimeout(() => {
-      this.clearInvoiceRequest();
+      this.clearBookRequest();
     }, 200)
+  }
+
+  editBook(modalReference: any) {
+    this.booksService.editBook(this.bookRequest).subscribe();
+    modalReference.close();
+    setTimeout(() => {
+      this.clearBookRequest();
+    }, 200);
   }
 
   deleteBook(bookId: string) {
@@ -61,15 +69,20 @@ export class BooksPageComponent implements OnInit {
     return index;
   }
 
+  onEditPress(modalReference: any, book: any) {
+    this.triggerModal(modalReference);
+    this.bookRequest = {...book};
+  }
+
   closeModal(modalReference: any) {
     modalReference.close()
     setTimeout(() => {
-      this.clearInvoiceRequest();
+      this.clearBookRequest();
     }, 200)
   }
 
   triggerModal(content: any) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.modalService.open(content, {centered: true, scrollable: true});
   }
 
   filterBooksByGenre(genre: string) {
@@ -82,7 +95,7 @@ export class BooksPageComponent implements OnInit {
     this.booksToDisplay = this.books;
   }
 
-  private clearInvoiceRequest() {
+  private clearBookRequest() {
     this.bookRequest = new BookRequest('bookId', '', '', [''], [''], null);
   }
 }

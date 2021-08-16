@@ -18,7 +18,8 @@ export class RatingsService {
   endpoints = {
     getRatingsByBookId: (bookId: string) => this.baseURL + "/ratings/book/" + bookId,
     addRating: () => this.baseURL + "/ratings",
-    deleteRating: (ratingId: string) => this.baseURL + "/ratings/" + ratingId
+    deleteRating: (ratingId: string) => this.baseURL + "/ratings/" + ratingId,
+    editRating: () => this.baseURL + "/ratings"
   }
 
   constructor(private http: HttpClient) {
@@ -34,5 +35,9 @@ export class RatingsService {
 
   deleteRating(ratingId: string) {
     return this.http.delete(this.endpoints.deleteRating(ratingId), httpOptions);
+  }
+
+  editRating(ratingRequest: RatingRequest) {
+    return this.http.put(this.endpoints.editRating(), ratingRequest, httpOptions)
   }
 }
