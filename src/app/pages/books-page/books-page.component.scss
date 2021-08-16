@@ -7,17 +7,21 @@
   display: inline-block;
   font-size: 3rem;
   color: #d3d3d3;
+  font-size: 35px;
 }
 
 .full {
-  color: red;
+  color: #FFD700;
+  font-size: 35px;
+
 }
 
 .half {
   position: absolute;
   display: inline-block;
   overflow: hidden;
-  color: red;
+  color: #FFD700;
+  font-size:35px;
 }
 
 .card {
@@ -54,3 +58,4 @@ a:hover, a:focus {
   margin-bottom: .20rem;
   font-size: x-large;
 }
+
