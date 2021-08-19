@@ -42,7 +42,6 @@
               <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
             </span>
             </ng-template>
-
             <ngb-rating [(rate)]="book.ratingAverage" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
           </h5>
           <a class="btn btn-secondary mr-1" (click)="onEditPress(editModal, book)">Edit</a>

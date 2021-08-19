@@ -5,14 +5,13 @@
 .star {
   position: relative;
   display: inline-block;
-  font-size: 3rem;
   color: #d3d3d3;
-  font-size: 35px;
+  font-size: 22px;
 }
 
 .full {
   color: #FFD700;
-  font-size: 35px;
+  font-size: 22px;
 
 }
 
@@ -21,7 +20,7 @@
   display: inline-block;
   overflow: hidden;
   color: #FFD700;
-  font-size:35px;
+  font-size:22px;
 }
 
 .card {
@@ -33,7 +32,7 @@
 }
 
 .card-img-top:hover {
-  transform: scale(1.03);
+  transform: scale(1.01);
 }
 
 .card-body {
@@ -52,6 +51,8 @@ a:hover, a:focus {
 
 .card-text {
   color: #A8A7A7;
+  font-size: 16px;
+  margin-bottom: 0;
 }
 
 .card-title {
