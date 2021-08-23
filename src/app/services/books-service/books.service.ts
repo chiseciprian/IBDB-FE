@@ -5,6 +5,7 @@ import { Book } from "../../models/Book";
 import { BookRequest } from "../../models/BookRequest";
 import { map } from "rxjs/operators";
 import { RatingsService } from "../ratings-service/ratings.service";
+import { Photo } from "../../models/Photo";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -23,7 +24,9 @@ export class BooksService {
     getBookById: (bookId: string) => this.baseURL + "/books/" + bookId,
     addBook: () => this.baseURL + "/books",
     deleteBook: (bookId: string) => this.baseURL + "/books/" + bookId,
-    updateBook: () => this.baseURL + "/books"
+    updateBook: () => this.baseURL + "/books",
+    getCover: (coverId: string) => this.baseURL + "/books/cover/" + coverId,
+    addCover: () => this.baseURL + "/books/cover/add",
   }
 
   constructor(private http: HttpClient, private ratingService: RatingsService) {
@@ -59,5 +62,13 @@ export class BooksService {
 
   updateBook(bookRequest: BookRequest) {
     return this.http.put(this.endpoints.updateBook(), bookRequest, httpOptions);
+  }
+
+  getCover(coverId: string) {
+    return this.http.get(this.endpoints.getCover(coverId));
+  }
+
+  addCover(formData: FormData): Observable<Photo> {
+    return this.http.post<Photo>(this.endpoints.addCover(), formData);
   }
 }

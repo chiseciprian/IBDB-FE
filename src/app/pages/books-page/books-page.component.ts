@@ -4,6 +4,8 @@ import { Book } from "../../models/Book";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { BookRequest } from "../../models/BookRequest";
 import { Genres } from "../../models/Genres";
+import { Photo } from "../../models/Photo";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-books-page',
@@ -13,13 +15,17 @@ import { Genres } from "../../models/Genres";
 export class BooksPageComponent implements OnInit {
   books: Book[] = [];
   booksToDisplay: Book[] = [];
-  bookRequest: BookRequest = new BookRequest('bookId', '', '', [''], [''], null);
+  bookRequest: BookRequest = new BookRequest('bookId', '', '', [''], [''], '');
   genres = Genres;
   selectedGenre = '';
+  selectedImage = '';
+  image: any;
+  imagePath: any;
 
   constructor(
     private booksService: BooksService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private _sanitizer: DomSanitizer
   ) {
   }
 
@@ -35,13 +41,31 @@ export class BooksPageComponent implements OnInit {
   }
 
   addBook(modalReference: any) {
-    this.booksService.addBook(this.bookRequest).subscribe((response) => {
-      this.getAllBooks();
+    this.booksService.addCover(this.image).subscribe((response: Photo) => {
+      this.bookRequest.coverId = response.coverId;
+      console.log(response);
+      this.booksService.addBook(this.bookRequest).subscribe((response) => {
+        this.getAllBooks();
+      });
     });
     modalReference.close();
     setTimeout(() => {
       this.clearBookRequest();
     }, 200)
+  }
+
+  onFileSelected(event: any) {
+
+    const file: File = event.target.files[0];
+
+    if (file) {
+      this.selectedImage = file.name;
+      const formData = new FormData();
+      formData.append('title', this.bookRequest.title)
+      formData.append('image', file);
+
+      this.image = formData;
+    }
   }
 
   updateBook(modalReference: any) {
@@ -99,6 +123,8 @@ export class BooksPageComponent implements OnInit {
   }
 
   private clearBookRequest() {
-    this.bookRequest = new BookRequest('bookId', '', '', [''], [''], null);
+    this.bookRequest = new BookRequest('bookId', '', '', [''], [''], '');
+    this.selectedImage = '';
+    this.image = null;
   }
 }
