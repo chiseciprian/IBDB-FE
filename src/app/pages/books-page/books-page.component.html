@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col">
       <h1>The Book List</h1>
-      <button type="button" class="btn btn-primary mb-2" (click)="triggerModal(addModal)">
+      <button type="button" class="btn btn-primary mb-2" (click)="onAddPress(addModal)">
         Add Book
       </button>
     </div>
@@ -169,11 +169,11 @@
             <div class="custom-file">
               <input type="file"
                      class="custom-file-input"
-                     id="customFile"
-                     name="customFile"
+                     id="cover"
+                     name="cover"
                      (change)="onFileSelected($event)"
                      required>
-              <label class="custom-file-label" for="customFile">Choose file</label>
+              <label class="custom-file-label" for="cover">Choose file</label>
             </div>
             <small>{{ selectedImage || "No file uploaded yet." }}</small>
           </div>
@@ -294,6 +294,22 @@
             <button type="button" class="btn btn-danger" (click)="removeInput(bookRequest.genres,i)">
               <i class="fas fa-minus"></i>
             </button>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="row">
+          <div class="col">
+            <div class="custom-file">
+              <input type="file"
+                     class="custom-file-input"
+                     id="edit-cover"
+                     name="edit-cover"
+                     (change)="onFileSelected($event)"
+                     required>
+              <label class="custom-file-label" for="cover">Choose file</label>
+            </div>
+            <small>{{ selectedImage || "No file uploaded yet." }}</small>
           </div>
         </div>
       </div>
