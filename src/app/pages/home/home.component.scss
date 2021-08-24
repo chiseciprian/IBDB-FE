@@ -1,4 +1,4 @@
-.container-fluid{
+.container-fluid {
   width: 80%;
   margin-top: 3%;
 }
@@ -9,34 +9,36 @@
   width: 100%;
   height: 100%;
 }
-img{
+
+img {
   float: right;
 }
 
-.text-col{
+.text-col {
   margin-top: 5%;
   margin-left: 8%;
 }
 
-.thumbnail-title{
+.thumbnail-title {
   color: #46408c;
   font-weight: bold;
   font-size: 45px;
   letter-spacing: 3px;
 }
 
-.thumbnail-subtitle{
+.thumbnail-subtitle {
   color: #b5aea9;
   font-size: 20px;
   line-height: 1.5;
 }
 
 .thumbnail-button {
-  background-color:  #c2a792 !important;
-  border-color:  #c2a792 !important;
+  background-color: #c2a792 !important;
+  border-color: #c2a792 !important;
   border-radius: 0.5rem;
   font-size: 18px;
 }
+
 .thumbnail-button:hover,
 .thumbnail-button:active,
 .thumbnail-button:visited,
@@ -45,4 +47,70 @@ img{
   border-color: #c29979 !important;
   border-radius: 0.5rem;
   font-size: 18px;
+}
+
+.h3-home {
+  font-weight: bold;
+}
+
+.books-container {
+  margin-bottom: 3rem;
+}
+
+.star {
+  position: relative;
+  display: inline-block;
+  color: #d3d3d3;
+  font-size: 22px;
+}
+
+.full {
+  color: #FFD700;
+  font-size: 22px;
+
+}
+
+.half {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  color: #FFD700;
+  font-size:22px;
+}
+
+.card {
+  border: none;
+}
+
+.card-img-top {
+  border-radius: 1rem;
+}
+
+.card-img-top:hover {
+  transform: scale(1.01);
+}
+
+.card-body {
+  padding-left: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #474747;
+}
+
+a:hover, a:focus {
+  text-decoration: none;
+  color: black;
+}
+
+.card-text {
+  color: #A8A7A7;
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.card-title {
+  margin-bottom: .20rem;
+  font-size: x-large;
 }
