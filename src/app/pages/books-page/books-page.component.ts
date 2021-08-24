@@ -66,9 +66,18 @@ export class BooksPageComponent implements OnInit {
   }
 
   updateBook(modalReference: any) {
-    this.booksService.updateBook(this.bookRequest).subscribe(() => {
-      this.getAllBooks();
-    });
+    if (this.cover) {
+      this.booksService.addCover(this.cover).subscribe((response: Cover) => {
+        this.bookRequest.coverId = response.coverId;
+        this.booksService.updateBook(this.bookRequest).subscribe(() => {
+          this.getAllBooks();
+        });
+      });
+    } else {
+      this.booksService.updateBook(this.bookRequest).subscribe(() => {
+        this.getAllBooks();
+      });
+    }
     modalReference.close();
     setTimeout(() => {
       this.clearBookRequest();
@@ -93,6 +102,11 @@ export class BooksPageComponent implements OnInit {
     return index;
   }
 
+  onAddPress(modalReference: any) {
+    this.clearBookRequest();
+    this.triggerModal(modalReference);
+  }
+
   onEditPress(modalReference: any, book: any) {
     this.triggerModal(modalReference);
     this.bookRequest = {...book};
@@ -105,10 +119,6 @@ export class BooksPageComponent implements OnInit {
     }, 200)
   }
 
-  triggerModal(content: any) {
-    this.modalService.open(content, {centered: true, scrollable: true});
-  }
-
   filterBooksByGenre(genre: string) {
     this.selectedGenre = genre;
     this.booksToDisplay = this.books.filter((book) => book.genres.indexOf(genre) != -1);
@@ -117,6 +127,10 @@ export class BooksPageComponent implements OnInit {
   displayAllBooks() {
     this.selectedGenre = '';
     this.booksToDisplay = this.books;
+  }
+
+  private triggerModal(content: any) {
+    this.modalService.open(content, {centered: true, scrollable: true});
   }
 
   private clearBookRequest() {
