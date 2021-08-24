@@ -5,7 +5,7 @@ export class Book {
     public description: string,
     public authors: Array<string>,
     public genres: Array<string>,
-    public poster: any,
+    public coverId: string,
     public ratingAverage: number
   ) {
   }

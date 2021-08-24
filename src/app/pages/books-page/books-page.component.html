@@ -165,6 +165,17 @@
           </div>
         </div>
       </div>
+      <div class="mb-3">
+        <div class="row">
+          <div class="col">
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="customFile" (change)="onFileSelected($event)">
+              <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+            <small>{{ selectedImage || "No file uploaded yet." }}</small>
+          </div>
+        </div>
+      </div>
     </form>
   </div>
   <div class="modal-footer">

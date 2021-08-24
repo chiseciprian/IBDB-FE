@@ -14,7 +14,7 @@ import { WebsocketService } from "../../services/websocket-service/websocket.ser
   styleUrls: ['./book-details.component.scss']
 })
 export class BookDetailsComponent implements OnInit, OnDestroy {
-  book = new Book('', '', '', [], [], null, 0);
+  book = new Book('', '', '', [], [], '', 0);
   ratings: Rating[] = [];
   bookId: string = '';
   ratingRequest: any;
