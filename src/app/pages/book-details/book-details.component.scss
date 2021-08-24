@@ -65,12 +65,54 @@ h5 {
   color: black;
 }
 
-.tab-panel{
+.tab-panel {
   background-color: white;
   border-radius: 1rem;
   width: 100%;
   height: 100%;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
   transition: 0.5s;
 }
 
+.form-label {
+  font-size: 18px;
+}
+
+input {
+  border-radius: 1rem;
+  background-color: #F1F1F1;
+  border: 0;
+}
+
+textarea {
+  border-radius: 1rem;
+  background-color: #F1F1F1;
+  border: 0;
+}
+
+.alert-danger {
+  background-color: transparent;
+  border: 0;
+  color: red;
+}
+
+button {
+  border-radius: 1rem;
+  font-size: 18px;
+}
+
+.message-panel{
+  background-color: #E5FBFB;
+  border-radius: 1rem;
+}
+
+.rating-stars{
+  font-size: 22px;
+  color: #FFD700;
+}
+
+.userName{
+  display: inline;
+  font-size: 20px;
+  color: #777;
+}
