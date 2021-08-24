@@ -2,12 +2,46 @@
   <div class="row thumbnail">
     <div class="col-4 text-col">
       <h1 class="thumbnail-title">Build your library</h1>
-      <h5 class="pt-1 thumbnail-subtitle" >Buy two selected books and get<br/>
+      <h5 class="pt-1 thumbnail-subtitle">Buy two selected books and get<br/>
         one for free</h5>
-      <button type="button" class="btn btn-primary mt-2 pl-4 pr-4 thumbnail-button" [routerLink]="['/books']">View all</button>
+      <button type="button" class="btn btn-primary mt-2 pl-4 pr-4 thumbnail-button" [routerLink]="['/books']">View all
+      </button>
     </div>
+
     <div class="col-6 p-5">
-     <img class="img-fluid" src="https://i.ibb.co/z8kCV9R/people.png" alt="people" >
+      <img class="img-fluid" src="https://i.ibb.co/z8kCV9R/people.png" alt="people">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-5 pl-0 h3-home">
+      <h3>Popular now</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-5 pl-0 d-flex justify-content-between">
+      <div *ngFor="let book of books" class="card d-inline-flex mt-2 mr-4" style="width: 18rem;">
+        <a [routerLink]="['/books',book.bookId]">
+          <img class="card-img-top"
+               src="https://images-na.ssl-images-amazon.com/images/I/418eG69n1rL._SX258_BO1,204,203,200_.jpg"
+               alt="Card image cap">
+        </a>
+        <div class="card-body">
+          <a [routerLink]="['/books',book.bookId]">
+            <h5 class="card-title">{{book.title}}</h5>
+          </a>
+          <p class="card-text">{{book.authors}}</p>
+          <h5 class="card-text">
+            <ng-template #t let-fill="fill">
+            <span class="star" [class.full]="fill === 100">
+              <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+            </span>
+            </ng-template>
+            <ngb-rating [(rate)]="book.ratingAverage" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
+          </h5>
+        </div>
+      </div>
     </div>
   </div>
 </div>

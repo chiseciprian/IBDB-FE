@@ -70,9 +70,8 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     })
   }
 
-  addRating(modalReference: any) {
+  addRating() {
     this.ratingService.addRating(this.ratingRequest).subscribe();
-    modalReference.close();
     setTimeout(() => {
       this.clearRatingRequest();
     }, 200);

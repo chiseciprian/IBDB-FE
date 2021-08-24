@@ -1,3 +1,13 @@
+.container-fluid {
+  width: 80%;
+  margin-top: 3%;
+}
+
+img.book-cover {
+  border-radius: 1rem;
+  border: none;
+}
+
 .rating-stars {
   font-size: 30px;
 }
@@ -5,18 +15,62 @@
 .book-details-container {
   margin-bottom: 3rem;
 }
+
 .star {
   position: relative;
   display: inline-block;
   font-size: 3rem;
   color: #d3d3d3;
 }
+
 .full {
   color: red;
 }
+
 .half {
   position: absolute;
   display: inline-block;
   overflow: hidden;
   color: red;
 }
+
+h5 {
+  color: #A8A7A7;
+}
+
+.star {
+  position: relative;
+  display: inline-block;
+  color: #d3d3d3;
+  font-size: 25px;
+}
+
+.full {
+  color: #FFD700;
+  font-size: 25px;
+
+}
+
+.half {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  color: #FFD700;
+  font-size: 25px;
+}
+
+.wishlist {
+  font-size: 18px;
+  text-decoration: none;
+  color: black;
+}
+
+.tab-panel{
+  background-color: white;
+  border-radius: 1rem;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.2);
+  transition: 0.5s;
+}
+
