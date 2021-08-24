@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BooksService } from "../../services/books-service/books.service";
-import { Book } from "../../models/Book";
+import { Book } from "../../models/book";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { BookRequest } from "../../models/BookRequest";
-import { Genres } from "../../models/Genres";
-import { Photo } from "../../models/Photo";
+import { BookRequest } from "../../models/book.request";
+import { Genres } from "../../models/genres";
+import { Cover } from "../../models/cover";
 import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
@@ -19,8 +19,7 @@ export class BooksPageComponent implements OnInit {
   genres = Genres;
   selectedGenre = '';
   selectedImage = '';
-  image: any;
-  imagePath: any;
+  cover: any;
 
   constructor(
     private booksService: BooksService,
@@ -41,10 +40,9 @@ export class BooksPageComponent implements OnInit {
   }
 
   addBook(modalReference: any) {
-    this.booksService.addCover(this.image).subscribe((response: Photo) => {
+    this.booksService.addCover(this.cover).subscribe((response: Cover) => {
       this.bookRequest.coverId = response.coverId;
-      console.log(response);
-      this.booksService.addBook(this.bookRequest).subscribe((response) => {
+      this.booksService.addBook(this.bookRequest).subscribe(() => {
         this.getAllBooks();
       });
     });
@@ -55,7 +53,6 @@ export class BooksPageComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-
     const file: File = event.target.files[0];
 
     if (file) {
@@ -64,7 +61,7 @@ export class BooksPageComponent implements OnInit {
       formData.append('title', this.bookRequest.title)
       formData.append('image', file);
 
-      this.image = formData;
+      this.cover = formData;
     }
   }
 
@@ -125,6 +122,6 @@ export class BooksPageComponent implements OnInit {
   private clearBookRequest() {
     this.bookRequest = new BookRequest('bookId', '', '', [''], [''], '');
     this.selectedImage = '';
-    this.image = null;
+    this.cover = null;
   }
 }

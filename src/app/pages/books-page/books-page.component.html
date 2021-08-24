@@ -27,9 +27,7 @@
     <div class="col">
       <div *ngFor="let book of booksToDisplay" class="card d-inline-flex mt-2 mr-4" style="width: 18rem;">
         <a [routerLink]="['/books',book.bookId]">
-          <img class="card-img-top"
-               src="https://images-na.ssl-images-amazon.com/images/I/418eG69n1rL._SX258_BO1,204,203,200_.jpg"
-               alt="Card image cap">
+          <img *ngIf="book.cover" class="card-img-top" src="{{'data:image/jpg;base64,' + book.cover}}" [alt]="book.title"/>
         </a>
         <div class="card-body">
           <a [routerLink]="['/books',book.bookId]">
@@ -169,7 +167,12 @@
         <div class="row">
           <div class="col">
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="customFile" (change)="onFileSelected($event)">
+              <input type="file"
+                     class="custom-file-input"
+                     id="customFile"
+                     name="customFile"
+                     (change)="onFileSelected($event)"
+                     required>
               <label class="custom-file-label" for="customFile">Choose file</label>
             </div>
             <small>{{ selectedImage || "No file uploaded yet." }}</small>

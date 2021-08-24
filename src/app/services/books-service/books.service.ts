@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Book } from "../../models/Book";
-import { BookRequest } from "../../models/BookRequest";
+import { Book } from "../../models/book";
+import { BookRequest } from "../../models/book.request";
 import { map } from "rxjs/operators";
 import { RatingsService } from "../ratings-service/ratings.service";
-import { Photo } from "../../models/Photo";
+import { Cover } from "../../models/cover";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -38,6 +38,12 @@ export class BooksService {
         this.ratingService.getRatingAverage(book.bookId).subscribe(average => {
           book.ratingAverage = average;
         });
+
+        if (book.coverId) {
+          this.getCover(book.coverId).subscribe((response) => {
+            book.cover = response.image.data;
+          })
+        }
         return book;
       })));
   }
@@ -48,6 +54,12 @@ export class BooksService {
         this.ratingService.getRatingAverage(book.bookId).subscribe(average => {
           book.ratingAverage = average;
         });
+
+        if (book.coverId) {
+          this.getCover(book.coverId).subscribe((response) => {
+            book.cover = response.image.data;
+          })
+        }
         return book;
       }));
   }
@@ -64,11 +76,11 @@ export class BooksService {
     return this.http.put(this.endpoints.updateBook(), bookRequest, httpOptions);
   }
 
-  getCover(coverId: string) {
-    return this.http.get(this.endpoints.getCover(coverId));
+  getCover(coverId: string): Observable<Cover> {
+    return this.http.get<Cover>(this.endpoints.getCover(coverId));
   }
 
-  addCover(formData: FormData): Observable<Photo> {
-    return this.http.post<Photo>(this.endpoints.addCover(), formData);
+  addCover(formData: FormData): Observable<Cover> {
+    return this.http.post<Cover>(this.endpoints.addCover(), formData)
   }
 }

@@ -2,10 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { BooksService } from "../../services/books-service/books.service";
 import { RatingsService } from "../../services/ratings-service/ratings.service";
-import { Rating } from "../../models/Rating";
-import { Book } from "../../models/Book";
+import { Rating } from "../../models/rating";
+import { Book } from "../../models/book";
 import { NgbModal, NgbRatingConfig } from "@ng-bootstrap/ng-bootstrap";
-import { RatingRequest } from "../../models/RatingRequest";
+import { RatingRequest } from "../../models/rating.request";
 import { WebsocketService } from "../../services/websocket-service/websocket.service";
 
 @Component({
@@ -14,7 +14,7 @@ import { WebsocketService } from "../../services/websocket-service/websocket.ser
   styleUrls: ['./book-details.component.scss']
 })
 export class BookDetailsComponent implements OnInit, OnDestroy {
-  book = new Book('', '', '', [], [], '', 0);
+  book = new Book('', '', '', [], [], '', '', 0);
   ratings: Rating[] = [];
   bookId: string = '';
   ratingRequest: any;

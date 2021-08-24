@@ -1,4 +1,4 @@
-export class Photo{
+export class Cover {
   constructor(
     public coverId: string,
     public title: string,
