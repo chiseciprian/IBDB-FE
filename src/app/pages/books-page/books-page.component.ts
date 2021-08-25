@@ -14,8 +14,8 @@ import { DomSanitizer } from "@angular/platform-browser";
 })
 export class BooksPageComponent implements OnInit {
   books: Book[] = [];
-  booksToDisplay: Book[] = [];
-  bookRequest: BookRequest = new BookRequest('bookId', '', '', [''], [''], '');
+  filteredBooks: Book[] = [];
+  bookRequest: BookRequest = new BookRequest('bookId', '', '', [''], [''], '', false);
   genres = Genres;
   selectedGenre = '';
   selectedImage = '';
@@ -35,7 +35,7 @@ export class BooksPageComponent implements OnInit {
   getAllBooks() {
     this.booksService.getAllBooks().subscribe((response) => {
       this.books = response;
-      this.booksToDisplay = response;
+      this.filteredBooks = response;
     })
   }
 
@@ -121,12 +121,12 @@ export class BooksPageComponent implements OnInit {
 
   filterBooksByGenre(genre: string) {
     this.selectedGenre = genre;
-    this.booksToDisplay = this.books.filter((book) => book.genres.indexOf(genre) != -1);
+    this.filteredBooks = this.books.filter((book) => book.genres.indexOf(genre) != -1);
   }
 
   displayAllBooks() {
     this.selectedGenre = '';
-    this.booksToDisplay = this.books;
+    this.filteredBooks = this.books;
   }
 
   private triggerModal(content: any) {
@@ -134,7 +134,7 @@ export class BooksPageComponent implements OnInit {
   }
 
   private clearBookRequest() {
-    this.bookRequest = new BookRequest('bookId', '', '', [''], [''], '');
+    this.bookRequest = new BookRequest('bookId', '', '', [''], [''], '', false);
     this.selectedImage = '';
     this.cover = null;
   }

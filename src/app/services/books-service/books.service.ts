@@ -27,6 +27,7 @@ export class BooksService {
     updateBook: () => this.baseURL + "/books",
     getCover: (coverId: string) => this.baseURL + "/books/cover/" + coverId,
     addCover: () => this.baseURL + "/books/cover/add",
+    getBooksAddedToReadList: () => this.baseURL + "/books/read-list"
   }
 
   constructor(private http: HttpClient, private ratingService: RatingsService) {
@@ -62,6 +63,22 @@ export class BooksService {
         }
         return book;
       }));
+  }
+
+  getBooksAddedToReadList(): Observable<Book[]> {
+    return this.http.get<Book[]>(this.endpoints.getBooksAddedToReadList())
+      .pipe(map(books => books.map(book => {
+        this.ratingService.getRatingAverage(book.bookId).subscribe(average => {
+          book.ratingAverage = average;
+        });
+
+        if (book.coverId) {
+          this.getCover(book.coverId).subscribe((response) => {
+            book.cover = response.image.data;
+          })
+        }
+        return book;
+      })));
   }
 
   addBook(bookRequest: BookRequest) {

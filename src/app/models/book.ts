@@ -7,7 +7,8 @@ export class Book {
     public genres: Array<string>,
     public coverId: string,
     public cover: string,
-    public ratingAverage: number
+    public ratingAverage: number,
+    public addedToReadList: boolean
   ) {
   }
 }

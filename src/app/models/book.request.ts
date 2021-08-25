@@ -5,7 +5,8 @@ export class BookRequest {
     public description: string,
     public authors: Array<string>,
     public genres: Array<string>,
-    public coverId: String
+    public coverId: String,
+    public addedToReadList: boolean
   ) {
   }
 

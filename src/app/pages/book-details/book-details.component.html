@@ -19,7 +19,7 @@
       <ngb-rating [(rate)]="book.ratingAverage" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
       <br>
 
-      <a role="button" class="wishlist">&#9825; Add to Readlist</a>
+      <a role="button" class="wishlist" [ngClass]="{ 'readlist': book.addedToReadList === true }" (click)="updateIsAddedToReadList(book)">&#9825; Add to Readlist</a>
 
       <h4 class="mt-5">Description</h4>
       <p class="mt-3">{{book.description}}</p>

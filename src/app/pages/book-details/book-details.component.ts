@@ -14,7 +14,7 @@ import { WebsocketService } from "../../services/websocket-service/websocket.ser
   styleUrls: ['./book-details.component.scss']
 })
 export class BookDetailsComponent implements OnInit, OnDestroy {
-  book = new Book('', '', '', [], [], '', '', 0);
+  book = new Book('', '', '', [], [], '', '', 0, false);
   ratings: Rating[] = [];
   bookId: string = '';
   ratingRequest: any;
@@ -95,6 +95,13 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   deleteBook(bookId: string) {
     this.booksService.deleteBook(bookId).subscribe(() => {
       this.router.navigateByUrl('/books');
+    });
+  }
+
+  updateIsAddedToReadList(book: Book) {
+    book.addedToReadList = !book.addedToReadList;
+    this.booksService.updateBook(book).subscribe(() => {
+      this.getBookById(book.bookId);
     });
   }
 
