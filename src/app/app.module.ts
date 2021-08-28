@@ -13,6 +13,7 @@ import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import { BookDetailsComponent } from './pages/book-details/book-details.component';
 import { FormsModule } from "@angular/forms";
 import { ReadListComponent } from './pages/read-list/read-list.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ReadListComponent } from './pages/read-list/read-list.component';
     HomeComponent,
     ErrorPageComponent,
     BookDetailsComponent,
-    ReadListComponent
+    ReadListComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
