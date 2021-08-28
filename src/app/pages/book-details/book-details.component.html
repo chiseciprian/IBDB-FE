@@ -107,7 +107,7 @@
                 <ngb-rating class="rating-stars" id="stars" name="stars" [(ngModel)]="ratingRequest.stars"></ngb-rating>
               </div>
             </form>
-            <button type="button" class="btn btn-primary mb-5" (click)="addRating()" [disabled]="!ratingForm.valid">
+            <button type="button" class="btn btn-primary mb-5" (click)="addRating(ratingForm)" [disabled]="!ratingForm.valid">
               Sumbit
             </button>
           </div>

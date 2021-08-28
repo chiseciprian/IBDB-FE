@@ -15,7 +15,7 @@ export class WebsocketService {
   }
 
   connect() {
-    const socket = new SockJS('http://localhost:8080/websocket');
+    const socket = new SockJS('http://localhost:9002/websocket');
     // @ts-ignore
     this.stompClient = Stomp.over(socket);
     const _this = this;

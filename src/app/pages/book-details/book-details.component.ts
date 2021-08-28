@@ -46,18 +46,6 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  onEditPress(modalReference: any, rating: any) {
-    this.triggerModal(modalReference);
-    this.ratingRequest = {...rating};
-  }
-
-  closeModal(modalReference: any) {
-    modalReference.close();
-    setTimeout(() => {
-      this.clearRatingRequest();
-    }, 200);
-  }
-
   getBookById(bookId: string) {
     return this.booksService.getBookById(bookId).subscribe((response) => {
       this.book = response;
@@ -70,32 +58,18 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     })
   }
 
-  addRating() {
-    this.ratingService.addRating(this.ratingRequest).subscribe();
-    setTimeout(() => {
-      this.clearRatingRequest();
-    }, 200);
-  }
+  addRating(ratingForm: any) {
+    this.ratingService.addRating(this.ratingRequest).subscribe(() => {
+      ratingForm.reset();
 
-  updateRating(modalReference: any) {
-    this.ratingService.updateRating(this.ratingRequest).subscribe(() => {
-      this.getBookById(this.bookId);
-      this.getRatingsByBookId(this.bookId);
+      setTimeout(() => {
+        this.clearRatingRequest();
+      }, 100);
     });
-    modalReference.close();
-    setTimeout(() => {
-      this.clearRatingRequest();
-    }, 200);
   }
 
   deleteRating(ratingId: string) {
     this.ratingService.deleteRating(ratingId).subscribe();
-  }
-
-  deleteBook(bookId: string) {
-    this.booksService.deleteBook(bookId).subscribe(() => {
-      this.router.navigateByUrl('/books');
-    });
   }
 
   updateIsAddedToReadList(book: Book) {
@@ -103,10 +77,6 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     this.booksService.updateBook(book).subscribe(() => {
       this.getBookById(book.bookId);
     });
-  }
-
-  triggerModal(content: any) {
-    this.modalService.open(content, {centered: true, scrollable: true});
   }
 
   ngOnDestroy(): void {
