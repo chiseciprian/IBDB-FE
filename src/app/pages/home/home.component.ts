@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { BooksService } from "../../services/books-service/books.service";
-import { Book } from "../../models/book";
+import {Component, OnInit} from '@angular/core';
+import {BooksService} from "../../services/books-service/books.service";
+import {Book} from "../../models/book";
 
 @Component({
   selector: 'app-home',
@@ -21,8 +21,15 @@ export class HomeComponent implements OnInit {
 
   getBooks() {
     this.booksService.getAllBooks().subscribe((response) => {
+
+      this.books = response.sort(function(a, b) {
+        return b.ratingAverage - a.ratingAverage;
+      }); // Sort
+
+      console.log(this.books);
       this.books = response.slice(0, 6);
-      this.books.sort((a, b) => (a.ratingAverage > b.ratingAverage) ? -1 : 1);
     })
   }
+
+
 }

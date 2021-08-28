@@ -1,3 +1,8 @@
+.container-fluid {
+  width: 80%;
+  margin-top: 3%;
+}
+
 .books-container {
   margin-bottom: 3rem;
 }
@@ -20,7 +25,7 @@
   display: inline-block;
   overflow: hidden;
   color: #FFD700;
-  font-size:22px;
+  font-size: 22px;
 }
 
 .card {
