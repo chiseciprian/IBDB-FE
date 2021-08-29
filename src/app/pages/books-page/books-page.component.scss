@@ -26,7 +26,7 @@
   display: inline-block;
   overflow: hidden;
   color: #FFD700;
-  font-size:22px;
+  font-size: 22px;
 }
 
 .card {
@@ -66,7 +66,7 @@ a:hover, a:focus {
   font-size: x-large;
 }
 
-.btn-add{
+.btn-add {
   color: #333333;
   border: none;
   border-radius: 1rem;
@@ -82,11 +82,11 @@ a:hover, a:focus {
   color: white;
 }
 
-.modal-header{
+.modal-header {
   border: none;
 }
 
-.modal-footer{
+.modal-footer {
   border: none;
 }
 
@@ -103,22 +103,26 @@ textarea {
   border: 0;
 }
 
-select{
+select {
   border-radius: 1rem;
   background-color: #F1F1F1;
   border: 0;
 }
 
-.custom-file-label{
+.custom-file-label {
   border-radius: 1rem;
   background-color: #F1F1F1;
   border: 0;
 }
 
-.btn-primary{
+.btn-primary {
   border-radius: 2rem;
 }
 
-.btn-danger{
+.btn-danger {
+  border-radius: 2rem;
+}
+
+.btn-secondary {
   border-radius: 2rem;
 }
