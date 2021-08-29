@@ -84,6 +84,22 @@ a:hover, a:focus {
   color: white;
 }
 
+.btn-delete{
+  color: #333333;
+  border: none;
+  border-radius: 1rem;
+  background-color: #f1f1f1;;
+}
+
+.btn-delete:hover,
+.btn-delete:active,
+.btn-delete:visited,
+.tbtn-delete:focus {
+  background-color: #f50114 !important;
+  border-radius: 1rem;
+  color: white;
+}
+
 .modal-header{
   border: none;
 }
@@ -124,3 +140,24 @@ select{
 .btn-danger{
   border-radius: 2rem;
 }
+
+.btn-secondary{
+  border-radius: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.nav-link{
+  border: none;
+  font-weight: bold;
+  color: #b5aea9;
+}
+
+.nav-link.active{
+  color: black;
+}
+
+.nav-tabs{
+ border: none;
+}
+
