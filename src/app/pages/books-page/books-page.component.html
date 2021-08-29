@@ -12,9 +12,9 @@
 
   <div class="row">
     <div class="col">
-      <ul class="nav nav-tabs">
+      <ul class="nav nav-tabs  mb-4 mt-3">
         <li class="nav-item">
-          <a class="nav-link active" [ngClass]="{ 'active': selectedGenre === '' }" (click)="displayAllBooks()">All
+          <a class="nav-link active pl-0" [ngClass]="{ 'active': selectedGenre === '' }" (click)="displayAllBooks()">All
             book</a>
         </li>
         <li class="nav-item" *ngFor="let genre of genres | keyvalue">
@@ -45,8 +45,8 @@
             </ng-template>
             <ngb-rating [(rate)]="book.ratingAverage" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
           </h5>
-          <a class="btn btn-secondary mr-1" (click)="onEditPress(editModal, book)">Edit</a>
-          <a class="btn btn-danger" (click)="deleteBook(book.bookId)">Delete</a>
+          <a class="btn btn-primary btn-add mt-2 mr-2 pr-4 pl-4" (click)="onEditPress(editModal, book)">Edit</a>
+          <a class="btn btn-danger btn-delete mt-2" (click)="deleteBook(book.bookId)">Delete</a>
         </div>
       </div>
       <div *ngIf="filteredBooks.length === 0">
