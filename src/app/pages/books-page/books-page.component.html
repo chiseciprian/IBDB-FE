@@ -185,8 +185,8 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="closeModal(modal)">Close</button>
-    <button type="button" class="btn btn-primary" (click)="addBook(modal)" [disabled]="!bookForm.valid">Add</button>
+    <button type="button" class="btn pl-5 pr-5 btn-danger" (click)="closeModal(modal)">Close</button>
+    <button type="button" class="btn pl-5 pr-5  btn-primary" (click)="addBook(modal)" [disabled]="!bookForm.valid">Add</button>
   </div>
 </ng-template>
 
@@ -320,6 +320,6 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-danger" (click)="closeModal(modal)">Close</button>
-    <button type="button" class="btn btn-primary" (click)="updateBook(modal)" [disabled]="!bookForm.valid">Edit</button>
+    <button type="button" class="btn  btn-primary" (click)="updateBook(modal)" [disabled]="!bookForm.valid">Edit</button>
   </div>
 </ng-template>

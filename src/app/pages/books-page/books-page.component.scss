@@ -81,3 +81,44 @@ a:hover, a:focus {
   border-radius: 1rem;
   color: white;
 }
+
+.modal-header{
+  border: none;
+}
+
+.modal-footer{
+  border: none;
+}
+
+input {
+  border-radius: 1rem;
+  background-color: #F1F1F1;
+  border: 0;
+}
+
+
+textarea {
+  border-radius: 1rem;
+  background-color: #F1F1F1;
+  border: 0;
+}
+
+select{
+  border-radius: 1rem;
+  background-color: #F1F1F1;
+  border: 0;
+}
+
+.custom-file-label{
+  border-radius: 1rem;
+  background-color: #F1F1F1;
+  border: 0;
+}
+
+.btn-primary{
+  border-radius: 2rem;
+}
+
+.btn-danger{
+  border-radius: 2rem;
+}
