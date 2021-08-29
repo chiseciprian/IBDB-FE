@@ -9,6 +9,7 @@ import {Book} from "../../models/book";
 })
 export class HomeComponent implements OnInit {
   books: Book[] = [];
+  showSpinner = true;
 
   constructor(
     private booksService: BooksService
@@ -25,6 +26,7 @@ export class HomeComponent implements OnInit {
         this.books = response.sort((a, b) => (a.ratingAverage > b.ratingAverage ? -1 : 1));
 
         this.books = this.books.slice(0, 6);
+        this.showSpinner = false;
       }, 400)
     })
   }
