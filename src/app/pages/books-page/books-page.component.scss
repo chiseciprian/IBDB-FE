@@ -55,7 +55,7 @@
   display: inline-block;
   overflow: hidden;
   color: #FFD700;
-  font-size:22px;
+  font-size: 22px;
 }
 
 a {
@@ -68,7 +68,7 @@ a:hover, a:focus {
   color: black;
 }
 
-.btn-add{
+.btn-add {
   color: #333333;
   border: none;
   border-radius: 1rem;
@@ -78,13 +78,13 @@ a:hover, a:focus {
 .btn-add:hover,
 .btn-add:active,
 .btn-add:visited,
-.tbtn-add:focus {
+.btn-add:focus {
   background-color: #1e73be !important;
-  border-radius: 1rem;
+  border-radius: 1rem !important;
   color: white;
 }
 
-.btn-delete{
+.btn-delete {
   color: #333333;
   border: none;
   border-radius: 1rem;
@@ -100,11 +100,11 @@ a:hover, a:focus {
   color: white;
 }
 
-.modal-header{
+.modal-header {
   border: none;
 }
 
-.modal-footer{
+.modal-footer {
   border: none;
 }
 
@@ -121,43 +121,43 @@ textarea {
   border: 0;
 }
 
-select{
+select {
   border-radius: 1rem;
   background-color: #F1F1F1;
   border: 0;
 }
 
-.custom-file-label{
+.custom-file-label {
   border-radius: 1rem;
   background-color: #F1F1F1;
   border: 0;
 }
 
-.btn-primary{
+.btn-add-modal {
+  border-radius: 1rem;
+}
+
+.btn-danger {
   border-radius: 2rem;
 }
 
-.btn-danger{
-  border-radius: 2rem;
-}
-
-.btn-secondary{
+.btn-secondary {
   border-radius: 2rem;
   padding-left: 1rem;
   padding-right: 1rem;
 }
 
-.nav-link{
+.nav-link {
   border: none;
   font-weight: bold;
   color: #b5aea9;
 }
 
-.nav-link.active{
+.nav-link.active {
   color: black;
 }
 
-.nav-tabs{
- border: none;
+.nav-tabs {
+  border: none;
 }
 
