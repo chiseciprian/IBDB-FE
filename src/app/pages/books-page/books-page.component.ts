@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { BooksService } from "../../services/books-service/books.service";
-import { Book } from "../../models/book";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { BookRequest } from "../../models/book.request";
-import { Genres } from "../../models/genres";
-import { Cover } from "../../models/cover";
-import { DomSanitizer } from "@angular/platform-browser";
+import {Component, OnInit} from '@angular/core';
+import {BooksService} from "../../services/books-service/books.service";
+import {Book} from "../../models/book";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {BookRequest} from "../../models/book.request";
+import {Genres} from "../../models/genres";
+import {Cover} from "../../models/cover";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-books-page',
@@ -20,6 +20,7 @@ export class BooksPageComponent implements OnInit {
   selectedGenre = '';
   selectedImage = '';
   cover: any;
+  showSpinner = true;
 
   constructor(
     private booksService: BooksService,
@@ -36,6 +37,9 @@ export class BooksPageComponent implements OnInit {
     this.booksService.getAllBooks().subscribe((response) => {
       this.books = response;
       this.filteredBooks = response;
+      setTimeout(() => {
+        this.showSpinner = false
+      }, 200);
     })
   }
 

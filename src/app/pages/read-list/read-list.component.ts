@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { BooksService } from "../../services/books-service/books.service";
-import { Book } from "../../models/book";
+import {Component, OnInit} from '@angular/core';
+import {BooksService} from "../../services/books-service/books.service";
+import {Book} from "../../models/book";
 
 @Component({
   selector: 'app-read-list',
@@ -9,6 +9,7 @@ import { Book } from "../../models/book";
 })
 export class ReadListComponent implements OnInit {
   books: Book[] = [];
+  showSpinner=true;
 
   constructor(private booksService: BooksService) {
   }
@@ -20,6 +21,9 @@ export class ReadListComponent implements OnInit {
   getBooksAddedToReadList() {
     this.booksService.getBooksAddedToReadList().subscribe((response) => {
       this.books = response;
+      setTimeout(() => {
+        this.showSpinner = false
+      }, 200);
     })
   }
 }
