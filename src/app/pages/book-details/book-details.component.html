@@ -1,4 +1,10 @@
-<div class="container-fluid book-details-container">
+<div *ngIf="showSpinner" class="d-flex mt-5 pt-5  spinner justify-content-center">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<div *ngIf="!showSpinner" class="container-fluid book-details-container">
   <div class="row">
     <div class="col-4">
       <img class="book-cover img-fluid"

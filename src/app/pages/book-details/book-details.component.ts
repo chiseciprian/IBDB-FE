@@ -18,6 +18,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   ratings: Rating[] = [];
   bookId: string = '';
   ratingRequest: any;
+  showSpinner=true;
 
   constructor(
     private route: ActivatedRoute,
@@ -49,6 +50,9 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   getBookById(bookId: string) {
     return this.booksService.getBookById(bookId).subscribe((response) => {
       this.book = response;
+      setTimeout(() => {
+        this.showSpinner = false
+      }, 200);
     })
   }
 
