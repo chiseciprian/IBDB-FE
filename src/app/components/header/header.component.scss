@@ -14,3 +14,11 @@
 .navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
   color: #46408c;
 }
+
+.logout-text:hover span {
+  display: none
+}
+
+.logout-text:hover:before {
+  content: "Logout"
+}

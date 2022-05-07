@@ -11,16 +11,14 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private keycloakService: KeycloakService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.username = this.keycloakService.getUsername();
   }
 
-  logOut() {
-    this.keycloakService.logout()
-      .then(() => {
-        console.log('logout')
-      });
+  logout(): void {
+    this.keycloakService.logout();
   }
 }
