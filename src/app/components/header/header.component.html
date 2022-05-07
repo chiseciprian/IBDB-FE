@@ -19,7 +19,8 @@
 
     <ul class="navbar-nav">
       <li class="ml-3 mr-3">
-        <a class="nav-link" routerLink="login">Login</a>
+<!--        <a class="nav-link" routerLink="login">Login</a>-->
+        <a class="nav-link" (click)="logOut()">{{ username }}</a>
       </li>
     </ul>
   </div>
