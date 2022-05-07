@@ -23,6 +23,8 @@
     "@stomp/stompjs": "^6.1.0",
     "bootstrap": "^4.6.0",
     "jquery": "^3.6.0",
+    "keycloak-angular": "^9.1.0",
+    "keycloak-js": "^16.1.1",
     "popper.js": "^1.16.1",
     "rxjs": "~6.6.0",
     "sockjs-client": "^1.5.1",
