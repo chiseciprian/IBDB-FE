@@ -15,10 +15,22 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.username = this.keycloakService.getUsername();
+    this.keycloakService.loadUserProfile().then(
+      (response) => {
+        this.username = response.firstName + ' ' + response.lastName;
+      }
+    );
+  }
+
+  login(): void {
+    this.keycloakService.login();
   }
 
   logout(): void {
     this.keycloakService.logout();
+  }
+
+  redirectToProfile() {
+    this.keycloakService.getKeycloakInstance().accountManagement();
   }
 }
