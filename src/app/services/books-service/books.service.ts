@@ -23,11 +23,12 @@ export class BooksService {
     getAllBooks: () => this.baseURL + "/books",
     getBookById: (bookId: string) => this.baseURL + "/books/" + bookId,
     addBook: () => this.baseURL + "/books",
+    buyBook: (username: string, bookId: string) => this.baseURL + `/books/buy?username=${username}&bookId=${bookId}`,
     deleteBook: (bookId: string) => this.baseURL + "/books/" + bookId,
     updateBook: () => this.baseURL + "/books",
     getCover: (coverId: string) => this.baseURL + "/books/cover/" + coverId,
     addCover: () => this.baseURL + "/books/cover/add",
-    getBooksAddedToReadList: () => this.baseURL + "/books/read-list"
+    getBooksAddedToReadList: (username: string) => this.baseURL + `/books/read-list?username=${username}`
   }
 
   constructor(private http: HttpClient, private ratingService: RatingsService) {
@@ -65,8 +66,8 @@ export class BooksService {
       }));
   }
 
-  getBooksAddedToReadList(): Observable<Book[]> {
-    return this.http.get<Book[]>(this.endpoints.getBooksAddedToReadList())
+  getBooksAddedToReadList(username: string): Observable<Book[]> {
+    return this.http.get<Book[]>(this.endpoints.getBooksAddedToReadList(username))
       .pipe(map(books => books.map(book => {
         this.ratingService.getRatingAverage(book.bookId).subscribe(average => {
           book.ratingAverage = average;
@@ -83,6 +84,10 @@ export class BooksService {
 
   addBook(bookRequest: BookRequest) {
     return this.http.post(this.endpoints.addBook(), bookRequest, httpOptions);
+  }
+
+  buyBook(username: string, bookId: string) {
+    return this.http.post(this.endpoints.buyBook(username, bookId), httpOptions);
   }
 
   deleteBook(bookId: string) {

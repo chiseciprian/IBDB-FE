@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {BooksService} from "../../services/books-service/books.service";
-import {Book} from "../../models/book";
+import { Component, OnInit } from '@angular/core';
+import { BooksService } from "../../services/books-service/books.service";
+import { Book } from "../../models/book";
+import { KeycloakService } from "keycloak-angular";
 
 @Component({
   selector: 'app-read-list',
@@ -9,21 +10,38 @@ import {Book} from "../../models/book";
 })
 export class ReadListComponent implements OnInit {
   books: Book[] = [];
-  showSpinner=true;
+  showSpinner = true;
+  username: string = '';
 
-  constructor(private booksService: BooksService) {
+  constructor(
+    private booksService: BooksService,
+    private keycloakService: KeycloakService
+  ) {
   }
 
   ngOnInit(): void {
-    this.getBooksAddedToReadList();
+    this.initializeReadList();
   }
 
-  getBooksAddedToReadList() {
-    this.booksService.getBooksAddedToReadList().subscribe((response) => {
+  getBooksAddedToReadList(username: string) {
+    this.booksService.getBooksAddedToReadList(username).subscribe((response) => {
       this.books = response;
       setTimeout(() => {
         this.showSpinner = false
       }, 200);
     })
+  }
+
+  async getUsername() {
+    await this.keycloakService.isLoggedIn().then(
+      () => {
+        this.username = this.keycloakService.getUsername();
+      }
+    )
+  }
+
+  async initializeReadList() {
+    await this.getUsername()
+    this.getBooksAddedToReadList(this.username);
   }
 }

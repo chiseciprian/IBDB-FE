@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { BooksService } from "../../services/books-service/books.service";
+import { KeycloakService } from "keycloak-angular";
+import { ActivatedRoute } from "@angular/router";
+import { Book } from "../../models/book";
 
 @Component({
   selector: 'app-stripe-payment',
@@ -8,12 +12,24 @@ import { Component, OnInit } from '@angular/core';
 export class StripePaymentComponent implements OnInit {
 
   handler: any = null;
+  bookIdParam: string = '';
+  username: string = '';
+  @Input() book: Book = new Book('', '', '', 0, [], [], [], '', '', 0, []);
 
-  constructor() {
+  constructor(
+    private booksService: BooksService,
+    private keycloakService: KeycloakService,
+    private route: ActivatedRoute
+  ) {
   }
 
   ngOnInit() {
     this.loadStripe();
+    const bookIdParam = this.route.snapshot.paramMap.get('bookId');
+    if (bookIdParam) {
+      this.bookIdParam = bookIdParam;
+    }
+    this.username = this.keycloakService.getUsername();
   }
 
   pay(amount: any) {
@@ -21,20 +37,17 @@ export class StripePaymentComponent implements OnInit {
     var handler = (<any>window).StripeCheckout.configure({
       key: 'pk_test_51KxGiAHdVCPrYB8grWSgvGp6cJgnUIOHc7zNbHa9Cc7dr0GerFaH00fi3sOFs2sDqePWVh1DP6dNjPHKIOegds0700srwGydc3',
       locale: 'auto',
-      token: function (token: any) {
-        // You can access the token ID with `token.id`.
-        // Get the token ID to your server-side code for use.
-        console.log(token)
-        alert('Save username and bookId to DB');
+      token: (token: any) => {
+        this.buyBook(this.username, this.bookIdParam);
       }
     });
 
     handler.open({
-      name: 'Demo Payment',
+      name: this.book.title,
       description: '1 book',
-      amount: amount * 100
+      amount: this.book.price * 100
     });
-
+    // this.buyBook(this.keycloakService.getUsername(), this.bookIdParam);
   }
 
   loadStripe() {
@@ -59,5 +72,9 @@ export class StripePaymentComponent implements OnInit {
 
       window.document.body.appendChild(s);
     }
+  }
+
+  buyBook(username: string, bookId: string) {
+    this.booksService.buyBook(username, bookId).subscribe();
   }
 }

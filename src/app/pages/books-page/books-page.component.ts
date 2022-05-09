@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {BooksService} from "../../services/books-service/books.service";
-import {Book} from "../../models/book";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {BookRequest} from "../../models/book.request";
-import {Genres} from "../../models/genres";
-import {Cover} from "../../models/cover";
-import {DomSanitizer} from "@angular/platform-browser";
+import { Component, OnInit } from '@angular/core';
+import { BooksService } from "../../services/books-service/books.service";
+import { Book } from "../../models/book";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { BookRequest } from "../../models/book.request";
+import { Genres } from "../../models/genres";
+import { Cover } from "../../models/cover";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-books-page',
@@ -15,7 +15,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 export class BooksPageComponent implements OnInit {
   books: Book[] = [];
   filteredBooks: Book[] = [];
-  bookRequest: BookRequest = new BookRequest('bookId', '', '', [''], [''], '', false);
+  bookRequest: BookRequest = new BookRequest('bookId', '', '', 10, [''], [''], [''], '', []);
   genres = Genres;
   selectedGenre = '';
   selectedImage = '';
@@ -138,7 +138,7 @@ export class BooksPageComponent implements OnInit {
   }
 
   private clearBookRequest() {
-    this.bookRequest = new BookRequest('bookId', '', '', [''], [''], '', false);
+    this.bookRequest = new BookRequest('bookId', '', '', 10, [''], [''], [''], '', []);
     this.selectedImage = '';
     this.cover = null;
   }

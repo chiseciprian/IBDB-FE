@@ -25,16 +25,20 @@
       <ngb-rating [(rate)]="book.ratingAverage" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
       <br>
 
-      <a role="button" class="wishlist" (click)="updateIsAddedToReadList(book)">
-        <span [ngClass]="{ 'readlist': book.addedToReadList === true }">&#9825;</span>
-        {{book.addedToReadList ? 'Remove from Readlist' : 'Add to Readlist'}}
+      <a *ngIf="username" role="button" class="wishlist" (click)="updateIsAddedToReadList(book)">
+        <span [ngClass]="{ 'readlist': book.addedToReadList.indexOf(username) !== -1 }">&#9825;</span>
+        {{book.addedToReadList.indexOf(username) !== -1 ? 'Remove from Readlist' : 'Add to Readlist'}}
       </a>
 
       <h4 class="mt-5">Description</h4>
       <p class="mt-3">{{book.description}}</p>
 
-      <h4 class="mt-5">Actions</h4>
-      <app-stripe-payment></app-stripe-payment>
+      <div *ngIf="username">
+        <h4 class="mt-5">Actions</h4>
+        <app-stripe-payment [book]="book" *ngIf="book.users.indexOf(username) === -1"></app-stripe-payment>
+        <button *ngIf="book.users.indexOf(username) !== -1" class="btn btn-danger btn-block">Read book</button>
+      </div>
+
     </div>
   </div>
 
