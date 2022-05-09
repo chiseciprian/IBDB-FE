@@ -1,0 +1,25 @@
+a {
+  text-decoration: none;
+  color: #474747;
+}
+
+a:hover, a:focus {
+  text-decoration: none;
+  color: black;
+}
+
+.btn-add {
+  color: #333333;
+  border: none;
+  border-radius: 1rem;
+  background-color: #f1f1f1;;
+}
+
+.btn-add:hover,
+.btn-add:active,
+.btn-add:visited,
+.btn-add:focus {
+  background-color: #1e73be !important;
+  border-radius: 1rem !important;
+  color: white;
+}

@@ -23,7 +23,10 @@
             </span>
       </ng-template>
       <ngb-rating [(rate)]="book.ratingAverage" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
-      <br>
+
+      <div class="price-container mb-3">
+        {{ book.price }} RON
+      </div>
 
       <a *ngIf="username" role="button" class="wishlist" (click)="updateIsAddedToReadList(book)">
         <span [ngClass]="{ 'readlist': book.addedToReadList.indexOf(username) !== -1 }">&#9825;</span>
@@ -36,7 +39,10 @@
       <div *ngIf="username">
         <h4 class="mt-5">Actions</h4>
         <app-stripe-payment [book]="book" *ngIf="book.users.indexOf(username) === -1"></app-stripe-payment>
-        <button *ngIf="book.users.indexOf(username) !== -1" class="btn btn-danger btn-block">Read book</button>
+        <a *ngIf="book.users.indexOf(username) !== -1"
+           class="btn btn-danger btn-delete mt-2">
+          Read book
+        </a>
       </div>
 
     </div>
