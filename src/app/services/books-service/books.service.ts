@@ -6,6 +6,7 @@ import { BookRequest } from "../../models/book.request";
 import { map } from "rxjs/operators";
 import { RatingsService } from "../ratings-service/ratings.service";
 import { Cover } from "../../models/cover";
+import { BookFile } from "../../models/book-file";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -27,7 +28,9 @@ export class BooksService {
     deleteBook: (bookId: string) => this.baseURL + "/books/" + bookId,
     updateBook: () => this.baseURL + "/books",
     getCover: (coverId: string) => this.baseURL + "/books/cover/" + coverId,
+    getBookFile: (fileId: string) => this.baseURL + "/books/file/" + fileId,
     addCover: () => this.baseURL + "/books/cover/add",
+    addBookFile: () => this.baseURL + "/books/file/add",
     getBooksAddedToReadList: (username: string) => this.baseURL + `/books/read-list?username=${username}`
   }
 
@@ -46,6 +49,13 @@ export class BooksService {
             book.cover = response.image.data;
           })
         }
+
+        if (book.fileId) {
+          this.getBookFile(book.fileId).subscribe((response) => {
+            book.file = response.bookFile.data;
+          })
+        }
+
         return book;
       })));
   }
@@ -62,6 +72,13 @@ export class BooksService {
             book.cover = response.image.data;
           })
         }
+
+        if (book.fileId) {
+          this.getBookFile(book.fileId).subscribe((response) => {
+            book.file = response.bookFile.data;
+          })
+        }
+
         return book;
       }));
   }
@@ -78,6 +95,13 @@ export class BooksService {
             book.cover = response.image.data;
           })
         }
+
+        if (book.fileId) {
+          this.getBookFile(book.fileId).subscribe((response) => {
+            book.file = response.bookFile.data;
+          })
+        }
+
         return book;
       })));
   }
@@ -102,7 +126,15 @@ export class BooksService {
     return this.http.get<Cover>(this.endpoints.getCover(coverId));
   }
 
+  getBookFile(fileId: string): Observable<BookFile> {
+    return this.http.get<BookFile>(this.endpoints.getBookFile(fileId));
+  }
+
   addCover(formData: FormData): Observable<Cover> {
-    return this.http.post<Cover>(this.endpoints.addCover(), formData)
+    return this.http.post<Cover>(this.endpoints.addCover(), formData);
+  }
+
+  addBookFile(formData: FormData): Observable<BookFile> {
+    return this.http.post<BookFile>(this.endpoints.addBookFile(), formData);
   }
 }

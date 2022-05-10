@@ -9,6 +9,8 @@ export class Book {
     public genres: Array<string>,
     public coverId: string,
     public cover: string,
+    public fileId: string,
+    public file: string,
     public ratingAverage: number,
     public addedToReadList: Array<string>
   ) {

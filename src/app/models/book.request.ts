@@ -8,6 +8,7 @@ export class BookRequest {
     public users: Array<string>,
     public genres: Array<string>,
     public coverId: String,
+    public fileId: String,
     public addedToReadList: Array<string>
   ) {
   }

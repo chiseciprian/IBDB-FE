@@ -5,6 +5,7 @@
 </div>
 
 <div *ngIf="!showSpinner" class="container-fluid book-details-container">
+  <a (click)="goBack()">Go back</a>
   <div class="row">
     <div class="col-4">
       <img class="book-cover img-fluid"
@@ -38,9 +39,14 @@
 
       <div *ngIf="username">
         <h4 class="mt-5">Actions</h4>
-        <app-stripe-payment [book]="book" *ngIf="book.users.indexOf(username) === -1"></app-stripe-payment>
+        <app-stripe-payment
+          *ngIf="book.users.indexOf(username) === -1"
+          [book]="book"
+          (bookBought)="getBookById(book.bookId)">
+        </app-stripe-payment>
         <a *ngIf="book.users.indexOf(username) !== -1"
-           class="btn btn-danger btn-delete mt-2">
+           class="btn btn-danger btn-delete mt-2"
+            (click)="openPdfFile()">
           Read book
         </a>
       </div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BooksService } from "../../services/books-service/books.service";
 import { KeycloakService } from "keycloak-angular";
 import { ActivatedRoute } from "@angular/router";
@@ -14,7 +14,8 @@ export class StripePaymentComponent implements OnInit {
   handler: any = null;
   bookIdParam: string = '';
   username: string = '';
-  @Input() book: Book = new Book('', '', '', 0, [], [], [], '', '', 0, []);
+  @Input() book: Book = new Book('', '', '', 0, [], [], [], '', '', '', '', 0, []);
+  @Output() bookBought = new EventEmitter<any>();
 
   constructor(
     private booksService: BooksService,
@@ -39,6 +40,9 @@ export class StripePaymentComponent implements OnInit {
       locale: 'auto',
       token: (token: any) => {
         this.buyBook(this.username, this.bookIdParam);
+        setTimeout(() => {
+          this.bookBought.emit();
+        }, 300);
       }
     });
 
@@ -47,7 +51,6 @@ export class StripePaymentComponent implements OnInit {
       description: '1 book',
       amount: this.book.price * 100
     });
-    // this.buyBook(this.keycloakService.getUsername(), this.bookIdParam);
   }
 
   loadStripe() {

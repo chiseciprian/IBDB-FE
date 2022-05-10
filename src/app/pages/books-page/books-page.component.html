@@ -175,6 +175,7 @@
           </div>
         </div>
       </div>
+
       <div class="mb-3">
         <div class="row">
           <div class="col">
@@ -192,6 +193,25 @@
           </div>
         </div>
       </div>
+
+      <div class="mb-3">
+        <div class="row">
+          <div class="col">
+            <label class="form-label">Book File</label>
+            <div class="custom-file">
+              <input type="file"
+                     class="custom-file-input"
+                     id="bookFile"
+                     name="bookFile"
+                     (change)="onFileSelected2($event)"
+                     required>
+              <label class="custom-file-label" for="bookFile">Choose file</label>
+            </div>
+            <small>{{ selectedBookFile || "No file uploaded yet." }}</small>
+          </div>
+        </div>
+      </div>
+
     </form>
   </div>
   <div class="modal-footer">
@@ -317,6 +337,7 @@
           </div>
         </div>
       </div>
+
       <div class="mb-3">
         <div class="row">
           <div class="col">
@@ -331,6 +352,24 @@
               <label class="custom-file-label" for="cover">Choose file</label>
             </div>
             <small>{{ selectedImage || "No file uploaded yet." }}</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div class="row">
+          <div class="col">
+            <label class="form-label">Book File</label>
+            <div class="custom-file">
+              <input type="file"
+                     class="custom-file-input"
+                     id="edit-bookFile"
+                     name="edit-bookFile"
+                     (change)="onFileSelected2($event)"
+                     required>
+              <label class="custom-file-label" for="cover">Choose file</label>
+            </div>
+            <small>{{ selectedBookFile || "No file uploaded yet." }}</small>
           </div>
         </div>
       </div>

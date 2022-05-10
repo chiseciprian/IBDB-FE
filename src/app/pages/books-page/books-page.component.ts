@@ -6,6 +6,7 @@ import { BookRequest } from "../../models/book.request";
 import { Genres } from "../../models/genres";
 import { Cover } from "../../models/cover";
 import { DomSanitizer } from "@angular/platform-browser";
+import { BookFile } from "../../models/book-file";
 
 @Component({
   selector: 'app-books-page',
@@ -15,11 +16,13 @@ import { DomSanitizer } from "@angular/platform-browser";
 export class BooksPageComponent implements OnInit {
   books: Book[] = [];
   filteredBooks: Book[] = [];
-  bookRequest: BookRequest = new BookRequest('bookId', '', '', 10, [''], [''], [''], '', []);
+  bookRequest: BookRequest = new BookRequest('bookId', '', '', 10, [], [], [], '', '', []);
   genres = Genres;
   selectedGenre = '';
   selectedImage = '';
+  selectedBookFile = '';
   cover: any;
+  bookFile: any;
   showSpinner = true;
 
   constructor(
@@ -44,12 +47,16 @@ export class BooksPageComponent implements OnInit {
   }
 
   addBook(modalReference: any) {
-    this.booksService.addCover(this.cover).subscribe((response: Cover) => {
-      this.bookRequest.coverId = response.coverId;
-      this.booksService.addBook(this.bookRequest).subscribe(() => {
-        this.getAllBooks();
+    this.booksService.addBookFile(this.bookFile).subscribe((file: BookFile) => {
+      this.bookRequest.fileId = file.fileId;
+      this.booksService.addCover(this.cover).subscribe((response: Cover) => {
+        this.bookRequest.coverId = response.coverId;
+        this.booksService.addBook(this.bookRequest).subscribe(() => {
+          this.getAllBooks();
+        });
       });
-    });
+    })
+
     modalReference.close();
     setTimeout(() => {
       this.clearBookRequest();
@@ -69,10 +76,40 @@ export class BooksPageComponent implements OnInit {
     }
   }
 
+  onFileSelected2(event: any) {
+    const file: File = event.target.files[0];
+
+    if (file) {
+      this.selectedBookFile = file.name;
+      const formData = new FormData();
+      formData.append('title', this.bookRequest.title)
+      formData.append('bookFile', file);
+
+      this.bookFile = formData;
+    }
+  }
+
   updateBook(modalReference: any) {
-    if (this.cover) {
+    if (this.cover && this.bookFile) {
+      this.booksService.addBookFile(this.bookFile).subscribe((file: BookFile) => {
+        this.bookRequest.fileId = file.fileId;
+        this.booksService.addCover(this.cover).subscribe((response: Cover) => {
+          this.bookRequest.coverId = response.coverId;
+          this.booksService.updateBook(this.bookRequest).subscribe(() => {
+            this.getAllBooks();
+          });
+        });
+      })
+    } else if (this.cover) {
       this.booksService.addCover(this.cover).subscribe((response: Cover) => {
         this.bookRequest.coverId = response.coverId;
+        this.booksService.updateBook(this.bookRequest).subscribe(() => {
+          this.getAllBooks();
+        });
+      });
+    } else if (this.bookFile) {
+      this.booksService.addBookFile(this.bookFile).subscribe((response: BookFile) => {
+        this.bookRequest.fileId = response.fileId;
         this.booksService.updateBook(this.bookRequest).subscribe(() => {
           this.getAllBooks();
         });
@@ -138,8 +175,10 @@ export class BooksPageComponent implements OnInit {
   }
 
   private clearBookRequest() {
-    this.bookRequest = new BookRequest('bookId', '', '', 10, [''], [''], [''], '', []);
+    this.bookRequest = new BookRequest('bookId', '', '', 10, [], [], [], '', '', []);
     this.selectedImage = '';
+    this.selectedBookFile = '';
     this.cover = null;
+    this.bookFile = null;
   }
 }

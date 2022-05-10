@@ -8,6 +8,8 @@ import { NgbModal, NgbRatingConfig } from "@ng-bootstrap/ng-bootstrap";
 import { RatingRequest } from "../../models/rating.request";
 import { WebsocketService } from "../../services/websocket-service/websocket.service";
 import { KeycloakService } from "keycloak-angular";
+import { DomSanitizer } from "@angular/platform-browser";
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-book-details',
@@ -15,7 +17,7 @@ import { KeycloakService } from "keycloak-angular";
   styleUrls: ['./book-details.component.scss']
 })
 export class BookDetailsComponent implements OnInit, OnDestroy {
-  book = new Book('', '', '', 10, [], [], [], '', '', 0, []);
+  book = new Book('', '', '', 10, [], [], [], '', '', '', '', 0, []);
   ratings: Rating[] = [];
   bookId: string = '';
   ratingRequest: any;
@@ -30,6 +32,8 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     private ws: WebsocketService,
     private modalService: NgbModal,
     private keycloakService: KeycloakService,
+    private sanitizer: DomSanitizer,
+    private location: Location,
     config: NgbRatingConfig
   ) {
     config.max = 5;
@@ -86,7 +90,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
 
   updateIsAddedToReadList(book: Book) {
     let indexOf = book.addedToReadList.indexOf(this.username);
-    if(indexOf !== 1) {
+    if (indexOf !== 1) {
       book.addedToReadList.push(this.username);
     } else {
       book.addedToReadList.splice(indexOf, 1);
@@ -98,6 +102,17 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.ws.disconnect();
+  }
+
+  openPdfFile() {
+    var newWindow = window.open();
+    if(newWindow) {
+      newWindow.document.write('<embed type="application/pdf" src="'+ 'data:application/pdf;base64,' + this.book.file +'" width="100%" height="100%" />');
+    }
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   private clearRatingRequest() {
