@@ -48,7 +48,7 @@
         </app-stripe-payment>
         <a *ngIf="book.users.indexOf(username) !== -1"
            class="btn btn-danger btn-delete mt-2"
-            (click)="openPdfFile()">
+           (click)="openPdfFile()">
           Read book
         </a>
       </div>
@@ -80,63 +80,72 @@
               </div>
             </div>
           </div>
-          <div class="col-6  mt-3">
-            <h3 class="mb-4">Add a review</h3>
-            <form #ratingForm="ngForm">
-              <div class="mb-3">
-                <label for="title" class="form-label">Title*</label>
-                <input type="text"
-                       class="form-control"
-                       id="title"
-                       name="title"
-                       placeholder="Rating Title"
-                       [(ngModel)]="ratingRequest.title"
-                       #title="ngModel"
-                       [ngClass]="{ 'is-invalid': title.invalid && (title.dirty || title.touched) }"
-                       required
-                       minlength="4">
+          <div class="col-6 mt-3">
+            <div class="top-layer">
+              <a (click)="login()" class="login-button">Login</a>
+            </div>
 
-                <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger">
-                  <div *ngIf="title.errors?.required">
-                    Title is required.
+            <div class="review-container">
+              <h3 class="mb-4">Add a review</h3>
+              <form #ratingForm="ngForm">
+                <div class="mb-3">
+                  <label for="title" class="form-label">Title*</label>
+                  <input type="text"
+                         class="form-control"
+                         id="title"
+                         name="title"
+                         placeholder="Rating Title"
+                         [(ngModel)]="ratingRequest.title"
+                         #title="ngModel"
+                         [ngClass]="{ 'is-invalid': title.invalid && (title.dirty || title.touched) }"
+                         required
+                         minlength="4">
+
+                  <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger">
+                    <div *ngIf="title.errors?.required">
+                      Title is required.
+                    </div>
+                    <div *ngIf="title.errors?.minlength">
+                      Title must be at least 4 characters long.
+                    </div>
                   </div>
-                  <div *ngIf="title.errors?.minlength">
-                    Title must be at least 4 characters long.
-                  </div>
+
                 </div>
+                <div class="mb-3">
+                  <label for="message" class="form-label">Message*</label>
+                  <textarea class="form-control"
+                            id="message"
+                            name="message"
+                            rows="3"
+                            [(ngModel)]="ratingRequest.message"
+                            #message="ngModel"
+                            [ngClass]="{ 'is-invalid': message.invalid && (message.dirty || message.touched) }"
+                            required
+                            minlength="10"></textarea>
 
-              </div>
-              <div class="mb-3">
-                <label for="message" class="form-label">Message*</label>
-                <textarea class="form-control"
-                          id="message"
-                          name="message"
-                          rows="3"
-                          [(ngModel)]="ratingRequest.message"
-                          #message="ngModel"
-                          [ngClass]="{ 'is-invalid': message.invalid && (message.dirty || message.touched) }"
-                          required
-                          minlength="10"></textarea>
+                  <div *ngIf="message.invalid && (message.dirty || message.touched)" class="alert alert-danger">
+                    <div *ngIf="message.errors?.required">
+                      Message is required.
+                    </div>
+                    <div *ngIf="message.errors?.minlength">
+                      Message must be at least 10 characters long.
+                    </div>
+                  </div>
 
-                <div *ngIf="message.invalid && (message.dirty || message.touched)" class="alert alert-danger">
-                  <div *ngIf="message.errors?.required">
-                    Message is required.
-                  </div>
-                  <div *ngIf="message.errors?.minlength">
-                    Message must be at least 10 characters long.
-                  </div>
                 </div>
+                <div class="mb-3">
+                  <label for="stars" class="form-label">Rating*</label>
+                  <br>
+                  <ngb-rating class="rating-stars" id="stars" name="stars"
+                              [(ngModel)]="ratingRequest.stars"></ngb-rating>
+                </div>
+              </form>
+              <button type="button" class="btn btn-primary mb-5" (click)="addRating(ratingForm)"
+                      [disabled]="!ratingForm.valid">
+                Sumbit
+              </button>
+            </div>
 
-              </div>
-              <div class="mb-3">
-                <label for="stars" class="form-label">Rating*</label>
-                <br>
-                <ngb-rating class="rating-stars" id="stars" name="stars" [(ngModel)]="ratingRequest.stars"></ngb-rating>
-              </div>
-            </form>
-            <button type="button" class="btn btn-primary mb-5" (click)="addRating(ratingForm)" [disabled]="!ratingForm.valid">
-              Sumbit
-            </button>
           </div>
         </div>
       </div>

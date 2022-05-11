@@ -7,6 +7,31 @@
   }
 }
 
+.review-container {
+  filter: blur(3px);
+  pointer-events: none;
+}
+
+.top-layer {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 5ch;
+  z-index: 100;
+}
+
+.login-button {
+  font-weight: bold;
+  color: rgba(0, 0, 0, .5);
+
+  :focus {
+    color: rgba(0, 0, 0, .6);
+  }
+}
+
 img.book-cover {
   border-radius: 1rem;
   border: none;
@@ -105,17 +130,17 @@ button {
   font-size: 18px;
 }
 
-.message-panel{
+.message-panel {
   background-color: #E5FBFB;
   border-radius: 1rem;
 }
 
-.rating-stars{
+.rating-stars {
   font-size: 22px;
   color: #FFD700;
 }
 
-.userName{
+.userName {
   display: inline;
   font-size: 20px;
   color: #777;

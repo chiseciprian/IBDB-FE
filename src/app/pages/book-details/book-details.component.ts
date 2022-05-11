@@ -115,6 +115,10 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     this.location.back();
   }
 
+  login() {
+    this.keycloakService.login();
+  }
+
   private clearRatingRequest() {
     this.ratingRequest = new RatingRequest('ratingId', this.bookId, 'Cipri', '', '', Math.floor(Date.now() / 1000), 1);
   }
