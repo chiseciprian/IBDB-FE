@@ -49,7 +49,8 @@ export class StripePaymentComponent implements OnInit {
     handler.open({
       name: this.book.title,
       description: '1 book',
-      amount: this.book.price * 100
+      amount: this.book.price * 100,
+      currency: 'ron'
     });
   }
 
@@ -65,10 +66,6 @@ export class StripePaymentComponent implements OnInit {
           key: 'pk_test_51KxGiAHdVCPrYB8grWSgvGp6cJgnUIOHc7zNbHa9Cc7dr0GerFaH00fi3sOFs2sDqePWVh1DP6dNjPHKIOegds0700srwGydc3',
           locale: 'auto',
           token: function (token: any) {
-            // You can access the token ID with `token.id`.
-            // Get the token ID to your server-side code for use.
-            console.log(token)
-            alert('Payment Success!!');
           }
         });
       }
@@ -77,7 +74,7 @@ export class StripePaymentComponent implements OnInit {
     }
   }
 
-  buyBook(username: string, bookId: string) {
+  private buyBook(username: string, bookId: string) {
     this.booksService.buyBook(username, bookId).subscribe();
   }
 }
