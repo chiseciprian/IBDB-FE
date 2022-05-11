@@ -16,7 +16,7 @@ import { BookFile } from "../../models/book-file";
 export class BooksPageComponent implements OnInit {
   books: Book[] = [];
   filteredBooks: Book[] = [];
-  bookRequest: BookRequest = new BookRequest('bookId', '', '', 10, [], [], [], '', '', []);
+  bookRequest: BookRequest = new BookRequest('bookId', '', '', 10, [''], [], [''], '', '', []);
   genres = Genres;
   selectedGenre = '';
   selectedImage = '';
@@ -175,7 +175,7 @@ export class BooksPageComponent implements OnInit {
   }
 
   private clearBookRequest() {
-    this.bookRequest = new BookRequest('bookId', '', '', 10, [], [], [], '', '', []);
+    this.bookRequest = new BookRequest('bookId', '', '', 10, [''], [], [''], '', '', []);
     this.selectedImage = '';
     this.selectedBookFile = '';
     this.cover = null;
