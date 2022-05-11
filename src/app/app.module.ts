@@ -17,6 +17,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
 import { initializeKeycloak } from "./utility/app.init";
 import { StripePaymentComponent } from './components/stripe-payment/stripe-payment.component';
+import { PurchasedBooksComponent } from './pages/purchased-books/purchased-books.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { StripePaymentComponent } from './components/stripe-payment/stripe-payme
     BookDetailsComponent,
     ReadListComponent,
     LoginComponent,
-    StripePaymentComponent
+    StripePaymentComponent,
+    PurchasedBooksComponent
   ],
   imports: [
     BrowserModule,
