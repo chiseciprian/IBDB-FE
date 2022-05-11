@@ -11,7 +11,7 @@ a:hover, a:focus {
 .btn-add {
   color: #333333;
   border: none;
-  border-radius: 1rem;
+  border-radius: 0.75rem;
   background-color: #f1f1f1;;
 }
 
@@ -20,6 +20,6 @@ a:hover, a:focus {
 .btn-add:visited,
 .btn-add:focus {
   background-color: #1e73be !important;
-  border-radius: 1rem !important;
+  border-radius: 0.75rem !important;
   color: white;
 }

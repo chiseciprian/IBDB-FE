@@ -1,6 +1,6 @@
 .container-fluid {
   width: 80%;
-  margin-top: 3%;
+  margin-top: 1%;
 
   .price-container {
     font-size: 1.25rem;
@@ -178,4 +178,31 @@ a:hover, a:focus {
 
 .btn-danger {
   border-radius: 2rem;
+}
+
+.fa-circle-chevron-left{
+  color: #a8a7a7;
+}
+
+.fa-circle-chevron-left:hover,
+.fa-circle-chevron-left:active,
+.fa-circle-chevron-left:visited,
+.fa-circle-chevron-left:focus {
+  color: #212529 !important;
+}
+
+.btn-read {
+  color: #333333;
+  border: none;
+  border-radius: 0.75rem;
+  background-color: #f1f1f1;;
+}
+
+.btn-read:hover,
+.btn-read:active,
+.btn-read:visited,
+.btn-read:focus {
+  background-color: #1e73be !important;
+  border-radius: 0.75rem !important;
+  color: white;
 }
