@@ -33,7 +33,7 @@ export class StripePaymentComponent implements OnInit {
     this.username = this.keycloakService.getUsername();
   }
 
-  pay(amount: any) {
+  pay() {
 
     var handler = (<any>window).StripeCheckout.configure({
       key: 'pk_test_51KxGiAHdVCPrYB8grWSgvGp6cJgnUIOHc7zNbHa9Cc7dr0GerFaH00fi3sOFs2sDqePWVh1DP6dNjPHKIOegds0700srwGydc3',

@@ -90,7 +90,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
 
   updateIsAddedToReadList(book: Book) {
     let indexOf = book.addedToReadList.indexOf(this.username);
-    if (indexOf !== 1) {
+    if (indexOf === -1) {
       book.addedToReadList.push(this.username);
     } else {
       book.addedToReadList.splice(indexOf, 1);

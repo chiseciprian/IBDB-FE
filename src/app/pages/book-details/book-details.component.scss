@@ -1,6 +1,7 @@
-.container-fluid {
+.book-details-container {
   width: 80%;
   margin-top: 1%;
+  margin-bottom: 4rem;
 
   .price-container {
     font-size: 1.25rem;
@@ -37,54 +38,11 @@ img.book-cover {
   border: none;
 }
 
-.rating-stars {
-  font-size: 30px;
-}
-
-.book-details-container {
-  margin-bottom: 4rem;
-}
-
-.star {
-  position: relative;
-  display: inline-block;
-  font-size: 3rem;
-  color: #d3d3d3;
-}
-
-.full {
-  color: red;
-}
-
-.half {
-  position: absolute;
-  display: inline-block;
-  overflow: hidden;
-  color: red;
-}
-
 h5 {
   color: #A8A7A7;
 }
 
-.star {
-  position: relative;
-  display: inline-block;
-  color: #d3d3d3;
-  font-size: 25px;
-}
-
-.full {
-  color: #FFD700;
-  font-size: 25px;
-
-}
-
-.half {
-  position: absolute;
-  display: inline-block;
-  overflow: hidden;
-  color: #FFD700;
+.star, .full, .half {
   font-size: 25px;
 }
 
@@ -144,20 +102,6 @@ button {
   display: inline;
   font-size: 20px;
   color: #777;
-}
-
-.readlist {
-  color: red;
-}
-
-a {
-  text-decoration: none;
-  color: #474747;
-}
-
-a:hover, a:focus {
-  text-decoration: none;
-  color: black;
 }
 
 .btn-delete {
