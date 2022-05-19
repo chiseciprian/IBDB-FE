@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Book } from "../../models/book";
-import { BookRequest } from "../../models/book.request";
+import { Book } from "../../utility/models/book";
+import { BookRequest } from "../../utility/requests/book.request";
 import { map } from "rxjs/operators";
 import { RatingsService } from "../ratings-service/ratings.service";
-import { Cover } from "../../models/cover";
-import { BookFile } from "../../models/book-file";
+import { Cover } from "../../utility/models/cover";
+import { BookFile } from "../../utility/models/book-file";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,6 +19,7 @@ const httpOptions = {
 })
 
 export class BooksService {
+
   baseURL = "http://localhost:8080";
   endpoints = {
     getAllBooks: () => this.baseURL + "/books",
@@ -35,7 +36,10 @@ export class BooksService {
     getPurchasedBooks: (username: string) => this.baseURL + `/books/my-books?username=${username}`
   }
 
-  constructor(private http: HttpClient, private ratingService: RatingsService) {
+  constructor(
+    private http: HttpClient,
+    private ratingService: RatingsService
+  ) {
   }
 
   getAllBooks(): Observable<Book[]> {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Book } from "../../models/book";
+import { Book } from "../../utility/models/book";
 import { BooksService } from "../../services/books-service/books.service";
-import { KeycloakService } from "keycloak-angular";
+import { AuthorizationServiceRepository } from "../../services/authorization/authorization.service.repository";
 
 @Component({
   selector: 'app-purchased-books',
@@ -15,8 +15,7 @@ export class PurchasedBooksComponent implements OnInit {
   username: string = '';
 
   constructor(
-    private booksService: BooksService,
-    private keycloakService: KeycloakService
+    private booksService: BooksService
   ) {
   }
 
@@ -33,16 +32,12 @@ export class PurchasedBooksComponent implements OnInit {
     })
   }
 
-  async getUsername() {
-    await this.keycloakService.isLoggedIn().then(
-      () => {
-        this.username = this.keycloakService.getUsername();
-      }
-    )
+  getUsername() {
+    this.username = AuthorizationServiceRepository.getCurrentUserValue().userName;
   }
 
   async initializeReadList() {
-    await this.getUsername()
+    this.getUsername()
     this.getPurchasedBooks(this.username);
   }
 

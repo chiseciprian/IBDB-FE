@@ -14,8 +14,6 @@ import { BookDetailsComponent } from './pages/book-details/book-details.componen
 import { FormsModule } from "@angular/forms";
 import { ReadListComponent } from './pages/read-list/read-list.component';
 import { LoginComponent } from './pages/login/login.component';
-import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
-import { initializeKeycloak } from "./utility/app.init";
 import { StripePaymentComponent } from './components/stripe-payment/stripe-payment.component';
 import { PurchasedBooksComponent } from './pages/purchased-books/purchased-books.component';
 
@@ -38,17 +36,9 @@ import { PurchasedBooksComponent } from './pages/purchased-books/purchased-books
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
-    FormsModule,
-    KeycloakAngularModule
+    FormsModule
   ],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeKeycloak,
-      multi: true,
-      deps: [KeycloakService]
-    }
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

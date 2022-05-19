@@ -1,27 +1,114 @@
-<div class="container-fluid login-container">
+<div class="container-fluid" [ngClass]="accountNeeded ? 'sign-up-container' : 'sign-in-container'">
   <div class="row d-flex justify-content-center">
     <div class="col-4">
       <div>
         <h1>Login Page</h1>
-        <p>Please login into your account.</p>
+        <p>Please login into your account, or create an account.</p>
       </div>
 
-      <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input type="text"
-               class="form-control"
-               id="username"
-               name="username"
-               placeholder="username">
+      <form #loginForm="ngForm">
+        <div *ngIf="accountNeeded" class="mb-2">
+          <label for="firstname" class="form-label">Firstname</label>
+          <input type="firstname"
+                 class="form-control"
+                 id="firstname"
+                 name="firstname"
+                 placeholder="John"
+                 [(ngModel)]="accountRequest.firstName">
+        </div>
+
+        <div *ngIf="accountNeeded" class="mb-2">
+          <label for="lastname" class="form-label">Lastname</label>
+          <input type="lastname"
+                 class="form-control"
+                 id="lastname"
+                 name="lastname"
+                 placeholder="Doe"
+                 [(ngModel)]="accountRequest.lastName">
+        </div>
+
+        <div *ngIf="accountNeeded" class="mb-2">
+          <label for="emailAddress" class="form-label">Email</label>
+          <input type="email"
+                 class="form-control"
+                 id="emailAddress"
+                 name="emailAddress"
+                 placeholder="placeholder@mail.com"
+                 [(ngModel)]="accountRequest.email">
+        </div>
+
+        <div class="mb-2">
+          <label for="username" class="form-label">Username</label>
+          <input type="text"
+                 class="form-control"
+                 id="username"
+                 name="username"
+                 placeholder="papushikatha01"
+                 [(ngModel)]="accountRequest.userName"
+                 #username="ngModel"
+                 [ngClass]="{ 'is-invalid': username.invalid && (username.dirty || username.touched) }"
+                 required
+                 minlength="4">
+
+          <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
+            <div *ngIf="username.errors?.required">
+              Username is required.
+            </div>
+            <div *ngIf="username.errors?.minlength">
+              Username must be at least 4 characters long.
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label for="password" class="form-label">Password</label>
+          <input [type]="showPassword? 'text' : 'password' "
+                 class="form-control"
+                 id="password"
+                 name="password"
+                 placeholder="password"
+                 [(ngModel)]="accountRequest.password"
+                 #password="ngModel"
+                 [ngClass]="{ 'is-invalid': password.invalid && (password.dirty || password.touched) }"
+                 required
+                 minlength="4">
+
+          <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+            <div *ngIf="password.errors?.required">
+              Password is required.
+            </div>
+            <div *ngIf="password.errors?.minlength">
+              Password must be at least 4 characters long.
+            </div>
+          </div>
+
+          <a class="anchor-tag toggle-eye" (click)="togglePasswordVisibility()">
+            <i *ngIf="!showPassword" class="fa-solid fa-eye"></i>
+            <i *ngIf="showPassword" class="fa-solid fa-eye-slash"></i>
+          </a>
+        </div>
+      </form>
+
+      <div class="row text-center margin-top-1" *ngIf="errorMessage">
+        <div class="col">
+          <p style="color: red">{{ errorMessage }}</p>
+        </div>
       </div>
 
-      <div>
-        <label for="password" class="form-label">Password</label>
-        <input type="password"
-               class="form-control"
-               id="password"
-               name="password"
-               placeholder="password">
+      <div class="text-center mt-2">
+        <button (click)="createAccount()" *ngIf="accountNeeded" type="button" class="btn btn-add btn-primary">
+          Create account
+        </button>
+
+        <button [disabled]="!loginForm.valid" (click)="onLogin()" *ngIf="!accountNeeded" type="button" class="btn btn-add btn-primary">
+          Login
+        </button>
+      </div>
+
+
+      <div class="text-center mt-2">
+        <p *ngIf="!accountNeeded">Need an account? <a (click)="signUp()">Sign up</a></p>
+        <p *ngIf="accountNeeded">Already have an account? <a (click)="signIn()">Sign in</a></p>
       </div>
     </div>
   </div>

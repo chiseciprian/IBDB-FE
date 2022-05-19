@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { KeycloakService } from "keycloak-angular";
+import { AuthorizationServiceRepository } from "../../services/authorization/authorization.service.repository";
+import { UserViewModel } from "../../utility/models/authorization/user.view.model";
+import { UserRoleEnum } from "../../utility/enums/authorization/user-role.enum";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -7,30 +10,41 @@ import { KeycloakService } from "keycloak-angular";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  username: string = '';
+  user: UserViewModel | null;
+  userRole = UserRoleEnum;
 
   constructor(
-    private keycloakService: KeycloakService
+    private router: Router,
+    private authorizationService: AuthorizationServiceRepository
   ) {
   }
 
   ngOnInit(): void {
-    this.keycloakService.loadUserProfile().then(
-      (response) => {
-        this.username = response.firstName + ' ' + response.lastName;
-      }
-    );
+    this.subscribeOnToken();
+
+    this.user = AuthorizationServiceRepository.getCurrentUserValue();
   }
 
-  login(): void {
-    this.keycloakService.login();
+  subscribeOnToken() {
+    this.authorizationService.currentTokenSubject
+      .subscribe((token: string) => {
+        console.log(token);
+        if (!AuthorizationServiceRepository.getCurrentTokenValue()) {
+          this.router.navigateByUrl('/login');
+          this.user = null;
+        } else {
+          this.user = AuthorizationServiceRepository.getCurrentUserValue();
+        }
+      })
   }
 
-  logout(): void {
-    this.keycloakService.logout();
+  logout() {
+    this.authorizationService.logout();
   }
 
-  redirectToProfile() {
-    this.keycloakService.getKeycloakInstance().accountManagement();
+  reloadPage() {
+    setTimeout(() => {
+      window.location.reload();
+    }, 200);
   }
 }

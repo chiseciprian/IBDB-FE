@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BooksService } from "../../services/books-service/books.service";
-import { KeycloakService } from "keycloak-angular";
 import { ActivatedRoute } from "@angular/router";
-import { Book } from "../../models/book";
+import { Book } from "../../utility/models/book";
+import { AuthorizationServiceRepository } from "../../services/authorization/authorization.service.repository";
 
 @Component({
   selector: 'app-stripe-payment',
@@ -19,7 +19,6 @@ export class StripePaymentComponent implements OnInit {
 
   constructor(
     private booksService: BooksService,
-    private keycloakService: KeycloakService,
     private route: ActivatedRoute
   ) {
   }
@@ -30,7 +29,7 @@ export class StripePaymentComponent implements OnInit {
     if (bookIdParam) {
       this.bookIdParam = bookIdParam;
     }
-    this.username = this.keycloakService.getUsername();
+    this.username = AuthorizationServiceRepository.getCurrentUserValue().userName;
   }
 
   pay() {

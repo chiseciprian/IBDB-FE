@@ -6,9 +6,8 @@ import { HomeComponent } from "./pages/home/home.component";
 import { BookDetailsComponent } from "./pages/book-details/book-details.component";
 import { ReadListComponent } from "./pages/read-list/read-list.component";
 import { LoginComponent } from "./pages/login/login.component";
-import { AuthGuard } from "./guards/auth.guard";
-import { KeycloakGuard } from "./utility/keycloak.guard";
 import { PurchasedBooksComponent } from "./pages/purchased-books/purchased-books.component";
+import { AuthGuard } from "./guards/auth/auth.guard";
 
 const routes: Routes = [
   {
@@ -22,12 +21,12 @@ const routes: Routes = [
   {
     path: 'read-list',
     component: ReadListComponent,
-    canActivate: [AuthGuard, KeycloakGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'my-books',
     component: PurchasedBooksComponent,
-    canActivate: [AuthGuard, KeycloakGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'home',

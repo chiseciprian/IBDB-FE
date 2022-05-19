@@ -2,14 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { BooksService } from "../../services/books-service/books.service";
 import { RatingsService } from "../../services/ratings-service/ratings.service";
-import { Rating } from "../../models/rating";
-import { Book } from "../../models/book";
+import { Rating } from "../../utility/models/rating";
+import { Book } from "../../utility/models/book";
 import { NgbModal, NgbRatingConfig } from "@ng-bootstrap/ng-bootstrap";
-import { RatingRequest } from "../../models/rating.request";
+import { RatingRequest } from "../../utility/requests/rating.request";
 import { WebsocketService } from "../../services/websocket-service/websocket.service";
-import { KeycloakService } from "keycloak-angular";
 import { DomSanitizer } from "@angular/platform-browser";
 import {Location} from '@angular/common';
+import { AuthorizationServiceRepository } from "../../services/authorization/authorization.service.repository";
 
 @Component({
   selector: 'app-book-details',
@@ -31,7 +31,6 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     private ratingService: RatingsService,
     private ws: WebsocketService,
     private modalService: NgbModal,
-    private keycloakService: KeycloakService,
     private sanitizer: DomSanitizer,
     private location: Location,
     config: NgbRatingConfig
@@ -43,11 +42,6 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
       this.ratingRequest = new RatingRequest('ratingId', this.bookId, 'Cipri', '', '', Math.floor(Date.now() / 1000), 1);
       this.getBookById(this.bookId);
       this.getRatingsByBookId(this.bookId);
-      this.keycloakService.isLoggedIn().then(
-        () => {
-          this.username = this.keycloakService.getUsername();
-        }
-      )
     }
   }
 
@@ -57,6 +51,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
       console.log(event);
       this.getRatingsByBookId(this.bookId);
     });
+    this.username = AuthorizationServiceRepository.getCurrentUserValue().userName;
   }
 
   getBookById(bookId: string) {
@@ -116,7 +111,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    this.keycloakService.login();
+    this.router.navigateByUrl('/login');
   }
 
   private clearRatingRequest() {

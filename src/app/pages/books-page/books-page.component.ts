@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { BooksService } from "../../services/books-service/books.service";
-import { Book } from "../../models/book";
+import { Book } from "../../utility/models/book";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { BookRequest } from "../../models/book.request";
-import { Genres } from "../../models/genres";
-import { Cover } from "../../models/cover";
+import { BookRequest } from "../../utility/requests/book.request";
+import { GenresEnum } from "../../utility/enums/genres.enum";
+import { Cover } from "../../utility/models/cover";
 import { DomSanitizer } from "@angular/platform-browser";
-import { BookFile } from "../../models/book-file";
+import { BookFile } from "../../utility/models/book-file";
 
 @Component({
   selector: 'app-books-page',
@@ -17,7 +17,7 @@ export class BooksPageComponent implements OnInit {
   books: Book[] = [];
   filteredBooks: Book[] = [];
   bookRequest: BookRequest = new BookRequest('bookId', '', '', 10, [''], [], [''], '', '', []);
-  genres = Genres;
+  genres = GenresEnum;
   selectedGenre = '';
   selectedImage = '';
   selectedBookFile = '';

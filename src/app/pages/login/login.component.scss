@@ -1,3 +1,31 @@
-.login-container {
-  margin-top: 300px;
+.sign-in-container {
+  margin-top: 275px;
+}
+
+.sign-up-container {
+  margin-top: 150px;
+}
+
+.btn-add {
+  color: #333333;
+  border: none;
+  border-radius: 1rem;
+  background-color: #f1f1f1;;
+}
+
+.btn-add:hover,
+.btn-add:active,
+.btn-add:visited,
+.btn-add:focus {
+  background-color: #1e73be !important;
+  border-radius: 1rem !important;
+  color: white;
+}
+
+.toggle-eye {
+  float: right;
+  left: -15px;
+  margin-top: -31px;
+  position: relative;
+  z-index: 2;
 }
