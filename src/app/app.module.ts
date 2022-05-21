@@ -16,6 +16,7 @@ import { ReadListComponent } from './pages/read-list/read-list.component';
 import { LoginComponent } from './pages/login/login.component';
 import { StripePaymentComponent } from './components/stripe-payment/stripe-payment.component';
 import { PurchasedBooksComponent } from './pages/purchased-books/purchased-books.component';
+import { ShowForRolesDirective } from "./utility/directives/show-for-roles.directives";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { PurchasedBooksComponent } from './pages/purchased-books/purchased-books
     ReadListComponent,
     LoginComponent,
     StripePaymentComponent,
-    PurchasedBooksComponent
+    PurchasedBooksComponent,
+    ShowForRolesDirective
   ],
   imports: [
     BrowserModule,

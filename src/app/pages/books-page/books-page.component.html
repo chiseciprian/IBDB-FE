@@ -3,7 +3,7 @@
     <div class="col-6">
       <h1>The Book List</h1>
     </div>
-    <div class="col-6 d-flex justify-content-end">
+    <div class="col-6 d-flex justify-content-end" *appShowForRoles="[userRoles.ADMIN]">
       <button type="button" class="btn btn-add btn-primary mb-2 pl-5 pr-5 pt-0 pb-0" (click)="onAddPress(addModal)">
         &plus; Add Book
       </button>
@@ -52,8 +52,10 @@
             </ng-template>
             <ngb-rating [(rate)]="book.ratingAverage" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
           </h5>
-          <a class="btn btn-primary btn-add mt-2 mr-2 pr-4 pl-4" (click)="onEditPress(editModal, book)">Edit</a>
-          <a class="btn btn-danger btn-delete mt-2" (click)="onDeleteBook(book.bookId, deleteModal)">Delete</a>
+          <div *appShowForRoles="[userRoles.ADMIN]">
+            <a class="btn btn-primary btn-add mt-2 mr-2 pr-4 pl-4" (click)="onEditPress(editModal, book)">Edit</a>
+            <a class="btn btn-danger btn-delete mt-2" (click)="onDeleteBook(book.bookId, deleteModal)">Delete</a>
+          </div>
         </div>
       </div>
       <div *ngIf="filteredBooks.length === 0">

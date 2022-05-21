@@ -8,6 +8,7 @@ import { CoverViewModel } from "../../utility/models/books/cover.view.model";
 import { BookFileViewModel } from "../../utility/models/books/book-file.view.model";
 import { BookViewModel } from "../../utility/models/books/book.view.model";
 import { RatingsService } from "../../services/ratings-service/ratings.service";
+import { UserRoleEnum } from "../../utility/enums/authorization/user-role.enum";
 
 @Component({
   selector: 'app-books-page',
@@ -26,6 +27,7 @@ export class BooksPageComponent implements OnInit {
   bookFile: any;
   showSpinner = true;
   selectedBookId = '';
+  userRoles = UserRoleEnum;
 
   constructor(
     private booksService: BooksService,
