@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BooksService } from "../../services/books-service/books.service";
 import { ActivatedRoute } from "@angular/router";
-import { Book } from "../../utility/models/book";
+import { BookModel } from "../../utility/models/books/book.model";
 import { AuthorizationServiceRepository } from "../../services/authorization/authorization.service.repository";
 
 @Component({
@@ -14,7 +14,7 @@ export class StripePaymentComponent implements OnInit {
   handler: any = null;
   bookIdParam: string = '';
   username: string = '';
-  @Input() book: Book = new Book('', '', '', 0, [], [], [], '', '', '', '', 0, []);
+  @Input() book: BookModel = new BookModel('', '', '', 0, [], [], [], '', '', '', '', 0, []);
   @Output() bookBought = new EventEmitter<any>();
 
   constructor(

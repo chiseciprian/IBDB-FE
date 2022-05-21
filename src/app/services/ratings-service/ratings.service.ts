@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Rating } from "../../utility/models/rating";
-import { RatingRequest } from "../../utility/requests/rating.request";
+import { RatingModel } from "../../utility/models/ratings/rating.model.";
+import { RatingRequest } from "../../utility/requests/ratings/rating.request";
+import { RatingAdapter } from "../../utility/model-adapters/ratings/rating.adapter";
+import { map } from "rxjs/operators";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -23,23 +25,31 @@ export class RatingsService {
     getRatingAverage: (bookId: string) => this.baseURL + "/ratings/average/book/" + bookId
   }
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private ratingAdapter: RatingAdapter
+  ) {
   }
 
-  getAllRatingsByBookId(bookId: string): Observable<Rating[]> {
-    return this.http.get<Rating[]>(this.endpoints.getRatingsByBookId(bookId));
+  getAllRatingsByBookId(bookId: string): Observable<RatingModel[]> {
+    return this.http.get<RatingModel[]>(this.endpoints.getRatingsByBookId(bookId))
+      .pipe(map((ratings: any) =>
+        ratings.map((rating: any) => this.ratingAdapter.adapt(rating))
+      ));
   }
 
   getRatingAverage(bookId: string): Observable<number> {
     return this.http.get<number>(this.endpoints.getRatingAverage(bookId));
   }
 
-  addRating(ratingRequest: RatingRequest) {
+  addRating(ratingRequest: RatingRequest): Observable<RatingModel> {
     return this.http.post(this.endpoints.addRating(), ratingRequest, httpOptions)
+      .pipe(map((rating) => this.ratingAdapter.adapt(rating)));
   }
 
-  updateRating(ratingRequest: RatingRequest) {
+  updateRating(ratingRequest: RatingRequest): Observable<RatingModel> {
     return this.http.put(this.endpoints.updateRating(), ratingRequest, httpOptions)
+      .pipe(map((rating) => this.ratingAdapter.adapt(rating)));
   }
 
   deleteRating(ratingId: string) {

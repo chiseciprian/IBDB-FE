@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BooksService } from "../../services/books-service/books.service";
-import { Book } from "../../utility/models/book";
+import { BookModel } from "../../utility/models/books/book.model";
 import { AuthorizationServiceRepository } from "../../services/authorization/authorization.service.repository";
 
 @Component({
@@ -9,7 +9,7 @@ import { AuthorizationServiceRepository } from "../../services/authorization/aut
   styleUrls: ['./read-list.component.scss']
 })
 export class ReadListComponent implements OnInit {
-  books: Book[] = [];
+  books: BookModel[] = [];
   showSpinner = true;
   username: string = '';
 

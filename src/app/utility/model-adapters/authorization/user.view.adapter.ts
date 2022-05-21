@@ -6,7 +6,6 @@ import { UserRoleEnum } from "../../enums/authorization/user-role.enum";
 @Injectable({
   providedIn: 'root'
 })
-
 export class UserViewAdapter implements ModelAdapter<UserViewModel> {
 
     adapt(data: any): UserViewModel {

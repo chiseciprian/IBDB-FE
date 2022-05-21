@@ -2,14 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { BooksService } from "../../services/books-service/books.service";
 import { RatingsService } from "../../services/ratings-service/ratings.service";
-import { Rating } from "../../utility/models/rating";
-import { Book } from "../../utility/models/book";
+import { BookModel } from "../../utility/models/books/book.model";
 import { NgbModal, NgbRatingConfig } from "@ng-bootstrap/ng-bootstrap";
-import { RatingRequest } from "../../utility/requests/rating.request";
+import { RatingRequest } from "../../utility/requests/ratings/rating.request";
 import { WebsocketService } from "../../services/websocket-service/websocket.service";
 import { DomSanitizer } from "@angular/platform-browser";
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 import { AuthorizationServiceRepository } from "../../services/authorization/authorization.service.repository";
+import { RatingViewModel } from "../../utility/models/ratings/rating.view.model.";
 
 @Component({
   selector: 'app-book-details',
@@ -17,8 +17,8 @@ import { AuthorizationServiceRepository } from "../../services/authorization/aut
   styleUrls: ['./book-details.component.scss']
 })
 export class BookDetailsComponent implements OnInit, OnDestroy {
-  book = new Book('', '', '', 10, [], [], [], '', '', '', '', 0, []);
-  ratings: Rating[] = [];
+  book = new BookModel('', '', '', 10, [], [], [], '', '', '', '', 0, []);
+  ratings: RatingViewModel[] = [];
   bookId: string = '';
   ratingRequest: any;
   showSpinner = true;
@@ -39,7 +39,8 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     const bookIdParam = this.route.snapshot.paramMap.get('bookId');
     if (bookIdParam) {
       this.bookId = bookIdParam;
-      this.ratingRequest = new RatingRequest('ratingId', this.bookId, 'Cipri', '', '', Math.floor(Date.now() / 1000), 1);
+      this.username = AuthorizationServiceRepository.getCurrentUserValue().userName;
+      this.clearRatingRequest();
       this.getBookById(this.bookId);
       this.getRatingsByBookId(this.bookId);
     }
@@ -51,7 +52,6 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
       console.log(event);
       this.getRatingsByBookId(this.bookId);
     });
-    this.username = AuthorizationServiceRepository.getCurrentUserValue().userName;
   }
 
   getBookById(bookId: string) {
@@ -70,7 +70,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   }
 
   addRating(ratingForm: any) {
-    this.ratingService.addRating(this.ratingRequest).subscribe(() => {
+    this.ratingService.addRating(this.ratingRequest).subscribe((res) => {
       ratingForm.reset();
 
       setTimeout(() => {
@@ -83,7 +83,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     this.ratingService.deleteRating(ratingId).subscribe();
   }
 
-  updateIsAddedToReadList(book: Book) {
+  updateIsAddedToReadList(book: BookModel) {
     let indexOf = book.addedToReadList.indexOf(this.username);
     if (indexOf === -1) {
       book.addedToReadList.push(this.username);
@@ -101,8 +101,8 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
 
   openPdfFile() {
     var newWindow = window.open();
-    if(newWindow) {
-      newWindow.document.write('<embed type="application/pdf" src="'+ 'data:application/pdf;base64,' + this.book.file +'" width="100%" height="100%" />');
+    if (newWindow) {
+      newWindow.document.write('<embed type="application/pdf" src="' + 'data:application/pdf;base64,' + this.book.file + '" width="100%" height="100%" />');
     }
   }
 
@@ -115,6 +115,13 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   }
 
   private clearRatingRequest() {
-    this.ratingRequest = new RatingRequest('ratingId', this.bookId, 'Cipri', '', '', Math.floor(Date.now() / 1000), 1);
+    this.ratingRequest = new RatingRequest();
+    this.ratingRequest.ratingId = 'ratingId';
+    this.ratingRequest.bookId = this.bookId;
+    this.ratingRequest.userName = this.username;
+    this.ratingRequest.title = '';
+    this.ratingRequest.message = '';
+    this.ratingRequest.date = Math.floor(Date.now() / 1000);
+    this.ratingRequest.stars = 1;
   }
 }

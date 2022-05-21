@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthorizationServiceRepository } from "../../services/authorization/authorization.service.repository";
 import { UserViewModel } from "../../utility/models/authorization/user.view.model";
-import { UserRoleEnum } from "../../utility/enums/authorization/user-role.enum";
 import { Router } from "@angular/router";
 
 @Component({
@@ -11,7 +10,6 @@ import { Router } from "@angular/router";
 })
 export class HeaderComponent implements OnInit {
   user: UserViewModel | null;
-  userRole = UserRoleEnum;
 
   constructor(
     private router: Router,
@@ -28,7 +26,6 @@ export class HeaderComponent implements OnInit {
   subscribeOnToken() {
     this.authorizationService.currentTokenSubject
       .subscribe((token: string) => {
-        console.log(token);
         if (!AuthorizationServiceRepository.getCurrentTokenValue()) {
           this.router.navigateByUrl('/login');
           this.user = null;
@@ -40,11 +37,5 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.authorizationService.logout();
-  }
-
-  reloadPage() {
-    setTimeout(() => {
-      window.location.reload();
-    }, 200);
   }
 }

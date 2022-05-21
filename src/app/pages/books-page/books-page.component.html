@@ -1,11 +1,11 @@
 <div class="container-fluid books-container">
   <div class="row mt-5">
     <div class="col-6">
-      <h1>The Book List</h1>
+      <h1>The BookModel List</h1>
     </div>
     <div class="col-6 d-flex justify-content-end">
       <button type="button" class="btn btn-add btn-primary mb-2 pl-5 pr-5 pt-0 pb-0" (click)="onAddPress(addModal)">
-        &plus; Add Book
+        &plus; Add BookModel
       </button>
     </div>
   </div>
@@ -78,7 +78,7 @@
                class="form-control"
                id="title"
                name="title"
-               placeholder="Book Title"
+               placeholder="BookModel Title"
                [(ngModel)]="bookRequest.title"
                #title="ngModel"
                [ngClass]="{ 'is-invalid': title.invalid && (title.dirty || title.touched) }"
@@ -179,7 +179,7 @@
       <div class="mb-3">
         <div class="row">
           <div class="col">
-            <label class="form-label">Cover</label>
+            <label class="form-label">CoverModel</label>
             <div class="custom-file">
               <input type="file"
                      class="custom-file-input"
@@ -197,7 +197,7 @@
       <div class="mb-3">
         <div class="row">
           <div class="col">
-            <label class="form-label">Book File</label>
+            <label class="form-label">BookModel File</label>
             <div class="custom-file">
               <input type="file"
                      class="custom-file-input"
@@ -240,7 +240,7 @@
                class="form-control"
                id="edit-title"
                name="edit-title"
-               placeholder="Book Title"
+               placeholder="BookModel Title"
                [(ngModel)]="bookRequest.title"
                #title="ngModel"
                [ngClass]="{ 'is-invalid': title.invalid && (title.dirty || title.touched) }"
@@ -341,7 +341,7 @@
       <div class="mb-3">
         <div class="row">
           <div class="col">
-            <label class="form-label">Cover</label>
+            <label class="form-label">CoverModel</label>
             <div class="custom-file">
               <input type="file"
                      class="custom-file-input"
@@ -359,7 +359,7 @@
       <div class="mb-3">
         <div class="row">
           <div class="col">
-            <label class="form-label">Book File</label>
+            <label class="form-label">BookModel File</label>
             <div class="custom-file">
               <input type="file"
                      class="custom-file-input"

@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Book } from "../../utility/models/book";
-import { BookRequest } from "../../utility/requests/book.request";
+import { BookModel } from "../../utility/models/books/book.model";
+import { BookRequest } from "../../utility/requests/books/book.request";
 import { map } from "rxjs/operators";
 import { RatingsService } from "../ratings-service/ratings.service";
-import { Cover } from "../../utility/models/cover";
-import { BookFile } from "../../utility/models/book-file";
+import { CoverModel } from "../../utility/models/books/cover.model";
+import { BookFileModel } from "../../utility/models/books/book-file.model";
+import { CoverAdapter } from "../../utility/model-adapters/books/cover.adapter";
+import { BookFileAdapter } from "../../utility/model-adapters/books/book-file.adapter";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -38,12 +40,14 @@ export class BooksService {
 
   constructor(
     private http: HttpClient,
-    private ratingService: RatingsService
+    private ratingService: RatingsService,
+    private coverAdapter: CoverAdapter,
+    private bookFileAdapter: BookFileAdapter
   ) {
   }
 
-  getAllBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>(this.endpoints.getAllBooks())
+  getAllBooks(): Observable<BookModel[]> {
+    return this.http.get<BookModel[]>(this.endpoints.getAllBooks())
       .pipe(map(books => books.map(book => {
         this.ratingService.getRatingAverage(book.bookId).subscribe(average => {
           book.ratingAverage = average;
@@ -65,8 +69,8 @@ export class BooksService {
       })));
   }
 
-  getBookById(bookId: string): Observable<Book> {
-    return this.http.get<Book>(this.endpoints.getBookById(bookId))
+  getBookById(bookId: string): Observable<BookModel> {
+    return this.http.get<BookModel>(this.endpoints.getBookById(bookId))
       .pipe(map(book => {
         this.ratingService.getRatingAverage(book.bookId).subscribe(average => {
           book.ratingAverage = average;
@@ -88,8 +92,8 @@ export class BooksService {
       }));
   }
 
-  getBooksAddedToReadList(username: string): Observable<Book[]> {
-    return this.http.get<Book[]>(this.endpoints.getBooksAddedToReadList(username))
+  getBooksAddedToReadList(username: string): Observable<BookModel[]> {
+    return this.http.get<BookModel[]>(this.endpoints.getBooksAddedToReadList(username))
       .pipe(map(books => books.map(book => {
         this.ratingService.getRatingAverage(book.bookId).subscribe(average => {
           book.ratingAverage = average;
@@ -111,8 +115,8 @@ export class BooksService {
       })));
   }
 
-  getPurchasedBooks(username: string): Observable<Book[]> {
-    return this.http.get<Book[]>(this.endpoints.getPurchasedBooks(username))
+  getPurchasedBooks(username: string): Observable<BookModel[]> {
+    return this.http.get<BookModel[]>(this.endpoints.getPurchasedBooks(username))
       .pipe(map(books => books.map(book => {
         this.ratingService.getRatingAverage(book.bookId).subscribe(average => {
           book.ratingAverage = average;
@@ -150,19 +154,23 @@ export class BooksService {
     return this.http.put(this.endpoints.updateBook(), bookRequest, httpOptions);
   }
 
-  getCover(coverId: string): Observable<Cover> {
-    return this.http.get<Cover>(this.endpoints.getCover(coverId));
+  getCover(coverId: string): Observable<CoverModel> {
+    return this.http.get(this.endpoints.getCover(coverId))
+      .pipe(map((cover: any) => this.coverAdapter.adapt(cover)));
   }
 
-  getBookFile(fileId: string): Observable<BookFile> {
-    return this.http.get<BookFile>(this.endpoints.getBookFile(fileId));
+  getBookFile(fileId: string): Observable<BookFileModel> {
+    return this.http.get(this.endpoints.getBookFile(fileId))
+      .pipe(map((file: any) => this.bookFileAdapter.adapt(file)));
   }
 
-  addCover(formData: FormData): Observable<Cover> {
-    return this.http.post<Cover>(this.endpoints.addCover(), formData);
+  addCover(formData: FormData): Observable<CoverModel> {
+    return this.http.post(this.endpoints.addCover(), formData)
+      .pipe(map((cover: any) => this.coverAdapter.adapt(cover)));
   }
 
-  addBookFile(formData: FormData): Observable<BookFile> {
-    return this.http.post<BookFile>(this.endpoints.addBookFile(), formData);
+  addBookFile(formData: FormData): Observable<BookFileModel> {
+    return this.http.post(this.endpoints.addBookFile(), formData)
+      .pipe(map((file: any) => this.bookFileAdapter.adapt(file)));
   }
 }

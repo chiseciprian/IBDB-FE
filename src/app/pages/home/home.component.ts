@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {BooksService} from "../../services/books-service/books.service";
-import {Book} from "../../utility/models/book";
+import {BookModel} from "../../utility/models/books/book.model";
 
 @Component({
   selector: 'app-home',
@@ -8,7 +8,7 @@ import {Book} from "../../utility/models/book";
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  books: Book[] = [];
+  books: BookModel[] = [];
   showSpinner = true;
 
   constructor(

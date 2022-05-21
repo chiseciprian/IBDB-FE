@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { BooksService } from "../../services/books-service/books.service";
-import { Book } from "../../utility/models/book";
+import { BookModel } from "../../utility/models/books/book.model";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { BookRequest } from "../../utility/requests/book.request";
+import { BookRequest } from "../../utility/requests/books/book.request";
 import { GenresEnum } from "../../utility/enums/genres.enum";
-import { Cover } from "../../utility/models/cover";
 import { DomSanitizer } from "@angular/platform-browser";
-import { BookFile } from "../../utility/models/book-file";
+import { CoverViewModel } from "../../utility/models/books/cover.view.model";
+import { BookFileViewModel } from "../../utility/models/books/book-file.view.model";
 
 @Component({
   selector: 'app-books-page',
@@ -14,9 +14,9 @@ import { BookFile } from "../../utility/models/book-file";
   styleUrls: ['./books-page.component.scss']
 })
 export class BooksPageComponent implements OnInit {
-  books: Book[] = [];
-  filteredBooks: Book[] = [];
-  bookRequest: BookRequest = new BookRequest('bookId', '', '', 10, [''], [], [''], '', '', []);
+  books: BookModel[] = [];
+  filteredBooks: BookModel[] = [];
+  bookRequest: BookRequest = new BookRequest();
   genres = GenresEnum;
   selectedGenre = '';
   selectedImage = '';
@@ -34,6 +34,8 @@ export class BooksPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllBooks();
+
+    this.initializeAuthorsAndGenres();
   }
 
   getAllBooks() {
@@ -47,9 +49,9 @@ export class BooksPageComponent implements OnInit {
   }
 
   addBook(modalReference: any) {
-    this.booksService.addBookFile(this.bookFile).subscribe((file: BookFile) => {
+    this.booksService.addBookFile(this.bookFile).subscribe((file: BookFileViewModel) => {
       this.bookRequest.fileId = file.fileId;
-      this.booksService.addCover(this.cover).subscribe((response: Cover) => {
+      this.booksService.addCover(this.cover).subscribe((response: CoverViewModel) => {
         this.bookRequest.coverId = response.coverId;
         this.booksService.addBook(this.bookRequest).subscribe(() => {
           this.getAllBooks();
@@ -91,9 +93,9 @@ export class BooksPageComponent implements OnInit {
 
   updateBook(modalReference: any) {
     if (this.cover && this.bookFile) {
-      this.booksService.addBookFile(this.bookFile).subscribe((file: BookFile) => {
+      this.booksService.addBookFile(this.bookFile).subscribe((file: BookFileViewModel) => {
         this.bookRequest.fileId = file.fileId;
-        this.booksService.addCover(this.cover).subscribe((response: Cover) => {
+        this.booksService.addCover(this.cover).subscribe((response: CoverViewModel) => {
           this.bookRequest.coverId = response.coverId;
           this.booksService.updateBook(this.bookRequest).subscribe(() => {
             this.getAllBooks();
@@ -101,14 +103,14 @@ export class BooksPageComponent implements OnInit {
         });
       })
     } else if (this.cover) {
-      this.booksService.addCover(this.cover).subscribe((response: Cover) => {
+      this.booksService.addCover(this.cover).subscribe((response: CoverViewModel) => {
         this.bookRequest.coverId = response.coverId;
         this.booksService.updateBook(this.bookRequest).subscribe(() => {
           this.getAllBooks();
         });
       });
     } else if (this.bookFile) {
-      this.booksService.addBookFile(this.bookFile).subscribe((response: BookFile) => {
+      this.booksService.addBookFile(this.bookFile).subscribe((response: BookFileViewModel) => {
         this.bookRequest.fileId = response.fileId;
         this.booksService.updateBook(this.bookRequest).subscribe(() => {
           this.getAllBooks();
@@ -175,10 +177,16 @@ export class BooksPageComponent implements OnInit {
   }
 
   private clearBookRequest() {
-    this.bookRequest = new BookRequest('bookId', '', '', 10, [''], [], [''], '', '', []);
+    this.bookRequest = new BookRequest();
+    this.initializeAuthorsAndGenres();
     this.selectedImage = '';
     this.selectedBookFile = '';
     this.cover = null;
     this.bookFile = null;
+  }
+
+  private initializeAuthorsAndGenres() {
+    this.bookRequest.authors = [''];
+    this.bookRequest.genres = [''];
   }
 }

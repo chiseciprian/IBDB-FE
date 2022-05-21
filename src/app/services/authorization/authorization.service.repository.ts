@@ -24,7 +24,7 @@ let httpOptions = {
 })
 export class AuthorizationServiceRepository {
 
-  public currentTokenSubject: Subject<string> = new Subject<string>();
+  public currentTokenSubject: Subject<any> = new Subject<any>();
   baseURL = "http://localhost:9005";
   endpoints = {
     signIn: () => this.baseURL + '/auth/token'
@@ -81,7 +81,7 @@ export class AuthorizationServiceRepository {
 
     const date = AuthorizationServiceRepository.getTokenExpirationDate(token);
     if (date === undefined) {
-      return false;
+      return true;
     }
 
     return !(date.valueOf() > new Date().valueOf());
@@ -121,7 +121,6 @@ export class AuthorizationServiceRepository {
     localStorage.removeItem(TOKEN_NAME);
     localStorage.removeItem(USER_NAME);
     localStorage.removeItem(CURRENT_ENV_NAME);
-    // @ts-ignore
     this.currentTokenSubject.next(null);
   }
 

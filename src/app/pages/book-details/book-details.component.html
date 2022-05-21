@@ -94,7 +94,7 @@
                          class="form-control"
                          id="title"
                          name="title"
-                         placeholder="Rating Title"
+                         placeholder="RatingModel Title"
                          [(ngModel)]="ratingRequest.title"
                          #title="ngModel"
                          [ngClass]="{ 'is-invalid': title.invalid && (title.dirty || title.touched) }"
@@ -134,7 +134,7 @@
 
                 </div>
                 <div class="mb-3">
-                  <label for="stars" class="form-label">Rating*</label>
+                  <label for="stars" class="form-label">RatingModel*</label>
                   <br>
                   <ngb-rating class="rating-stars" id="stars" name="stars"
                               [(ngModel)]="ratingRequest.stars"></ngb-rating>

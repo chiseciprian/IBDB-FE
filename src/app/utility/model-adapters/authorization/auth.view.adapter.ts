@@ -3,7 +3,9 @@ import { ModelAdapter } from "./model-adapter";
 import { AuthViewModel } from "../../models/authorization/auth.view.model";
 import { UserViewAdapter } from "./user.view.adapter";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthViewAdapter implements ModelAdapter<AuthViewModel> {
 
     constructor(

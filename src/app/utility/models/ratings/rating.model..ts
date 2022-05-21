@@ -1,4 +1,4 @@
-export interface Rating {
+export class RatingModel {
   ratingId: string;
   bookId: string;
   userName: string;

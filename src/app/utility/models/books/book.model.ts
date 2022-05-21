@@ -1,4 +1,4 @@
-export class BookRequest {
+export class BookModel {
   constructor(
     public bookId: string,
     public title: string,
@@ -7,10 +7,12 @@ export class BookRequest {
     public authors: Array<string>,
     public users: Array<string>,
     public genres: Array<string>,
-    public coverId: String,
-    public fileId: String,
+    public coverId: string,
+    public cover: string,
+    public fileId: string,
+    public file: string,
+    public ratingAverage: number,
     public addedToReadList: Array<string>
   ) {
   }
-
 }
