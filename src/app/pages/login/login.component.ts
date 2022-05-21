@@ -13,11 +13,12 @@ import { LoginService } from "../../services/login-service/login.service";
 })
 export class LoginComponent implements OnInit {
 
-  accountRequest: AccountRequest = new AccountRequest('', '', '', '', '');
+  accountRequest: AccountRequest = new AccountRequest();
 
   accountNeeded: boolean = false;
   showPassword: boolean = false;
   errorMessage: string;
+  formWasSubmitted = false;
 
   constructor(
     private router: Router,
@@ -31,32 +32,47 @@ export class LoginComponent implements OnInit {
 
   signIn() {
     this.accountNeeded = false;
+    this.errorMessage = '';
   }
 
   signUp() {
     this.accountNeeded = true;
+    this.errorMessage = '';
   }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
-  onLogin() {
-    this.authorizationService.signIn(
-      this.accountRequest.userName,
-      this.accountRequest.password
-    ).subscribe((response: AuthViewModel) => {
-      this.errorMessage = '';
-      this.router.navigateByUrl('/home');
-    }, (error: HttpErrorResponse) => {
-      this.errorMessage = 'The username or the password is incorrect.';
-    });
+  onLogin(isFormValid: any) {
+    if (isFormValid) {
+      this.authorizationService.signIn(
+        this.accountRequest.userName,
+        this.accountRequest.password
+      ).subscribe((response: AuthViewModel) => {
+        this.errorMessage = '';
+        this.router.navigateByUrl('/home');
+      }, (error: HttpErrorResponse) => {
+        console.error(error)
+        this.errorMessage = error.message;
+      });
+    } else {
+      this.formWasSubmitted = true;
+    }
+
   }
 
-  createAccount() {
-    this.loginService.createAccount(this.accountRequest).subscribe(() => {
-      this.onLogin();
-    });
+  createAccount(isFormValid: any) {
+    if (isFormValid) {
+      this.loginService.createAccount(this.accountRequest).subscribe(() => {
+        this.onLogin(isFormValid);
+      }, (error: HttpErrorResponse) => {
+        console.error(error);
+        this.errorMessage = error.message;
+      });
+    } else {
+      this.formWasSubmitted = true;
+    }
   }
 
 }

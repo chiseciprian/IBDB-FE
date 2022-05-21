@@ -6,7 +6,7 @@
         <p>Please login into your account, or create an account.</p>
       </div>
 
-      <form #loginForm="ngForm">
+      <form #loginForm="ngForm" [ngClass]="{'was-validated': formWasSubmitted}">
         <div *ngIf="accountNeeded" class="mb-2">
           <label for="firstname" class="form-label">Firstname</label>
           <input type="firstname"
@@ -92,11 +92,11 @@
       </div>
 
       <div class="text-center mt-2">
-        <button (click)="createAccount()" [disabled]="!loginForm.valid" *ngIf="accountNeeded" type="button" class="btn btn-add btn-primary">
+        <button (click)="createAccount(loginForm.valid)" *ngIf="accountNeeded" type="button" class="btn btn-add btn-primary">
           Create account
         </button>
 
-        <button (click)="onLogin()" [disabled]="!loginForm.valid" *ngIf="!accountNeeded" type="button" class="btn btn-add btn-primary">
+        <button (click)="onLogin(loginForm.valid)" *ngIf="!accountNeeded" type="button" class="btn btn-add btn-primary">
           Login
         </button>
       </div>
