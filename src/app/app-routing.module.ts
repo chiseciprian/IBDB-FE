@@ -24,8 +24,18 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'read-list/:bookId',
+    component: BookDetailsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'my-books',
     component: PurchasedBooksComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'my-books/:bookId',
+    component: BookDetailsComponent,
     canActivate: [AuthGuard]
   },
   {

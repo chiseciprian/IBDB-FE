@@ -14,12 +14,12 @@
   <div *ngIf="!showSpinner" class="row">
     <div class="col">
       <div *ngFor="let book of books" class="card d-inline-flex mt-2 mr-2">
-        <a [routerLink]="['/books',book.bookId]">
+        <a [routerLink]="['/read-list',book.bookId]">
           <img *ngIf="book.cover" class="card-img-top" src="{{'data:image/jpg;base64,' + book.cover}}"
                [alt]="book.title"/>
         </a>
         <div class="card-body">
-          <a class="anchor-tag" [routerLink]="['/books',book.bookId]">
+          <a class="anchor-tag" [routerLink]="['/read-list',book.bookId]">
             <h5 class="card-title">{{book.title}}</h5>
           </a>
           <p class="card-text">{{book.authors}}</p>
