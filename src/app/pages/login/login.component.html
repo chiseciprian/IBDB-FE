@@ -43,7 +43,9 @@
                  name="email"
                  placeholder="placeholder@mail.com"
                  [(ngModel)]="accountRequest.email"
+                 email="true"
                  #email="ngModel"
+                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                  [ngClass]="{ 'is-invalid': email.invalid && (email.dirty || email.touched) }"
                  required
                  minlength="4">
@@ -83,9 +85,9 @@
         </div>
       </form>
 
-      <div class="row text-center margin-top-1" *ngIf="errorMessage">
+      <div class="row mt-1 text-center" *ngIf="errorMessage">
         <div class="col">
-          <p style="color: red">{{ errorMessage }}</p>
+          <p class="text-danger">{{ errorMessage }}</p>
         </div>
       </div>
 
