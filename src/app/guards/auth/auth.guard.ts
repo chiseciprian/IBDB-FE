@@ -8,23 +8,23 @@ import { AuthorizationServiceRepository } from '../../services/authorization/aut
 })
 export class AuthGuard implements CanActivate {
 
-    constructor(
-        private router: Router
-    ) {
+  constructor(
+    private router: Router
+  ) {
+  }
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    const currentToken = AuthorizationServiceRepository.getCurrentTokenValue();
+
+    if (currentToken) {
+      return true;
     }
 
-    canActivate(
-        route: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      const currentToken = AuthorizationServiceRepository.getCurrentTokenValue();
-
-      if (currentToken) {
-        return true;
-      }
-
-        this.router.navigateByUrl('/login');
-        return false;
-    }
+    this.router.navigateByUrl('/login');
+    return false;
+  }
 
 }
