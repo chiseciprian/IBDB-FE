@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 import { AuthorizationServiceRepository } from "../../services/authorization/authorization.service.repository";
 import { RatingViewModel } from "../../utility/models/ratings/rating.view.model.";
 import { BookViewModel } from "../../utility/models/books/book.view.model";
+import { RatingModel } from "../../utility/models/ratings/rating.model.";
 
 @Component({
   selector: 'app-book-details',
@@ -21,9 +22,10 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   book = new BookViewModel();
   ratings: RatingViewModel[] = [];
   bookId: string = '';
-  ratingRequest: any;
+  ratingRequest: RatingRequest = new RatingRequest();
   showSpinner = true;
   username: string = '';
+  editedMessage = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,10 +50,16 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.subscribeToWebsocket();
+  }
+
+  subscribeToWebsocket() {
     this.ws.connect();
     this.ws.subscribe(event => {
       console.log(event);
-      this.getRatingsByBookId(this.bookId);
+      setTimeout(() => {
+        this.getRatingsByBookId(this.bookId);
+      }, 300);
     });
   }
 
@@ -100,6 +108,20 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  editRating(ratingForm: any) {
+    this.ratingService.updateRating(this.ratingRequest).subscribe((res) => {
+      ratingForm.reset();
+
+      setTimeout(() => {
+        this.clearRatingRequest();
+      }, 100);
+
+      setTimeout(() => {
+        this.getRatingsByBookId(this.bookId);
+      }, 300);
+    });
+  }
+
   deleteRating(ratingId: string) {
     this.ratingService.deleteRating(ratingId).subscribe();
   }
@@ -114,6 +136,20 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     this.booksService.updateBook(book).subscribe(() => {
       this.getBookById(book.bookId);
     });
+  }
+
+  onEditMessage(rating: RatingModel) {
+    this.editedMessage = true;
+    this.ratingRequest.ratingId = rating.ratingId;
+    this.ratingRequest.title = rating.title;
+    this.ratingRequest.message = rating.message;
+    this.ratingRequest.stars = rating.stars;
+  }
+
+  onCancelEditMessage(ratingForm: any) {
+    this.editedMessage = false;
+    this.clearRatingRequest();
+    ratingForm.reset();
   }
 
   ngOnDestroy(): void {
