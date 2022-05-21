@@ -25,6 +25,7 @@ export class BooksPageComponent implements OnInit {
   cover: any;
   bookFile: any;
   showSpinner = true;
+  selectedBookId = '';
 
   constructor(
     private booksService: BooksService,
@@ -151,8 +152,14 @@ export class BooksPageComponent implements OnInit {
     }, 200);
   }
 
-  deleteBook(bookId: string) {
-    this.booksService.deleteBook(bookId).subscribe(() => {
+  onDeleteBook(bookId: string, deleteModal: any) {
+    this.selectedBookId = bookId;
+    this.triggerModal(deleteModal);
+  }
+
+  deleteBook(modal: any) {
+    this.closeModal(modal);
+    this.booksService.deleteBook(this.selectedBookId).subscribe(() => {
       this.getAllBooks();
     });
   }

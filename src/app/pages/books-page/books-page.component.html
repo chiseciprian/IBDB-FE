@@ -53,7 +53,7 @@
             <ngb-rating [(rate)]="book.ratingAverage" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
           </h5>
           <a class="btn btn-primary btn-add mt-2 mr-2 pr-4 pl-4" (click)="onEditPress(editModal, book)">Edit</a>
-          <a class="btn btn-danger btn-delete mt-2" (click)="deleteBook(book.bookId)">Delete</a>
+          <a class="btn btn-danger btn-delete mt-2" (click)="onDeleteBook(book.bookId, deleteModal)">Delete</a>
         </div>
       </div>
       <div *ngIf="filteredBooks.length === 0">
@@ -399,6 +399,32 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-danger" (click)="closeModal(modal)">Close</button>
     <button type="button" class="btn  btn-primary btn-add-modal" (click)="updateBook(modal)" [disabled]="!bookForm.valid">Edit
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-delete-title">Delete book</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(modal)">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+
+      <div>
+        Are you sure you want to delete this book?
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn pl-5 pr-5 btn-danger" (click)="closeModal(modal)">Close</button>
+    <button type="button"
+            class="btn pl-5 pr-5 btn-primary btn-add-modal"
+            (click)="deleteBook(modal)">
+      Delete
     </button>
   </div>
 </ng-template>
