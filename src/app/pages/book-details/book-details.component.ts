@@ -78,6 +78,9 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.showSpinner = false
       }, 200);
+    }, error => {
+      console.error(error);
+      this.router.navigateByUrl('/**');
     })
   }
 
