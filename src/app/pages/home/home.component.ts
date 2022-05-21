@@ -24,29 +24,30 @@ export class HomeComponent implements OnInit {
 
   getBooks() {
     this.booksService.getAllBooks().subscribe((response: any) => {
+      this.books = response;
+
+      this.books.map((book) => {
+        this.ratingService.getRatingAverage(book.bookId).subscribe(average => {
+          book.ratingAverage = average;
+        });
+
+        if (book.coverId) {
+          this.booksService.getCover(book.coverId).subscribe((response) => {
+            book.cover = response.image.data;
+          })
+        }
+
+        if (book.fileId) {
+          this.booksService.getBookFile(book.fileId).subscribe((response) => {
+            book.file = response.bookFile.data;
+          })
+        }
+
+        return book;
+      })
+
       setTimeout(() => {
-        this.books = response.sort((a: any, b: any) => (a.ratingAverage > b.ratingAverage ? -1 : 1));
-
-        this.books.map((book) => {
-          this.ratingService.getRatingAverage(book.bookId).subscribe(average => {
-            book.ratingAverage = average;
-          });
-
-          if (book.coverId) {
-            this.booksService.getCover(book.coverId).subscribe((response) => {
-              book.cover = response.image.data;
-            })
-          }
-
-          if (book.fileId) {
-            this.booksService.getBookFile(book.fileId).subscribe((response) => {
-              book.file = response.bookFile.data;
-            })
-          }
-
-          return book;
-        })
-
+        this.books = this.books.sort((a: any, b: any) => (a.ratingAverage > b.ratingAverage ? -1 : 1));
 
         this.books = this.books.slice(0, 6);
         this.showSpinner = false;

@@ -26,7 +26,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div *ngIf="!showSpinner" class="row">
     <div class="col-12 mt-5 pl-0 d-flex justify-content-between">
       <div *ngFor="let book of books" class="card d-inline-flex mt-2 mr-4" style="width: 18rem;">
         <a [routerLink]="['/books',book.bookId]">
