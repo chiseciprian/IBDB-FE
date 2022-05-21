@@ -26,6 +26,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   showSpinner = true;
   username: string = '';
   editedMessage = false;
+  selectedRatingId = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -122,8 +123,9 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  deleteRating(ratingId: string) {
-    this.ratingService.deleteRating(ratingId).subscribe();
+  deleteRating(modal: any) {
+    this.closeModal(modal);
+    this.ratingService.deleteRating(this.selectedRatingId).subscribe();
   }
 
   updateIsAddedToReadList(book: BookModel) {
@@ -169,6 +171,19 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
 
   login() {
     this.router.navigateByUrl('/login');
+  }
+
+  onDeleteRating(ratingId: string, deleteModal: any) {
+    this.selectedRatingId = ratingId;
+    this.triggerModal(deleteModal);
+  }
+
+  closeModal(modalReference: any) {
+    modalReference.close()
+  }
+
+  private triggerModal(content: any) {
+    this.modalService.open(content, {centered: true, scrollable: true});
   }
 
   private clearRatingRequest() {
