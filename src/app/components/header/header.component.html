@@ -30,8 +30,8 @@
         </div>
       </li>
 
-      <li *ngIf="!user" class="ml-3 mr-3">
-        <a class="nav-link logout-text" routerLink="login">Login</a>
+      <li class="nav-item ml-3 mr-3" *ngIf="!user" routerLink="login" [routerLinkActive]="['active']">
+        <a class="nav-link logout-text">Login</a>
       </li>
     </ul>
   </div>
