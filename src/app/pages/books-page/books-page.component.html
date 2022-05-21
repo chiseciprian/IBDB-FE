@@ -1,11 +1,11 @@
 <div class="container-fluid books-container">
   <div class="row mt-5">
     <div class="col-6">
-      <h1>The BookModel List</h1>
+      <h1>The Book List</h1>
     </div>
     <div class="col-6 d-flex justify-content-end">
       <button type="button" class="btn btn-add btn-primary mb-2 pl-5 pr-5 pt-0 pb-0" (click)="onAddPress(addModal)">
-        &plus; Add BookModel
+        &plus; Add Book
       </button>
     </div>
   </div>
@@ -72,13 +72,14 @@
   </div>
   <div class="modal-body">
     <form #bookForm="ngForm">
+
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
         <input type="text"
                class="form-control"
                id="title"
                name="title"
-               placeholder="BookModel Title"
+               placeholder="Book Title"
                [(ngModel)]="bookRequest.title"
                #title="ngModel"
                [ngClass]="{ 'is-invalid': title.invalid && (title.dirty || title.touched) }"
@@ -93,8 +94,8 @@
             Title must be at least 4 characters long.
           </div>
         </div>
-
       </div>
+
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
         <textarea class="form-control"
@@ -115,8 +116,8 @@
             Description must be at least 10 characters long.
           </div>
         </div>
-
       </div>
+
       <div class="mb-3">
         <div class="row">
           <div class="col d-flex justify-content-between align-items-center mb-2">
@@ -144,13 +145,14 @@
           </div>
         </div>
       </div>
+
       <div class="mb-3">
         <div class="row">
           <div class="col d-flex justify-content-between align-items-center mb-2">
-            <label class="form-label">GenresEnum</label>
+            <label class="form-label">Genres</label>
             <button type="button" class="btn btn-add-modal btn-primary"
                     (click)="addInput(bookRequest.genres)">
-              Add GenresEnum
+              Add Genres
             </button>
           </div>
         </div>
@@ -179,7 +181,7 @@
       <div class="mb-3">
         <div class="row">
           <div class="col">
-            <label class="form-label">CoverModel</label>
+            <label class="form-label">Cover</label>
             <div class="custom-file">
               <input type="file"
                      class="custom-file-input"
@@ -197,7 +199,7 @@
       <div class="mb-3">
         <div class="row">
           <div class="col">
-            <label class="form-label">BookModel File</label>
+            <label class="form-label">Book File</label>
             <div class="custom-file">
               <input type="file"
                      class="custom-file-input"
@@ -208,6 +210,25 @@
               <label class="custom-file-label" for="bookFile">Choose file</label>
             </div>
             <small>{{ selectedBookFile || "No file uploaded yet." }}</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="price" class="form-label">Price</label>
+        <input type="number"
+               class="form-control"
+               id="price"
+               name="price"
+               placeholder="Book Price"
+               [(ngModel)]="bookRequest.price"
+               #price="ngModel"
+               [ngClass]="{ 'is-invalid': price.invalid && (price.dirty || price.touched) }"
+               required>
+
+        <div *ngIf="price.invalid && (price.dirty || price.touched)" class="alert alert-danger">
+          <div *ngIf="price.errors?.required">
+            Price is required.
           </div>
         </div>
       </div>
@@ -240,7 +261,7 @@
                class="form-control"
                id="edit-title"
                name="edit-title"
-               placeholder="BookModel Title"
+               placeholder="Book Title"
                [(ngModel)]="bookRequest.title"
                #title="ngModel"
                [ngClass]="{ 'is-invalid': title.invalid && (title.dirty || title.touched) }"
@@ -341,7 +362,7 @@
       <div class="mb-3">
         <div class="row">
           <div class="col">
-            <label class="form-label">CoverModel</label>
+            <label class="form-label">Cover</label>
             <div class="custom-file">
               <input type="file"
                      class="custom-file-input"
@@ -359,7 +380,7 @@
       <div class="mb-3">
         <div class="row">
           <div class="col">
-            <label class="form-label">BookModel File</label>
+            <label class="form-label">Book File</label>
             <div class="custom-file">
               <input type="file"
                      class="custom-file-input"

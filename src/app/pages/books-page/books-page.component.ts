@@ -212,5 +212,7 @@ export class BooksPageComponent implements OnInit {
   private initializeAuthorsAndGenres() {
     this.bookRequest.authors = [''];
     this.bookRequest.genres = [''];
+    this.bookRequest.addedToReadList = [];
+    this.bookRequest.users = [];
   }
 }
