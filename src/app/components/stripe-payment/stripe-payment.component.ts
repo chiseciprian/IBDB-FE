@@ -14,7 +14,7 @@ export class StripePaymentComponent implements OnInit {
   handler: any = null;
   bookIdParam: string = '';
   username: string = '';
-  @Input() book: BookModel = new BookModel('', '', '', 0, [], [], [], '', '', '', '', 0, []);
+  @Input() book: BookModel = new BookModel();
   @Output() bookBought = new EventEmitter<any>();
 
   constructor(

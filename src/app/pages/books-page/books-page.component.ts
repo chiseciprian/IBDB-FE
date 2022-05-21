@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { BooksService } from "../../services/books-service/books.service";
-import { BookModel } from "../../utility/models/books/book.model";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { BookRequest } from "../../utility/requests/books/book.request";
 import { GenresEnum } from "../../utility/enums/genres.enum";
 import { DomSanitizer } from "@angular/platform-browser";
 import { CoverViewModel } from "../../utility/models/books/cover.view.model";
 import { BookFileViewModel } from "../../utility/models/books/book-file.view.model";
+import { BookViewModel } from "../../utility/models/books/book.view.model";
+import { RatingsService } from "../../services/ratings-service/ratings.service";
 
 @Component({
   selector: 'app-books-page',
@@ -14,8 +15,8 @@ import { BookFileViewModel } from "../../utility/models/books/book-file.view.mod
   styleUrls: ['./books-page.component.scss']
 })
 export class BooksPageComponent implements OnInit {
-  books: BookModel[] = [];
-  filteredBooks: BookModel[] = [];
+  books: BookViewModel[] = [];
+  filteredBooks: BookViewModel[] = [];
   bookRequest: BookRequest = new BookRequest();
   genres = GenresEnum;
   selectedGenre = '';
@@ -28,7 +29,8 @@ export class BooksPageComponent implements OnInit {
   constructor(
     private booksService: BooksService,
     private modalService: NgbModal,
-    private _sanitizer: DomSanitizer
+    private _sanitizer: DomSanitizer,
+    private ratingService: RatingsService
   ) {
   }
 
@@ -39,8 +41,30 @@ export class BooksPageComponent implements OnInit {
   }
 
   getAllBooks() {
-    this.booksService.getAllBooks().subscribe((response) => {
+    this.booksService.getAllBooks().subscribe((response: any) => {
       this.books = response;
+
+      this.books.map((book) => {
+        this.ratingService.getRatingAverage(book.bookId).subscribe(average => {
+          book.ratingAverage = average;
+        });
+
+        if (book.coverId) {
+          this.booksService.getCover(book.coverId).subscribe((response) => {
+            book.cover = response.image.data;
+          })
+        }
+
+        if (book.fileId) {
+          this.booksService.getBookFile(book.fileId).subscribe((response) => {
+            book.file = response.bookFile.data;
+          })
+        }
+
+        return book;
+      })
+
+
       this.filteredBooks = response;
       setTimeout(() => {
         this.showSpinner = false

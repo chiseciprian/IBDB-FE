@@ -9,6 +9,7 @@ import { CoverModel } from "../../utility/models/books/cover.model";
 import { BookFileModel } from "../../utility/models/books/book-file.model";
 import { CoverAdapter } from "../../utility/model-adapters/books/cover.adapter";
 import { BookFileAdapter } from "../../utility/model-adapters/books/book-file.adapter";
+import { BookAdapter } from "../../utility/model-adapters/books/book.adapter";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -41,6 +42,7 @@ export class BooksService {
   constructor(
     private http: HttpClient,
     private ratingService: RatingsService,
+    private bookAdapter: BookAdapter,
     private coverAdapter: CoverAdapter,
     private bookFileAdapter: BookFileAdapter
   ) {
@@ -48,94 +50,22 @@ export class BooksService {
 
   getAllBooks(): Observable<BookModel[]> {
     return this.http.get<BookModel[]>(this.endpoints.getAllBooks())
-      .pipe(map(books => books.map(book => {
-        this.ratingService.getRatingAverage(book.bookId).subscribe(average => {
-          book.ratingAverage = average;
-        });
-
-        if (book.coverId) {
-          this.getCover(book.coverId).subscribe((response) => {
-            book.cover = response.image.data;
-          })
-        }
-
-        if (book.fileId) {
-          this.getBookFile(book.fileId).subscribe((response) => {
-            book.file = response.bookFile.data;
-          })
-        }
-
-        return book;
-      })));
+      .pipe(map((books: any) => books.map((book: any) => this.bookAdapter.adapt(book))));
   }
 
   getBookById(bookId: string): Observable<BookModel> {
     return this.http.get<BookModel>(this.endpoints.getBookById(bookId))
-      .pipe(map(book => {
-        this.ratingService.getRatingAverage(book.bookId).subscribe(average => {
-          book.ratingAverage = average;
-        });
-
-        if (book.coverId) {
-          this.getCover(book.coverId).subscribe((response) => {
-            book.cover = response.image.data;
-          })
-        }
-
-        if (book.fileId) {
-          this.getBookFile(book.fileId).subscribe((response) => {
-            book.file = response.bookFile.data;
-          })
-        }
-
-        return book;
-      }));
+      .pipe(map((book: any) => this.bookAdapter.adapt(book)));
   }
 
   getBooksAddedToReadList(username: string): Observable<BookModel[]> {
-    return this.http.get<BookModel[]>(this.endpoints.getBooksAddedToReadList(username))
-      .pipe(map(books => books.map(book => {
-        this.ratingService.getRatingAverage(book.bookId).subscribe(average => {
-          book.ratingAverage = average;
-        });
-
-        if (book.coverId) {
-          this.getCover(book.coverId).subscribe((response) => {
-            book.cover = response.image.data;
-          })
-        }
-
-        if (book.fileId) {
-          this.getBookFile(book.fileId).subscribe((response) => {
-            book.file = response.bookFile.data;
-          })
-        }
-
-        return book;
-      })));
+    return this.http.get(this.endpoints.getBooksAddedToReadList(username))
+      .pipe(map((books: any) => books.map((book: any) => this.bookAdapter.adapt(book))));
   }
 
   getPurchasedBooks(username: string): Observable<BookModel[]> {
-    return this.http.get<BookModel[]>(this.endpoints.getPurchasedBooks(username))
-      .pipe(map(books => books.map(book => {
-        this.ratingService.getRatingAverage(book.bookId).subscribe(average => {
-          book.ratingAverage = average;
-        });
-
-        if (book.coverId) {
-          this.getCover(book.coverId).subscribe((response) => {
-            book.cover = response.image.data;
-          })
-        }
-
-        if (book.fileId) {
-          this.getBookFile(book.fileId).subscribe((response) => {
-            book.file = response.bookFile.data;
-          })
-        }
-
-        return book;
-      })));
+    return this.http.get(this.endpoints.getPurchasedBooks(username))
+      .pipe(map((books: any) => books.map((book: any) => this.bookAdapter.adapt(book))));
   }
 
   addBook(bookRequest: BookRequest) {

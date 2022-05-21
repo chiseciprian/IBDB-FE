@@ -10,6 +10,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { Location } from '@angular/common';
 import { AuthorizationServiceRepository } from "../../services/authorization/authorization.service.repository";
 import { RatingViewModel } from "../../utility/models/ratings/rating.view.model.";
+import { BookViewModel } from "../../utility/models/books/book.view.model";
 
 @Component({
   selector: 'app-book-details',
@@ -17,7 +18,7 @@ import { RatingViewModel } from "../../utility/models/ratings/rating.view.model.
   styleUrls: ['./book-details.component.scss']
 })
 export class BookDetailsComponent implements OnInit, OnDestroy {
-  book = new BookModel('', '', '', 10, [], [], [], '', '', '', '', 0, []);
+  book = new BookViewModel();
   ratings: RatingViewModel[] = [];
   bookId: string = '';
   ratingRequest: any;
@@ -55,8 +56,25 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   }
 
   getBookById(bookId: string) {
-    return this.booksService.getBookById(bookId).subscribe((response) => {
+    return this.booksService.getBookById(bookId).subscribe((response: any) => {
       this.book = response;
+
+      this.ratingService.getRatingAverage(this.book.bookId).subscribe(average => {
+        this.book.ratingAverage = average;
+      });
+
+      if (this.book.coverId) {
+        this.booksService.getCover(this.book.coverId).subscribe((response) => {
+          this.book.cover = response.image.data;
+        })
+      }
+
+      if (this.book.fileId) {
+        this.booksService.getBookFile(this.book.fileId).subscribe((response) => {
+          this.book.file = response.bookFile.data;
+        })
+      }
+
       setTimeout(() => {
         this.showSpinner = false
       }, 200);
