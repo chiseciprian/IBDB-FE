@@ -61,6 +61,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     this.ws.subscribe(event => {
       console.log(event);
       setTimeout(() => {
+        this.getRatingAverage();
         this.getRatingsByBookId(this.bookId);
       }, 300);
     });
@@ -70,9 +71,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     return this.booksService.getBookById(bookId).subscribe((response: any) => {
       this.book = response;
 
-      this.ratingService.getRatingAverage(this.book.bookId).subscribe(average => {
-        this.book.ratingAverage = average;
-      });
+      this.getRatingAverage();
 
       if (this.book.coverId) {
         this.booksService.getCover(this.book.coverId).subscribe((response) => {
@@ -115,7 +114,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     this.ratingService.updateRating(this.ratingRequest).subscribe((res) => {
       ratingForm.reset();
       this.editedMessage = false;
-      this.getBookById(this.bookId);
+      this.getRatingAverage();
       this.getRatingsByBookId(this.bookId);
 
       setTimeout(() => {
@@ -127,7 +126,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   deleteRating(modal: any) {
     this.closeModal(modal);
     this.ratingService.deleteRating(this.selectedRatingId).subscribe(() => {
-      this.getBookById(this.bookId);
+      this.getRatingAverage();
     });
   }
 
@@ -140,6 +139,12 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     }
     this.booksService.updateBook(book).subscribe(() => {
       this.getBookById(book.bookId);
+    });
+  }
+
+  getRatingAverage() {
+    this.ratingService.getRatingAverage(this.book.bookId).subscribe(average => {
+      this.book.ratingAverage = average;
     });
   }
 
