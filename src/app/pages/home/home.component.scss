@@ -11,6 +11,9 @@
 }
 
 @media only screen and (min-width: 1200px) {
+  .thumbnail {
+    padding-bottom: 0;
+  }
   .card {
     .card-img-top {
       width: 230px;
