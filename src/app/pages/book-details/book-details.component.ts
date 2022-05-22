@@ -43,7 +43,9 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     const bookIdParam = this.route.snapshot.paramMap.get('bookId');
     if (bookIdParam) {
       this.bookId = bookIdParam;
-      this.username = AuthorizationServiceRepository.getCurrentUserValue().userName;
+      if(AuthorizationServiceRepository.getCurrentUserValue()) {
+        this.username = AuthorizationServiceRepository.getCurrentUserValue().userName;
+      }
       this.clearRatingRequest();
       this.getBookById(this.bookId);
       this.getRatingsByBookId(this.bookId);

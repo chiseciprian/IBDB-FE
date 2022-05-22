@@ -22,7 +22,10 @@ export class ShowForRolesDirective {
   }
 
   roleChecker(showFor: Array<string>) {
-    const userRole = AuthorizationServiceRepository.getCurrentUserValue().role;
+    let userRole;
+    if(AuthorizationServiceRepository.getCurrentUserValue()) {
+      userRole = AuthorizationServiceRepository.getCurrentUserValue().role;
+    }
 
     if (!userRole) {
       this.viewContainerRef.clear();
