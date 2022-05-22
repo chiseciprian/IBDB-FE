@@ -18,7 +18,7 @@
                  #firstName="ngModel"
                  [ngClass]="{ 'is-invalid': firstName.invalid && (firstName.dirty || firstName.touched) }"
                  required
-                 minlength="4">
+                 minlength="3">
         </div>
 
         <div *ngIf="accountNeeded" class="mb-2">
@@ -32,7 +32,7 @@
                  #lastName="ngModel"
                  [ngClass]="{ 'is-invalid': lastName.invalid && (lastName.dirty || lastName.touched) }"
                  required
-                 minlength="4">
+                 minlength="3">
         </div>
 
         <div *ngIf="accountNeeded" class="mb-2">
@@ -47,8 +47,7 @@
                  #email="ngModel"
                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                  [ngClass]="{ 'is-invalid': email.invalid && (email.dirty || email.touched) }"
-                 required
-                 minlength="4">
+                 required>
         </div>
 
         <div class="mb-2">
@@ -62,7 +61,7 @@
                  #username="ngModel"
                  [ngClass]="{ 'is-invalid': username.invalid && (username.dirty || username.touched) }"
                  required
-                 minlength="4">
+                 minlength="5">
         </div>
 
         <div>
@@ -76,7 +75,7 @@
                  #password="ngModel"
                  [ngClass]="{ 'is-invalid': password.invalid && (password.dirty || password.touched) }"
                  required
-                 minlength="4">
+                 minlength="5">
 
           <a class="anchor-tag toggle-eye" (click)="togglePasswordVisibility()">
             <i *ngIf="!showPassword" class="fa-solid fa-eye"></i>
