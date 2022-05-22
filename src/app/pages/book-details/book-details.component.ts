@@ -114,6 +114,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   editRating(ratingForm: any) {
     this.ratingService.updateRating(this.ratingRequest).subscribe((res) => {
       ratingForm.reset();
+      this.editedMessage = false;
 
       setTimeout(() => {
         this.clearRatingRequest();

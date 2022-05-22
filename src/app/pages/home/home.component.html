@@ -29,11 +29,11 @@
   <div *ngIf="!showSpinner" class="row">
     <div class="col-12 mt-5 pl-0 d-flex justify-content-between">
       <div *ngFor="let book of books" class="card d-inline-flex mt-2 mr-4" style="width: 18rem;">
-        <a [routerLink]="['/books',book.bookId]">
+        <a [routerLink]="['/home',book.bookId]">
           <img *ngIf="book.cover" class="card-img-top" src="{{'data:image/jpg;base64,' + book.cover}}" [alt]="book.title"/>
         </a>
         <div class="card-body">
-          <a [routerLink]="['/books',book.bookId]">
+          <a [routerLink]="['/home',book.bookId]">
             <h5 class="card-title">{{book.title}}</h5>
           </a>
           <p class="card-text">{{book.authors}}</p>

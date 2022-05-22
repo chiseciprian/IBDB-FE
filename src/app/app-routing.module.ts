@@ -43,6 +43,10 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
+    path: 'home/:bookId',
+    component: BookDetailsComponent
+  },
+  {
     path: 'login',
     component: LoginComponent
   },
