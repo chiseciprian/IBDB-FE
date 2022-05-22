@@ -8,13 +8,13 @@
   <span (click)="goBack()"> <i class="fa-solid fa-circle-chevron-left  fa-2x mb-4"></i></span>
 
   <div class="row">
-    <div class="col-4">
+    <div class="col-md-4 col-xs-12">
       <img class="book-cover img-fluid"
            *ngIf="book.cover" src="{{'data:image/jpg;base64,' + book.cover}}" [alt]="book.title"
            alt="Card image cap">
     </div>
 
-    <div class="col-6">
+    <div class="col-md-6 col-xs-12">
       <h1>{{book.title}}</h1>
 
       <h5 class="mt-3">{{book.authors}}</h5>
@@ -63,7 +63,7 @@
     <div class="col-12">
       <div class="col-12 mt-3 tab-panel">
         <div class="row">
-          <div class="col-6  mt-3">
+          <div class="col-md-6 col-xs-12 mt-3">
             <h3>{{ratings.length}} review for {{book.title}} </h3>
             <div *ngFor="let rating of ratings" class="col-10 mt-3 message-panel">
               <div class="row">
@@ -87,7 +87,7 @@
               </div>
             </div>
           </div>
-          <div class="col-6 mt-3">
+          <div class="col-md-6 col-xs-12 mt-3">
             <div *ngIf="!username" class="top-layer">
               <a (click)="login()" class="login-button">Login</a>
             </div>

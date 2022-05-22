@@ -1,7 +1,22 @@
-.card {
-  .card-img-top {
-    width: 230px;
-    height: 340px;
+@media only screen and (max-width: 480px) {
+  .thumbnail {
+    margin: 0!important;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .card {
+    .card-img-top {
+      width: 230px;
+      height: 340px;
+    }
+  }
+
+  .home-books-container {
+    padding: 0;
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-between;
   }
 }
 

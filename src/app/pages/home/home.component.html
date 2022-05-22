@@ -1,6 +1,6 @@
 <div class="container-fluid books-container">
   <div class="row thumbnail">
-    <div class="col-4 text-col">
+    <div class="col-md-4 col-xs-12 text-col">
       <h1 class="thumbnail-title">Build your library</h1>
       <h5 class="pt-1 thumbnail-subtitle">Select your favorite books and add<br/>
         them to your readlist</h5>
@@ -9,13 +9,13 @@
       </button>
     </div>
 
-    <div class="col-6 p-5">
+    <div class="col-md-6 col-xs-12 p-5">
       <img class="img-fluid float-right" src="/assets/images/people.png" alt="people">
     </div>
   </div>
 
   <div class="row">
-    <div class="col-12 mt-5 pl-0 font-weight-bold">
+    <div class="col mt-5 pl-0 font-weight-bold">
       <h3>Best Rated</h3>
     </div>
   </div>
@@ -27,8 +27,8 @@
   </div>
 
   <div *ngIf="!showSpinner" class="row">
-    <div class="col-12 mt-5 pl-0 d-flex justify-content-between">
-      <div *ngFor="let book of books" class="card d-inline-flex mt-2 mr-4">
+    <div class="col home-books-container">
+      <div *ngFor="let book of books" class="card d-inline-flex mt-2 mr-2">
         <a [routerLink]="['/home',book.bookId]">
           <img *ngIf="book.cover" class="card-img-top" src="{{'data:image/jpg;base64,' + book.cover}}" [alt]="book.title"/>
         </a>

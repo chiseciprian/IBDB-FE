@@ -1,18 +1,40 @@
-.sign-in-container {
-  margin-top: 275px;
-}
-
-.sign-up-container {
-  margin-top: 150px;
-}
-
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 480px) {
   .sign-in-container {
-    margin-top: 175px;
+    margin-top: 12em;
   }
 
   .sign-up-container {
-    margin-top: 85px;
+    margin-top: 6em;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .sign-in-container {
+    margin-top: 15em;
+  }
+
+  .sign-up-container {
+    margin-top: 10em;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .sign-in-container {
+    margin-top: 22em;
+  }
+
+  .sign-up-container {
+    margin-top: 18em;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .sign-in-container {
+    margin-top: 16em;
+  }
+
+  .sign-up-container {
+    margin-top: 8em;
   }
 }
 
