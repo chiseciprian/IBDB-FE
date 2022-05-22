@@ -6,6 +6,16 @@
   margin-top: 150px;
 }
 
+@media only screen and (max-width: 600px) {
+  .sign-in-container {
+    margin-top: 175px;
+  }
+
+  .sign-up-container {
+    margin-top: 85px;
+  }
+}
+
 .btn-add {
   color: #333333;
   border: none;
