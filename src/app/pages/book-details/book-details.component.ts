@@ -115,20 +115,20 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     this.ratingService.updateRating(this.ratingRequest).subscribe((res) => {
       ratingForm.reset();
       this.editedMessage = false;
+      this.getBookById(this.bookId);
+      this.getRatingsByBookId(this.bookId);
 
       setTimeout(() => {
         this.clearRatingRequest();
       }, 100);
-
-      setTimeout(() => {
-        this.getRatingsByBookId(this.bookId);
-      }, 300);
     });
   }
 
   deleteRating(modal: any) {
     this.closeModal(modal);
-    this.ratingService.deleteRating(this.selectedRatingId).subscribe();
+    this.ratingService.deleteRating(this.selectedRatingId).subscribe(() => {
+      this.getBookById(this.bookId);
+    });
   }
 
   updateIsAddedToReadList(book: BookModel) {
