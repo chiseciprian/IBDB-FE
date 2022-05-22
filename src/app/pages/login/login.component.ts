@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthorizationServiceRepository} from "../../services/authorization/authorization.service.repository";
-import {Router} from "@angular/router";
-import {HttpErrorResponse} from "@angular/common/http";
-import {AuthViewModel} from "../../utility/models/authorization/auth.view.model";
-import {AccountRequest} from "../../utility/requests/authorization/account.request";
-import {LoginService} from "../../services/login-service/login.service";
+import { Component, OnInit } from '@angular/core';
+import { AuthorizationServiceRepository } from "../../services/authorization/authorization.service.repository";
+import { Router } from "@angular/router";
+import { HttpErrorResponse } from "@angular/common/http";
+import { AuthViewModel } from "../../utility/models/authorization/auth.view.model";
+import { AccountRequest } from "../../utility/requests/authorization/account.request";
+import { LoginService } from "../../services/login-service/login.service";
 
 @Component({
   selector: 'app-login',
