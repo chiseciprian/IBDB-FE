@@ -149,7 +149,7 @@
               </form>
               <button type="button"
                       class="btn btn-primary mb-5"
-                      (click)="addRating(ratingForm)"
+                      (click)="addRating(ratingForm, updateModal)"
                       [disabled]="!ratingForm.valid"
                       *ngIf="!editedMessage">
                 Sumbit
@@ -198,6 +198,32 @@
             class="btn pl-5 pr-5 btn-primary btn-add-modal"
             (click)="deleteRating(modal)">
       Delete
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #updateModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-update-title">Update rating</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(modal)">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+
+      <div>
+        It seams like there's already a review from this user, do you want me to update it?
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn pl-5 pr-5 btn-danger" (click)="closeModal(modal)">Close</button>
+    <button type="button"
+            class="btn pl-5 pr-5 btn-primary btn-add-modal"
+            (click)="updateRating(modal)">
+      Update
     </button>
   </div>
 </ng-template>

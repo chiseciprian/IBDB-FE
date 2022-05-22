@@ -1,38 +1,7 @@
-.container-fluid {
-  width: 80%;
-  margin-top: 3%;
-}
-
-.books-container {
-  margin-bottom: 3rem;
-}
-
 .card {
-  border: none;
-
   .card-img-top {
-    border-radius: 1rem;
     width: 230px;
     height: 340px;
-
-    &:hover {
-      transform: scale(1.01);
-    }
-  }
-
-  .card-body {
-    padding-left: 0;
-
-    .card-text {
-      color: #A8A7A7;
-      font-size: 16px;
-      margin-bottom: 0;
-    }
-
-    .card-title {
-      margin-bottom: .20rem;
-      font-size: x-large;
-    }
   }
 }
 
@@ -41,10 +10,6 @@
   border-radius: 1rem;
   width: 100%;
   height: 100%;
-}
-
-img {
-  float: right;
 }
 
 .text-col {
@@ -80,39 +45,4 @@ img {
   border-color: #c29979 !important;
   border-radius: 0.5rem;
   font-size: 18px;
-}
-
-.h3-home {
-  font-weight: bold;
-}
-
-.star {
-  position: relative;
-  display: inline-block;
-  color: #d3d3d3;
-  font-size: 22px;
-}
-
-.full {
-  color: #FFD700;
-  font-size: 22px;
-
-}
-
-.half {
-  position: absolute;
-  display: inline-block;
-  overflow: hidden;
-  color: #FFD700;
-  font-size:22px;
-}
-
-a {
-  text-decoration: none;
-  color: #474747;
-}
-
-a:hover, a:focus {
-  text-decoration: none;
-  color: black;
 }

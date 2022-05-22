@@ -27,6 +27,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   username: string = '';
   editedMessage = false;
   selectedRatingId = '';
+  ratingForm: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -100,14 +101,22 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     })
   }
 
-  addRating(ratingForm: any) {
-    this.ratingService.addRating(this.ratingRequest).subscribe((res) => {
-      ratingForm.reset();
+  addRating(ratingForm: any, updateModal: any) {
+    const ratingFromUser = this.ratings.find((rating) => rating.userName === this.username);
 
-      setTimeout(() => {
-        this.clearRatingRequest();
-      }, 100);
-    });
+    if(!ratingFromUser) {
+      this.ratingService.addRating(this.ratingRequest).subscribe((res) => {
+        ratingForm.reset();
+
+        setTimeout(() => {
+          this.clearRatingRequest();
+        }, 100);
+      });
+    } else {
+      this.ratingRequest.ratingId = ratingFromUser.ratingId;
+      this.triggerModal(updateModal);
+      this.ratingForm = ratingForm;
+    }
   }
 
   editRating(ratingForm: any) {
@@ -127,6 +136,19 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     this.closeModal(modal);
     this.ratingService.deleteRating(this.selectedRatingId).subscribe(() => {
       this.getRatingAverage();
+    });
+  }
+
+  updateRating(modal: any) {
+    this.closeModal(modal);
+    this.ratingService.updateRating(this.ratingRequest).subscribe(() => {
+      this.ratingForm.reset();
+      this.getRatingAverage();
+      this.getRatingsByBookId(this.bookId);
+
+      setTimeout(() => {
+        this.clearRatingRequest();
+      }, 100);
     });
   }
 
