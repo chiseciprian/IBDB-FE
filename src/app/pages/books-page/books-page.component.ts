@@ -9,6 +9,8 @@ import { BookFileViewModel } from "../../utility/models/books/book-file.view.mod
 import { BookViewModel } from "../../utility/models/books/book.view.model";
 import { RatingsService } from "../../services/ratings-service/ratings.service";
 import { UserRoleEnum } from "../../utility/enums/authorization/user-role.enum";
+import { AuthorizationServiceRepository } from "../../services/authorization/authorization.service.repository";
+import { UserViewModel } from "../../utility/models/authorization/user.view.model";
 
 @Component({
   selector: 'app-books-page',
@@ -28,6 +30,7 @@ export class BooksPageComponent implements OnInit {
   showSpinner = true;
   selectedBookId = '';
   userRoles = UserRoleEnum;
+  user: UserViewModel;
 
   constructor(
     private booksService: BooksService,
@@ -41,6 +44,8 @@ export class BooksPageComponent implements OnInit {
     this.getAllBooks();
 
     this.initializeAuthorsAndGenres();
+
+    this.user = AuthorizationServiceRepository.getCurrentUserValue();
   }
 
   getAllBooks() {
@@ -76,20 +81,23 @@ export class BooksPageComponent implements OnInit {
   }
 
   addBook(modalReference: any) {
+    this.bookRequest.authorName = this.user.firstName + ' ' + this.user.lastName;
+    this.bookRequest.authorUsername = this.user.userName;
     this.booksService.addBookFile(this.bookFile).subscribe((file: BookFileViewModel) => {
       this.bookRequest.fileId = file.fileId;
       this.booksService.addCover(this.cover).subscribe((response: CoverViewModel) => {
         this.bookRequest.coverId = response.coverId;
+        console.log(this.bookRequest);
         this.booksService.addBook(this.bookRequest).subscribe(() => {
           this.getAllBooks();
+
+          modalReference.close();
+          setTimeout(() => {
+            this.clearBookRequest();
+          }, 200)
         });
       });
     })
-
-    modalReference.close();
-    setTimeout(() => {
-      this.clearBookRequest();
-    }, 200)
   }
 
   onFileSelected(event: any) {
@@ -219,7 +227,7 @@ export class BooksPageComponent implements OnInit {
   }
 
   private initializeAuthorsAndGenres() {
-    this.bookRequest.authors = [''];
+    this.bookRequest.authorName = '';
     this.bookRequest.genres = [''];
     this.bookRequest.addedToReadList = [];
     this.bookRequest.users = [];

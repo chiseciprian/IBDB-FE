@@ -5,6 +5,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { AuthViewModel } from "../../utility/models/authorization/auth.view.model";
 import { AccountRequest } from "../../utility/requests/authorization/account.request";
 import { LoginService } from "../../services/login-service/login.service";
+import { UserRoleEnum } from "../../utility/enums/authorization/user-role.enum";
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit {
 
   accountRequest: AccountRequest = new AccountRequest();
 
+  roleAsWriter: boolean = false;
   accountNeeded: boolean = false;
   showPassword: boolean = false;
   errorMessage: string;
@@ -64,6 +66,7 @@ export class LoginComponent implements OnInit {
 
   createAccount(isFormValid: any) {
     if (isFormValid) {
+      this.accountRequest.role = this.roleAsWriter ? UserRoleEnum.WRITER : UserRoleEnum.USER;
       this.loginService.createAccount(this.accountRequest).subscribe(() => {
         this.onLogin(isFormValid);
       }, (error: HttpErrorResponse) => {

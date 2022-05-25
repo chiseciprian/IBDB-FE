@@ -3,7 +3,7 @@
     <div class="col-xs-12 col-md-6">
       <h1 class="book-details-title">The Book List</h1>
     </div>
-    <div class="col-xs-12 col-md-6 d-flex justify-content-end" *appShowForRoles="[userRoles.ADMIN]">
+    <div class="col-xs-12 col-md-6 d-flex justify-content-end" *appShowForRoles="[userRoles.ADMIN, userRoles.WRITER]">
       <button type="button" class="btn btn-add btn-add-book btn-primary mb-2 pl-5 pr-5 pt-0 pb-0" (click)="onAddPress(addModal)">
         &plus; Add Book
       </button>
@@ -43,7 +43,7 @@
           <a class="anchor-tag" [routerLink]="['/books',book.bookId]">
             <h5 class="card-title">{{book.title}}</h5>
           </a>
-          <p class="card-text">{{book.authors}}</p>
+          <p class="card-text">{{book.authorName}}</p>
           <h5 class="card-text">
             <ng-template #t let-fill="fill">
             <span class="star" [class.full]="fill === 100">
@@ -52,7 +52,7 @@
             </ng-template>
             <ngb-rating [(rate)]="book.ratingAverage" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
           </h5>
-          <div *appShowForRoles="[userRoles.ADMIN]">
+          <div *ngIf="user.role === userRoles.ADMIN || ( user.role === userRoles.WRITER && book.authorUsername === user.userName )">
             <a class="btn btn-primary btn-add mt-2 mr-2 pr-4 pl-4" (click)="onEditPress(editModal, book)">Edit</a>
             <a class="btn btn-danger btn-delete mt-2" (click)="onDeleteBook(book.bookId, deleteModal)">Delete</a>
           </div>
@@ -116,34 +116,6 @@
           </div>
           <div *ngIf="description.errors?.minlength">
             Description must be at least 10 characters long.
-          </div>
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <div class="row">
-          <div class="col d-flex justify-content-between align-items-center mb-2">
-            <label class="form-label">Authors</label>
-            <button type="button" class="btn btn-add-modal btn-primary" (click)="addInput(bookRequest.authors)">
-              Add Author
-            </button>
-          </div>
-        </div>
-        <div class="row" *ngFor="let author of bookRequest.authors; let i = index;trackBy:trackByIndex">
-          <div class="col-10">
-            <input type="text"
-                   class="form-control mb-1"
-                   [id]="'author'+i"
-                   [name]="'author'+i"
-                   [placeholder]="'Authors '+ (i+1)"
-                   [(ngModel)]="bookRequest.authors[i]"
-                   required>
-          </div>
-          <div class="col-2">
-            <button type="button" class="btn btn-danger" (click)="removeInput(bookRequest.authors,i)"
-                    [disabled]="bookRequest.authors.length === 1">
-              <i class="fas fa-minus"></i>
-            </button>
           </div>
         </div>
       </div>
@@ -301,33 +273,6 @@
           </div>
         </div>
 
-      </div>
-      <div class="mb-3">
-        <div class="row">
-          <div class="col d-flex justify-content-between align-items-center mb-2">
-            <label class="form-label">Authors</label>
-            <button type="button" class="btn btn-primary btn-add-modal" (click)="addInput(bookRequest.authors)">
-              Add Author
-            </button>
-          </div>
-        </div>
-        <div class="row" *ngFor="let author of bookRequest.authors; let i = index;trackBy:trackByIndex">
-          <div class="col-10">
-            <input type="text"
-                   class="form-control mb-1"
-                   [id]="'edit-author'+i"
-                   [name]="'edit-author'+i"
-                   [placeholder]="'Authors '+ (i+1)"
-                   [(ngModel)]="bookRequest.authors[i]"
-                   required>
-          </div>
-          <div class="col-2">
-            <button type="button" class="btn btn-danger" (click)="removeInput(bookRequest.authors,i)"
-                    [disabled]="bookRequest.authors.length === 1">
-              <i class="fas fa-minus"></i>
-            </button>
-          </div>
-        </div>
       </div>
       <div class="mb-3">
         <div class="row">

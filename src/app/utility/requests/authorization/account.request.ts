@@ -1,3 +1,5 @@
+import { UserRoleEnum } from "../../enums/authorization/user-role.enum";
+
 export class AccountRequest {
 
   public firstName: string;
@@ -5,5 +7,6 @@ export class AccountRequest {
   public userName: string;
   public password: string;
   public email: string;
+  public role: UserRoleEnum;
 
 }

@@ -13,7 +13,8 @@ export class BookViewAdapter implements ModelAdapter<BookViewModel> {
     adapt.title = data.title;
     adapt.description = data.description;
     adapt.price = data.price;
-    adapt.authors = data.authors;
+    adapt.authorName = data.authorName;
+    adapt.authorUsername = data.authorUsername;
     adapt.users = data.users;
     adapt.genres = data.genres;
     adapt.coverId = data.coverId;

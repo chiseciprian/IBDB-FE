@@ -8,6 +8,7 @@ import { ReadListComponent } from "./pages/read-list/read-list.component";
 import { LoginComponent } from "./pages/login/login.component";
 import { PurchasedBooksComponent } from "./pages/purchased-books/purchased-books.component";
 import { AuthGuard } from "./guards/auth/auth.guard";
+import { AuthorBooksComponent } from "./pages/author-books/author-books.component";
 
 const routes: Routes = [
   {
@@ -29,8 +30,18 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'my-books',
+    path: 'library',
     component: PurchasedBooksComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'library/:bookId',
+    component: BookDetailsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'my-books',
+    component: AuthorBooksComponent,
     canActivate: [AuthGuard]
   },
   {

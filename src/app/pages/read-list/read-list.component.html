@@ -22,7 +22,7 @@
           <a class="anchor-tag" [routerLink]="['/read-list',book.bookId]">
             <h5 class="card-title">{{book.title}}</h5>
           </a>
-          <p class="card-text">{{book.authors}}</p>
+          <p class="card-text">{{book.authorName}}</p>
           <h5 class="card-text">
             <ng-template #t let-fill="fill">
             <span class="star" [class.full]="fill === 100">

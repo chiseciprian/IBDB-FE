@@ -90,6 +90,17 @@
         </div>
       </div>
 
+      <div class="row mt-2" *ngIf="accountNeeded">
+        <div class="col">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" [(ngModel)]="roleAsWriter">
+            <label class="form-check-label" for="flexCheckDefault">
+              Writer account
+            </label>
+          </div>
+        </div>
+      </div>
+
       <div class="text-center mt-2">
         <button (click)="createAccount(loginForm.valid)" *ngIf="accountNeeded" type="button" class="btn btn-add btn-primary">
           Create account

@@ -36,7 +36,8 @@ export class BooksService {
     addCover: () => this.baseURL + "/books/cover/add",
     addBookFile: () => this.baseURL + "/books/file/add",
     getBooksAddedToReadList: (username: string) => this.baseURL + `/books/read-list?username=${username}`,
-    getPurchasedBooks: (username: string) => this.baseURL + `/books/my-books?username=${username}`
+    getPurchasedBooks: (username: string) => this.baseURL + `/books/my-books?username=${username}`,
+    getBooksByAuthorUsername: (username: string) => this.baseURL + `/books/author?username=${username}`
   }
 
   constructor(
@@ -60,6 +61,11 @@ export class BooksService {
 
   getBooksAddedToReadList(username: string): Observable<BookModel[]> {
     return this.http.get(this.endpoints.getBooksAddedToReadList(username))
+      .pipe(map((books: any) => books.map((book: any) => this.bookAdapter.adapt(book))));
+  }
+
+  getBooksByAuthorUsername(username: string): Observable<BookModel[]> {
+    return this.http.get(this.endpoints.getBooksByAuthorUsername(username))
       .pipe(map((books: any) => books.map((book: any) => this.bookAdapter.adapt(book))));
   }
 
