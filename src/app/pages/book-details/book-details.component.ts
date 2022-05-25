@@ -12,6 +12,8 @@ import { AuthorizationServiceRepository } from "../../services/authorization/aut
 import { RatingViewModel } from "../../utility/models/ratings/rating.view.model.";
 import { BookViewModel } from "../../utility/models/books/book.view.model";
 import { RatingModel } from "../../utility/models/ratings/rating.model.";
+import { UserViewModel } from "../../utility/models/authorization/user.view.model";
+import { UserRoleEnum } from "../../utility/enums/authorization/user-role.enum";
 
 @Component({
   selector: 'app-book-details',
@@ -28,6 +30,8 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   editedMessage = false;
   selectedRatingId = '';
   ratingForm: any;
+  userRoles = UserRoleEnum;
+  user: UserViewModel;
 
   constructor(
     private route: ActivatedRoute,
@@ -50,6 +54,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
       this.clearRatingRequest();
       this.getBookById(this.bookId);
       this.getRatingsByBookId(this.bookId);
+      this.user = AuthorizationServiceRepository.getCurrentUserValue();
     }
   }
 

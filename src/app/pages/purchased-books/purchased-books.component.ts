@@ -25,6 +25,15 @@ export class PurchasedBooksComponent implements OnInit {
     this.initializeReadList();
   }
 
+  initializeReadList() {
+    this.getUsername()
+    this.getPurchasedBooks(this.username);
+  }
+
+  getUsername() {
+    this.username = AuthorizationServiceRepository.getCurrentUserValue().userName;
+  }
+
   getPurchasedBooks(username: string) {
     this.booksService.getPurchasedBooks(username).subscribe((response: any) => {
       this.books = response;
@@ -51,15 +60,6 @@ export class PurchasedBooksComponent implements OnInit {
         this.showSpinner = false
       }, 200);
     })
-  }
-
-  getUsername() {
-    this.username = AuthorizationServiceRepository.getCurrentUserValue().userName;
-  }
-
-  async initializeReadList() {
-    this.getUsername()
-    this.getPurchasedBooks(this.username);
   }
 
 }

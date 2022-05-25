@@ -39,11 +39,11 @@
 
       <div *ngIf="username">
         <app-stripe-payment
-          *ngIf="book.users.indexOf(username) === -1 && book.authorUsername !== username"
+          *ngIf="book.users.indexOf(username) === -1 && book.authorUsername !== username && (user && user.role !== userRoles.ADMIN)"
           [book]="book"
           (bookBought)="getBookById(book.bookId)">
         </app-stripe-payment>
-        <a *ngIf="book.users.indexOf(username) !== -1 || book.authorUsername === username"
+        <a *ngIf="book.users.indexOf(username) !== -1 || book.authorUsername === username || (user && user.role === userRoles.ADMIN)"
            class="btn btn-read mt-2"
            (click)="openPdfFile()">
           Read book

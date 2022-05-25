@@ -1,0 +1,108 @@
+.btn-add {
+  color: #333333;
+  border: none;
+  border-radius: 1rem;
+  background-color: #f1f1f1;;
+}
+
+.btn-add:hover,
+.btn-add:active,
+.btn-add:visited,
+.btn-add:focus {
+  background-color: #1e73be !important;
+  border-radius: 1rem !important;
+  color: white;
+}
+
+.btn-delete {
+  color: #333333;
+  border: none;
+  border-radius: 1rem;
+  background-color: #f1f1f1;;
+}
+
+.btn-delete:hover,
+.btn-delete:active,
+.btn-delete:visited,
+.tbtn-delete:focus {
+  background-color: #f50114 !important;
+  border-radius: 1rem;
+  color: white;
+}
+
+.modal-header {
+  border: none;
+}
+
+.modal-footer {
+  border: none;
+}
+
+input {
+  border-radius: 1rem;
+  background-color: #F1F1F1;
+  border: 0;
+}
+
+
+textarea {
+  border-radius: 1rem;
+  background-color: #F1F1F1;
+  border: 0;
+}
+
+select {
+  border-radius: 1rem;
+  background-color: #F1F1F1;
+  border: 0;
+}
+
+.custom-file-label {
+  border-radius: 1rem;
+  background-color: #F1F1F1;
+  border: 0;
+}
+
+.btn-add-modal {
+  border-radius: 1rem;
+}
+
+.btn-danger {
+  border-radius: 2rem;
+}
+
+.btn-secondary {
+  border-radius: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.nav-link {
+  border: none;
+  font-weight: bold;
+  color: #b5aea9;
+}
+
+.nav-link.active {
+  color: black;
+}
+
+.nav-tabs {
+  border: none;
+}
+
+@media only screen and (max-width: 480px) {
+  .book-details-title {
+    text-align: center;
+  }
+
+  .nav-tabs {
+    justify-content: center;
+  }
+
+  .btn-add-book {
+    width: 100%;
+    padding: 12px!important;
+  }
+}
+

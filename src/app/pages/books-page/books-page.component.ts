@@ -22,6 +22,8 @@ export class BooksPageComponent implements OnInit {
   filteredBooks: BookViewModel[] = [];
   bookRequest: BookRequest = new BookRequest();
   genres = GenresEnum;
+  userRoles = UserRoleEnum;
+  user: UserViewModel;
   selectedGenre = '';
   selectedImage = '';
   selectedBookFile = '';
@@ -29,8 +31,6 @@ export class BooksPageComponent implements OnInit {
   bookFile: any;
   showSpinner = true;
   selectedBookId = '';
-  userRoles = UserRoleEnum;
-  user: UserViewModel;
 
   constructor(
     private booksService: BooksService,
@@ -46,6 +46,76 @@ export class BooksPageComponent implements OnInit {
     this.initializeAuthorsAndGenres();
 
     this.user = AuthorizationServiceRepository.getCurrentUserValue();
+  }
+
+  onDeleteBook(bookId: string, deleteModal: any) {
+    this.selectedBookId = bookId;
+    this.triggerModal(deleteModal);
+  }
+
+  onAddPress(modalReference: any) {
+    this.clearBookRequest();
+    this.triggerModal(modalReference);
+  }
+
+  onEditPress(modalReference: any, book: any) {
+    this.triggerModal(modalReference);
+    this.bookRequest = {...book};
+  }
+
+  onFileCoverSelected(event: any) {
+    const file: File = event.target.files[0];
+
+    if (file) {
+      this.selectedImage = file.name;
+      const formData = new FormData();
+      formData.append('title', this.bookRequest.title)
+      formData.append('image', file);
+
+      this.cover = formData;
+    }
+  }
+
+  onBookFileSelected(event: any) {
+    const file: File = event.target.files[0];
+
+    if (file) {
+      this.selectedBookFile = file.name;
+      const formData = new FormData();
+      formData.append('title', this.bookRequest.title)
+      formData.append('bookFile', file);
+
+      this.bookFile = formData;
+    }
+  }
+
+  removeInput(field: any, i: number) {
+    field.splice(i, 1);
+  }
+
+  addInput(field: any) {
+    field.push("");
+  }
+
+  trackByIndex(index: number, obj: any): any {
+    return index;
+  }
+
+  closeModal(modalReference: any) {
+    modalReference.close()
+    setTimeout(() => {
+      this.clearBookRequest();
+    }, 200)
+  }
+
+  filterBooksByGenre(genre: string) {
+    this.selectedGenre = genre;
+    this.filteredBooks = this.books.filter((book) => book.genres.indexOf(genre) != -1);
+  }
+
+  displayAllBooks() {
+    this.selectedGenre = '';
+    this.filteredBooks = this.books;
   }
 
   getAllBooks() {
@@ -100,117 +170,49 @@ export class BooksPageComponent implements OnInit {
     })
   }
 
-  onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-
-    if (file) {
-      this.selectedImage = file.name;
-      const formData = new FormData();
-      formData.append('title', this.bookRequest.title)
-      formData.append('image', file);
-
-      this.cover = formData;
-    }
-  }
-
-  onFileSelected2(event: any) {
-    const file: File = event.target.files[0];
-
-    if (file) {
-      this.selectedBookFile = file.name;
-      const formData = new FormData();
-      formData.append('title', this.bookRequest.title)
-      formData.append('bookFile', file);
-
-      this.bookFile = formData;
-    }
-  }
-
   updateBook(modalReference: any) {
-    if (this.cover && this.bookFile) {
-      this.booksService.addBookFile(this.bookFile).subscribe((file: BookFileViewModel) => {
-        this.bookRequest.fileId = file.fileId;
-        this.booksService.addCover(this.cover).subscribe((response: CoverViewModel) => {
-          this.bookRequest.coverId = response.coverId;
-          this.booksService.updateBook(this.bookRequest).subscribe(() => {
-            this.getAllBooks();
-          });
-        });
-      })
-    } else if (this.cover) {
-      this.booksService.addCover(this.cover).subscribe((response: CoverViewModel) => {
-        this.bookRequest.coverId = response.coverId;
-        this.booksService.updateBook(this.bookRequest).subscribe(() => {
-          this.getAllBooks();
-        });
-      });
-    } else if (this.bookFile) {
-      this.booksService.addBookFile(this.bookFile).subscribe((response: BookFileViewModel) => {
-        this.bookRequest.fileId = response.fileId;
-        this.booksService.updateBook(this.bookRequest).subscribe(() => {
-          this.getAllBooks();
-        });
-      });
-    } else {
-      this.booksService.updateBook(this.bookRequest).subscribe(() => {
-        this.getAllBooks();
-      });
-    }
-    modalReference.close();
-    setTimeout(() => {
-      this.clearBookRequest();
-    }, 200);
-  }
+    const promises = [];
 
-  onDeleteBook(bookId: string, deleteModal: any) {
-    this.selectedBookId = bookId;
-    this.triggerModal(deleteModal);
-  }
+    promises.push(
+      new Promise((coverPromise) => {
+        if (this.cover) {
+          this.booksService.addCover(this.cover).subscribe((response: CoverViewModel) => {
+            this.bookRequest.coverId = response.coverId;
+            coverPromise(response.coverId);
+          });
+        } else {
+          coverPromise('');
+        }
+      }),
+      new Promise((bookFilePromise) => {
+        if (this.bookFile) {
+          this.booksService.addBookFile(this.bookFile).subscribe((response: BookFileViewModel) => {
+            this.bookRequest.fileId = response.fileId;
+            bookFilePromise(response.fileId);
+          });
+        } else {
+          bookFilePromise('');
+        }
+      })
+    )
+
+    Promise.all(promises)
+      .then(() => {
+        this.booksService.updateBook(this.bookRequest).subscribe(() => {
+          this.getAllBooks();
+
+          modalReference.close();
+          setTimeout(() => {
+            this.clearBookRequest();
+          }, 300);
+        });
+      })  }
 
   deleteBook(modal: any) {
     this.closeModal(modal);
     this.booksService.deleteBook(this.selectedBookId).subscribe(() => {
       this.getAllBooks();
     });
-  }
-
-  removeInput(field: any, i: number) {
-    field.splice(i, 1);
-  }
-
-  addInput(field: any) {
-    field.push("");
-  }
-
-  trackByIndex(index: number, obj: any): any {
-    return index;
-  }
-
-  onAddPress(modalReference: any) {
-    this.clearBookRequest();
-    this.triggerModal(modalReference);
-  }
-
-  onEditPress(modalReference: any, book: any) {
-    this.triggerModal(modalReference);
-    this.bookRequest = {...book};
-  }
-
-  closeModal(modalReference: any) {
-    modalReference.close()
-    setTimeout(() => {
-      this.clearBookRequest();
-    }, 200)
-  }
-
-  filterBooksByGenre(genre: string) {
-    this.selectedGenre = genre;
-    this.filteredBooks = this.books.filter((book) => book.genres.indexOf(genre) != -1);
-  }
-
-  displayAllBooks() {
-    this.selectedGenre = '';
-    this.filteredBooks = this.books;
   }
 
   private triggerModal(content: any) {

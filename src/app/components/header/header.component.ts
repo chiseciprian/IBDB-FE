@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthorizationServiceRepository } from "../../services/authorization/authorization.service.repository";
 import { UserViewModel } from "../../utility/models/authorization/user.view.model";
 import { Router } from "@angular/router";
+import { UserRoleEnum } from "../../utility/enums/authorization/user-role.enum";
 
 @Component({
   selector: 'app-header',
@@ -10,6 +11,7 @@ import { Router } from "@angular/router";
 })
 export class HeaderComponent implements OnInit {
   user: UserViewModel | null;
+  userRoles = UserRoleEnum;
 
   constructor(
     private router: Router,

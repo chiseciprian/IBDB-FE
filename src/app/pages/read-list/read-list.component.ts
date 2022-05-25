@@ -24,6 +24,15 @@ export class ReadListComponent implements OnInit {
     this.initializeReadList();
   }
 
+  initializeReadList() {
+    this.getUsername()
+    this.getBooksAddedToReadList(this.username);
+  }
+
+  getUsername() {
+    this.username = AuthorizationServiceRepository.getCurrentUserValue().userName;
+  }
+
   getBooksAddedToReadList(username: string) {
     this.booksService.getBooksAddedToReadList(username).subscribe((response: any) => {
       this.books = response;
@@ -52,14 +61,5 @@ export class ReadListComponent implements OnInit {
         this.showSpinner = false
       }, 200);
     })
-  }
-
-  getUsername() {
-    this.username = AuthorizationServiceRepository.getCurrentUserValue().userName;
-  }
-
-  async initializeReadList() {
-    this.getUsername()
-    this.getBooksAddedToReadList(this.username);
   }
 }

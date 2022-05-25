@@ -31,6 +31,10 @@
             </ng-template>
             <ngb-rating [(rate)]="book.ratingAverage" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
           </h5>
+          <div *ngIf="user.role === userRoles.WRITER">
+            <a class="btn btn-primary btn-add mt-2 mr-2 pr-4 pl-4" (click)="onEditPress(editModal, book)">Edit</a>
+            <a class="btn btn-danger btn-delete mt-2" (click)="onDeleteBook(book.bookId, deleteModal)">Delete</a>
+          </div>
         </div>
       </div>
       <div *ngIf="books.length === 0">
@@ -39,3 +43,159 @@
     </div>
   </div>
 </div>
+
+<ng-template #editModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-edit-title">Edit book</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(modal)">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #bookForm="ngForm">
+      <div class="mb-3">
+        <label for="edit-title" class="form-label">Title</label>
+        <input type="text"
+               class="form-control"
+               id="edit-title"
+               name="edit-title"
+               placeholder="Book Title"
+               [(ngModel)]="bookRequest.title"
+               #title="ngModel"
+               [ngClass]="{ 'is-invalid': title.invalid && (title.dirty || title.touched) }"
+               required
+               minlength="4">
+
+        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger">
+          <div *ngIf="title.errors?.required">
+            Title is required.
+          </div>
+          <div *ngIf="title.errors?.minlength">
+            Title must be at least 4 characters long.
+          </div>
+        </div>
+
+      </div>
+      <div class="mb-3">
+        <label for="edit-description" class="form-label">Description</label>
+        <textarea class="form-control"
+                  id="edit-description"
+                  name="edit-description"
+                  rows="3"
+                  [(ngModel)]="bookRequest.description"
+                  #description="ngModel"
+                  [ngClass]="{ 'is-invalid': description.invalid && (description.dirty || description.touched) }"
+                  required
+                  minlength="10"></textarea>
+
+        <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert alert-danger">
+          <div *ngIf="description.errors?.required">
+            Description is required.
+          </div>
+          <div *ngIf="description.errors?.minlength">
+            Description must be at least 10 characters long.
+          </div>
+        </div>
+
+      </div>
+      <div class="mb-3">
+        <div class="row">
+          <div class="col d-flex justify-content-between align-items-center mb-2">
+            <label class="form-label">GenresEnum</label>
+            <button type="button" class="btn btn-primary btn-add-modal"
+                    (click)="addInput(bookRequest.genres)">
+              Add GenresEnum
+            </button>
+          </div>
+        </div>
+        <div class="row" *ngFor="let genresInput of bookRequest.genres; let i = index;trackBy:trackByIndex">
+          <div class="col-10">
+            <select class="form-control mb-1"
+                    [id]="'edit-genresInput'+i"
+                    [name]="'edit-genresInput'+i"
+                    [(ngModel)]="bookRequest.genres[i]"
+                    required>
+              <option value="" disabled selected>Select your option</option>
+              <ng-container *ngFor="let genre of genres | keyvalue">
+                <option [ngValue]="genre.key">{{ genre.value }}</option>
+              </ng-container>
+            </select>
+          </div>
+          <div class="col-2">
+            <button type="button" class="btn btn-danger" (click)="removeInput(bookRequest.genres,i)"
+                    [disabled]="bookRequest.genres.length === 1">
+              <i class="fas fa-minus"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div class="row">
+          <div class="col">
+            <label class="form-label">Cover</label>
+            <div class="custom-file">
+              <input type="file"
+                     class="custom-file-input"
+                     id="edit-cover"
+                     name="edit-cover"
+                     (change)="onFileCoverSelected($event)"
+                     required>
+              <label class="custom-file-label" for="edit-cover">Choose file</label>
+            </div>
+            <small>{{ selectedImage || "No file uploaded yet." }}</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div class="row">
+          <div class="col">
+            <label class="form-label">Book File</label>
+            <div class="custom-file">
+              <input type="file"
+                     class="custom-file-input"
+                     id="edit-bookFile"
+                     name="edit-bookFile"
+                     (change)="onBookFileSelected($event)"
+                     required>
+              <label class="custom-file-label" for="edit-bookFile">Choose file</label>
+            </div>
+            <small>{{ selectedBookFile || "No file uploaded yet." }}</small>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="closeModal(modal)">Close</button>
+    <button type="button" class="btn  btn-primary btn-add-modal" (click)="updateBook(modal)" [disabled]="!bookForm.valid">Edit
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-delete-title">Delete book</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal(modal)">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+
+      <div>
+        Are you sure you want to delete this book?
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn pl-5 pr-5 btn-danger" (click)="closeModal(modal)">Close</button>
+    <button type="button"
+            class="btn pl-5 pr-5 btn-primary btn-add-modal"
+            (click)="deleteBook(modal)">
+      Delete
+    </button>
+  </div>
+</ng-template>
