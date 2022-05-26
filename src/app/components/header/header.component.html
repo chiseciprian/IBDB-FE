@@ -35,6 +35,8 @@
           {{ user.firstName }} {{ user.lastName }}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" [routerLink]="['/account-settings']">Account Settings</a>
+
           <a class="dropdown-item" (click)="logout()">Logout</a>
         </div>
       </li>

@@ -18,6 +18,7 @@ import { StripePaymentComponent } from './components/stripe-payment/stripe-payme
 import { PurchasedBooksComponent } from './pages/purchased-books/purchased-books.component';
 import { ShowForRolesDirective } from "./utility/directives/show-for-roles.directives";
 import { AuthorBooksComponent } from './pages/author-books/author-books.component';
+import { AccountSettingsComponent } from './pages/account-settings/account-settings.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { AuthorBooksComponent } from './pages/author-books/author-books.componen
     StripePaymentComponent,
     PurchasedBooksComponent,
     ShowForRolesDirective,
-    AuthorBooksComponent
+    AuthorBooksComponent,
+    AccountSettingsComponent
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,7 @@ import { LoginComponent } from "./pages/login/login.component";
 import { PurchasedBooksComponent } from "./pages/purchased-books/purchased-books.component";
 import { AuthGuard } from "./guards/auth/auth.guard";
 import { AuthorBooksComponent } from "./pages/author-books/author-books.component";
+import { AccountSettingsComponent } from "./pages/account-settings/account-settings.component";
 
 const routes: Routes = [
   {
@@ -60,6 +61,11 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'account-settings',
+    component: AccountSettingsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '',

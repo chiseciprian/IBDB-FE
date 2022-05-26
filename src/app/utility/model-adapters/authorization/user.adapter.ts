@@ -10,6 +10,7 @@ export class UserAdapter implements ModelAdapter<UserModel> {
 
   adapt(data: any): UserModel {
     const adapt = new UserModel();
+    adapt.id = data.id;
     adapt.lastName = data.lastName;
     adapt.firstName = data.firstName;
     adapt.userName = data.userName;
