@@ -5,6 +5,7 @@ import { LoginService } from "../../services/login-service/login.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { UserRoleEnum } from "../../utility/enums/authorization/user-role.enum";
 import { AccountUpdateRequest } from "../../utility/requests/authorization/account-update.request";
+import { UserModel } from "../../utility/models/authorization/user.model";
 
 @Component({
   selector: 'app-account-settings',
@@ -42,13 +43,26 @@ export class AccountSettingsComponent implements OnInit {
     this.roleAsWriter = this.user.role === this.userRoles.WRITER;
   }
 
+  getNewUserModel() {
+    const userModel = new UserModel();
+    userModel.id = this.user.id;
+    userModel.firstName = this.accountRequest.firstName;
+    userModel.lastName = this.accountRequest.lastName;
+    userModel.userName = this.accountRequest.userName;
+    userModel.email = this.accountRequest.email;
+    userModel.role = this.accountRequest.role;
+
+    return userModel;
+  }
+
   editProfile(profileModal: any) {
     this.accountRequest.role = this.roleAsWriter ? UserRoleEnum.WRITER : UserRoleEnum.USER;
     this.loginService.updateAccount(this.user.id, this.accountRequest)
       .subscribe(
         () => {
-          this.authorizationService.logout()
+          AuthorizationServiceRepository.setCurrentUserValue(this.getNewUserModel())
           this.closeModal(profileModal);
+          this.authorizationService.currentTokenSubject.next(AuthorizationServiceRepository.getCurrentTokenValue());
         }
       )
   }

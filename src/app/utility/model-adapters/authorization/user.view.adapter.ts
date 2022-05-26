@@ -8,14 +8,16 @@ import { UserRoleEnum } from "../../enums/authorization/user-role.enum";
 })
 export class UserViewAdapter implements ModelAdapter<UserViewModel> {
 
-    adapt(data: any): UserViewModel {
-        const adapt = new UserViewModel();
-        adapt.email = data.email;
-        adapt.lastName = data.lastName;
-        adapt.firstName = data.firstName;
-        adapt.role = <UserRoleEnum>data.role;
+  adapt(data: any): UserViewModel {
+    const adapt = new UserViewModel();
+    adapt.id = data.id;
+    adapt.firstName = data.firstName;
+    adapt.lastName = data.lastName;
+    adapt.userName = data.userName;
+    adapt.email = data.email;
+    adapt.role = <UserRoleEnum>data.role;
 
-        return adapt;
-    }
+    return adapt;
+  }
 
 }

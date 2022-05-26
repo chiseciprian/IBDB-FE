@@ -11,10 +11,9 @@ export class UserAdapter implements ModelAdapter<UserModel> {
   adapt(data: any): UserModel {
     const adapt = new UserModel();
     adapt.id = data.id;
-    adapt.lastName = data.lastName;
     adapt.firstName = data.firstName;
+    adapt.lastName = data.lastName;
     adapt.userName = data.userName;
-    adapt.password = data.password;
     adapt.email = data.email;
     adapt.role = <UserRoleEnum>data.role;
 
