@@ -9,6 +9,7 @@ export class BookModel {
   public users: Array<string>;
   public genres: Array<string>;
   public coverId: string;
+  public bookText: string;
   public fileId: string;
   public addedToReadList: Array<string>;
 

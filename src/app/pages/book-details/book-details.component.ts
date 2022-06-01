@@ -85,7 +85,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
         })
       }
 
-      if (this.book.fileId) {
+      if (this.book.bookText) {
         this.booksService.getBookFile(this.book.fileId).subscribe((response) => {
           this.book.file = response.bookFile.data;
         })

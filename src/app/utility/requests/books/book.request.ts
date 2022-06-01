@@ -10,6 +10,7 @@ export class BookRequest {
   public genres: Array<string>;
   public coverId: String;
   public fileId: String;
+  public bookText: string;
   public addedToReadList: Array<string>;
 
 }

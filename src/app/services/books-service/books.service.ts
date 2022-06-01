@@ -34,7 +34,6 @@ export class BooksService {
     getCover: (coverId: string) => this.baseURL + "/books/cover/" + coverId,
     getBookFile: (fileId: string) => this.baseURL + "/books/file/" + fileId,
     addCover: () => this.baseURL + "/books/cover/add",
-    addBookFile: () => this.baseURL + "/books/file/add",
     getBooksAddedToReadList: (username: string) => this.baseURL + `/books/read-list?username=${username}`,
     getPurchasedBooks: (username: string) => this.baseURL + `/books/my-books?username=${username}`,
     getBooksByAuthorUsername: (username: string) => this.baseURL + `/books/author?username=${username}`
@@ -103,10 +102,5 @@ export class BooksService {
   addCover(formData: FormData): Observable<CoverModel> {
     return this.http.post(this.endpoints.addCover(), formData)
       .pipe(map((cover: any) => this.coverAdapter.adapt(cover)));
-  }
-
-  addBookFile(formData: FormData): Observable<BookFileModel> {
-    return this.http.post(this.endpoints.addBookFile(), formData)
-      .pipe(map((file: any) => this.bookFileAdapter.adapt(file)));
   }
 }
