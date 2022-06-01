@@ -37,12 +37,6 @@ export class HomeComponent implements OnInit {
           })
         }
 
-        if (book.bookText) {
-          this.booksService.getBookFile(book.bookText).subscribe((response) => {
-            book.file = response.bookFile.data;
-          })
-        }
-
         return book;
       })
 

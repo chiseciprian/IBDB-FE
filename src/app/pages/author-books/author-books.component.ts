@@ -116,7 +116,6 @@ export class AuthorBooksComponent implements OnInit {
     this.bookRequest.authorUsername = this.user.userName;
     this.booksService.addCover(this.cover).subscribe((response: CoverViewModel) => {
       this.bookRequest.coverId = response.coverId;
-      console.log(this.bookRequest);
       this.booksService.addBook(this.bookRequest).subscribe(() => {
         this.getBooksByAuthorUsername(this.username);
 
@@ -140,12 +139,6 @@ export class AuthorBooksComponent implements OnInit {
         if (book.coverId) {
           this.booksService.getCover(book.coverId).subscribe((response) => {
             book.cover = response.image.data;
-          })
-        }
-
-        if (book.bookText) {
-          this.booksService.getBookFile(book.bookText).subscribe((response) => {
-            book.file = response.bookFile.data;
           })
         }
 

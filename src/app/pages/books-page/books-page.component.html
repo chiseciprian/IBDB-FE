@@ -234,6 +234,7 @@
   </div>
   <div class="modal-body">
     <form #bookForm="ngForm">
+
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
         <input type="text"
@@ -255,30 +256,30 @@
             Title must be at least 4 characters long.
           </div>
         </div>
+      </div>
 
-        <div class="mb-3">
-          <label for="bookText" class="form-label">Book Text</label>
-          <textarea class="form-control"
-                    id="edit-bookText"
-                    name="edit-bookText"
-                    rows="3"
-                    [(ngModel)]="bookRequest.bookText"
-                    #bookText="ngModel"
-                    [ngClass]="{ 'is-invalid': bookText.invalid && (bookText.dirty || bookText.touched) }"
-                    required
-                    minlength="10"></textarea>
+      <div class="mb-3">
+        <label for="bookText" class="form-label">Book Text</label>
+        <textarea class="form-control"
+                  id="edit-bookText"
+                  name="edit-bookText"
+                  rows="3"
+                  [(ngModel)]="bookRequest.bookText"
+                  #bookText="ngModel"
+                  [ngClass]="{ 'is-invalid': bookText.invalid && (bookText.dirty || bookText.touched) }"
+                  required
+                  minlength="10"></textarea>
 
-          <div *ngIf="bookText.invalid && (bookText.dirty || bookText.touched)" class="alert alert-danger">
-            <div *ngIf="description.errors?.required">
-              Book Text is required.
-            </div>
-            <div *ngIf="description.errors?.minlength">
-              Book Text must be at least 10 characters long.
-            </div>
+        <div *ngIf="bookText.invalid && (bookText.dirty || bookText.touched)" class="alert alert-danger">
+          <div *ngIf="bookText.errors?.required">
+            Book Text is required.
+          </div>
+          <div *ngIf="bookText.errors?.minlength">
+            Book Text must be at least 10 characters long.
           </div>
         </div>
-
       </div>
+
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
         <textarea class="form-control"
@@ -301,6 +302,7 @@
         </div>
 
       </div>
+
       <div class="mb-3">
         <div class="row">
           <div class="col d-flex justify-content-between align-items-center mb-2">
@@ -351,12 +353,40 @@
         </div>
       </div>
 
+      <div class="mb-3">
+        <label for="edit-price" class="form-label">Price</label>
+        <input type="number"
+               class="form-control"
+               id="edit-price"
+               name="edit-price"
+               placeholder="Book Price"
+               [(ngModel)]="bookRequest.price"
+               #price="ngModel"
+               [ngClass]="{ 'is-invalid': price.invalid && (price.dirty || price.touched) }"
+               required>
+
+        <div *ngIf="price.invalid && (price.dirty || price.touched)" class="alert alert-danger">
+          <div *ngIf="price.errors?.required">
+            Price is required.
+          </div>
+        </div>
+      </div>
+
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="closeModal(modal)">Close</button>
-    <button type="button" class="btn  btn-primary btn-add-modal" (click)="updateBook(modal)"
-            [disabled]="!bookForm.valid">Edit
+    <button type="button"
+            class="btn btn-danger"
+            (click)="closeModal(modal)">
+      Close
+    </button>
+    <button type="button"
+            class="btn
+            btn-primary
+            btn-add-modal"
+            (click)="updateBook(modal)"
+            [disabled]="!bookForm.valid">
+      Edit
     </button>
   </div>
 </ng-template>

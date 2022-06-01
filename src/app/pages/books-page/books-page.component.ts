@@ -118,12 +118,6 @@ export class BooksPageComponent implements OnInit {
           })
         }
 
-        if (book.fileId) {
-          this.booksService.getBookFile(book.fileId).subscribe((response) => {
-            book.file = response.bookFile.data;
-          })
-        }
-
         return book;
       })
 
@@ -171,7 +165,6 @@ export class BooksPageComponent implements OnInit {
       .then(() => {
         this.booksService.updateBook(this.bookRequest).subscribe(() => {
           this.getAllBooks();
-          console.log(this.bookRequest)
           modalReference.close();
           setTimeout(() => {
             this.clearBookRequest();
