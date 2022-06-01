@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BookViewModel } from "../../utility/models/books/book.view.model";
 import { BooksService } from "../../services/books-service/books.service";
-import { RatingsService } from "../../services/ratings-service/ratings.service";
 import { AuthorizationServiceRepository } from "../../services/authorization/authorization.service.repository";
 import { BookRequest } from "../../utility/requests/books/book.request";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { GenresEnum } from "../../utility/enums/genres.enum";
-import { BookFileViewModel } from "../../utility/models/books/book-file.view.model";
 import { CoverViewModel } from "../../utility/models/books/cover.view.model";
 import { UserRoleEnum } from "../../utility/enums/authorization/user-role.enum";
 import { UserViewModel } from "../../utility/models/authorization/user.view.model";
@@ -26,13 +24,11 @@ export class AuthorBooksComponent implements OnInit {
   username: string = '';
   selectedBookId = '';
   selectedImage = '';
-  selectedBookFile = '';
   cover: any;
   bookFile: any;
 
   constructor(
     private booksService: BooksService,
-    private ratingService: RatingsService,
     private modalService: NgbModal
   ) {
   }
@@ -79,19 +75,6 @@ export class AuthorBooksComponent implements OnInit {
     }
   }
 
-  onBookFileSelected(event: any) {
-    const file: File = event.target.files[0];
-
-    if (file) {
-      this.selectedBookFile = file.name;
-      const formData = new FormData();
-      formData.append('title', this.bookRequest.title)
-      formData.append('bookFile', file);
-
-      this.bookFile = formData;
-    }
-  }
-
   closeModal(modalReference: any) {
     modalReference.close()
     setTimeout(() => {
@@ -128,27 +111,15 @@ export class AuthorBooksComponent implements OnInit {
   }
 
   getBooksByAuthorUsername(username: string) {
-    this.booksService.getBooksByAuthorUsername(username).subscribe((response: any) => {
-      this.books = response;
+    this.booksService.getBooksByAuthorUsername(username).then(
+      (response) => {
+        this.books = response;
 
-      this.books.map((book) => {
-        this.ratingService.getRatingAverage(book.bookId).subscribe(average => {
-          book.ratingAverage = average;
-        });
-
-        if (book.coverId) {
-          this.booksService.getCover(book.coverId).subscribe((response) => {
-            book.cover = response.image.data;
-          })
-        }
-
-        return book;
-      })
-
-      setTimeout(() => {
-        this.showSpinner = false
-      }, 200);
-    })
+        setTimeout(() => {
+          this.showSpinner = false
+        }, 200);
+      }
+    )
   }
 
   updateBook(modalReference: any) {
@@ -195,7 +166,6 @@ export class AuthorBooksComponent implements OnInit {
     this.bookRequest = new BookRequest();
     this.initializeAuthorsAndGenres();
     this.selectedImage = '';
-    this.selectedBookFile = '';
     this.cover = null;
     this.bookFile = null;
   }

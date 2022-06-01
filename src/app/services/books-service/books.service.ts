@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { BookModel } from "../../utility/models/books/book.model";
 import { BookRequest } from "../../utility/requests/books/book.request";
@@ -10,6 +10,8 @@ import { BookFileModel } from "../../utility/models/books/book-file.model";
 import { CoverAdapter } from "../../utility/model-adapters/books/cover.adapter";
 import { BookFileAdapter } from "../../utility/model-adapters/books/book-file.adapter";
 import { BookAdapter } from "../../utility/model-adapters/books/book.adapter";
+import { BookViewModel } from "../../utility/models/books/book.view.model";
+import { BookViewAdapter } from "../../utility/model-adapters/books/book.view.adapter";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -43,14 +45,14 @@ export class BooksService {
     private http: HttpClient,
     private ratingService: RatingsService,
     private bookAdapter: BookAdapter,
+    private bookViewAdapter: BookViewAdapter,
     private coverAdapter: CoverAdapter,
     private bookFileAdapter: BookFileAdapter
   ) {
   }
 
-  getAllBooks(): Observable<BookModel[]> {
-    return this.http.get<BookModel[]>(this.endpoints.getAllBooks())
-      .pipe(map((books: any) => books.map((book: any) => this.bookAdapter.adapt(book))));
+  getAllBooks(): Promise<BookViewModel[]> {
+    return this.getBookWithProperties(this.endpoints.getAllBooks());
   }
 
   getBookById(bookId: string): Observable<BookModel> {
@@ -58,19 +60,16 @@ export class BooksService {
       .pipe(map((book: any) => this.bookAdapter.adapt(book)));
   }
 
-  getBooksAddedToReadList(username: string): Observable<BookModel[]> {
-    return this.http.get(this.endpoints.getBooksAddedToReadList(username))
-      .pipe(map((books: any) => books.map((book: any) => this.bookAdapter.adapt(book))));
+  getBooksAddedToReadList(username: string): Promise<BookViewModel[]> {
+    return this.getBookWithProperties(this.endpoints.getBooksAddedToReadList(username));
   }
 
-  getBooksByAuthorUsername(username: string): Observable<BookModel[]> {
-    return this.http.get(this.endpoints.getBooksByAuthorUsername(username))
-      .pipe(map((books: any) => books.map((book: any) => this.bookAdapter.adapt(book))));
+  getBooksByAuthorUsername(username: string): Promise<BookViewModel[]> {
+    return this.getBookWithProperties(this.endpoints.getBooksByAuthorUsername(username));
   }
 
-  getPurchasedBooks(username: string): Observable<BookModel[]> {
-    return this.http.get(this.endpoints.getPurchasedBooks(username))
-      .pipe(map((books: any) => books.map((book: any) => this.bookAdapter.adapt(book))));
+  getPurchasedBooks(username: string): Promise<BookViewModel[]> {
+    return this.getBookWithProperties(this.endpoints.getPurchasedBooks(username));
   }
 
   addBook(bookRequest: BookRequest) {
@@ -102,5 +101,58 @@ export class BooksService {
   addCover(formData: FormData): Observable<CoverModel> {
     return this.http.post(this.endpoints.addCover(), formData)
       .pipe(map((cover: any) => this.coverAdapter.adapt(cover)));
+  }
+
+  getBookWithProperties(url: string): Promise<BookViewModel[]> {
+    return new Promise(((resolve, reject) => {
+      this.http.get(url)
+        .pipe(map((books: any) => books.map((book: any) => this.bookViewAdapter.adapt(book))))
+        .subscribe((response: any) => {
+          const promises: any[] = [];
+          response.forEach((bookViewModel: BookViewModel) => {
+            promises.push(
+              new Promise(((resolve1) => {
+                const promisesBookProperties = [];
+                promisesBookProperties.push(
+                  new Promise((resolveBookAverageRating) => {
+                    this.ratingService.getRatingAverage(bookViewModel.bookId).subscribe(average => {
+                      bookViewModel.ratingAverage = average;
+                      resolveBookAverageRating(bookViewModel);
+                    }, (error: HttpErrorResponse) => {
+                      resolveBookAverageRating(bookViewModel);
+                    });
+                  }),
+                  new Promise((resolveBookCover) => {
+                    this.getCover(bookViewModel.coverId).subscribe(response => {
+                      bookViewModel.cover = response.image.data;
+                      resolveBookCover(bookViewModel);
+                    }, (error: HttpErrorResponse) => {
+                      resolveBookCover(bookViewModel);
+                    });
+                  }),
+                  new Promise((resolveBookFile) => {
+                    this.getBookFile(bookViewModel.fileId).subscribe(response => {
+                      bookViewModel.file = response.bookFile.data;
+                      resolveBookFile(bookViewModel);
+                    }, (error: HttpErrorResponse) => {
+                      resolveBookFile(bookViewModel);
+                    });
+                  })
+                );
+
+                Promise.all(promisesBookProperties)
+                  .then((booksData: any) => {
+                    resolve1(booksData);
+                  });
+              }))
+            );
+          });
+
+          Promise.all(promises)
+            .then(() => resolve(response));
+        }, (error: HttpErrorResponse) => {
+          reject(error);
+        });
+    }));
   }
 }

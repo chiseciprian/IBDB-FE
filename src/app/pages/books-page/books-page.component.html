@@ -14,12 +14,12 @@
   <div class="row">
     <div class="col">
       <ul class="nav nav-tabs mb-4 mt-3">
-        <li class="nav-item">
+        <li class="nav-item pointer-cursor">
           <a class="nav-link active pl-0" [ngClass]="{ 'active': selectedGenre === '' }" (click)="displayAllBooks()">
             All book
           </a>
         </li>
-        <li class="nav-item" *ngFor="let genre of genres | keyvalue">
+        <li class="nav-item pointer-cursor" *ngFor="let genre of genres | keyvalue">
           <a class="nav-link" [ngClass]="{ 'active': selectedGenre === genre.key }"
              (click)="filterBooksByGenre(genre.key)">{{ genre.value }}</a>
         </li>
@@ -41,7 +41,7 @@
                [alt]="book.title"/>
         </a>
         <div class="card-body">
-          <a class="anchor-tag" [routerLink]="['/books',book.bookId]">
+          <a class="anchor-tag pointer-cursor" [routerLink]="['/books',book.bookId]">
             <h5 class="card-title">{{book.title}}</h5>
           </a>
           <p class="card-text">{{book.authorName}}</p>

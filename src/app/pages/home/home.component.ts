@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BooksService } from "../../services/books-service/books.service";
 import { BookViewModel } from "../../utility/models/books/book.view.model";
-import { RatingsService } from "../../services/ratings-service/ratings.service";
 
 @Component({
   selector: 'app-home',
@@ -13,8 +12,7 @@ export class HomeComponent implements OnInit {
   showSpinner = true;
 
   constructor(
-    private booksService: BooksService,
-    private ratingService: RatingsService
+    private booksService: BooksService
   ) {
   }
 
@@ -23,31 +21,16 @@ export class HomeComponent implements OnInit {
   }
 
   getBooks() {
-    this.booksService.getAllBooks().subscribe((response: any) => {
-      this.books = response;
+    this.booksService.getAllBooks()
+      .then((response: any) => {
+        this.books = response;
+        setTimeout(() => {
+          this.books = this.books.sort((a: any, b: any) => (a.ratingAverage > b.ratingAverage ? -1 : 1));
 
-      this.books.map((book) => {
-        this.ratingService.getRatingAverage(book.bookId).subscribe(average => {
-          book.ratingAverage = average;
-        });
-
-        if (book.coverId) {
-          this.booksService.getCover(book.coverId).subscribe((response) => {
-            book.cover = response.image.data;
-          })
-        }
-
-        return book;
+          this.books = this.books.slice(0, 6);
+          this.showSpinner = false;
+        }, 200)
       })
-
-      setTimeout(() => {
-        this.books = this.books.sort((a: any, b: any) => (a.ratingAverage > b.ratingAverage ? -1 : 1));
-
-        this.books = this.books.slice(0, 6);
-        this.showSpinner = false;
-      }, 400)
-    })
   }
-
 
 }
