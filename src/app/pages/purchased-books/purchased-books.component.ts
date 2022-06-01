@@ -48,8 +48,8 @@ export class PurchasedBooksComponent implements OnInit {
           })
         }
 
-        if (book.fileId) {
-          this.booksService.getBookFile(book.fileId).subscribe((response) => {
+        if (book.bookText) {
+          this.booksService.getBookFile(book.bookText).subscribe((response) => {
             book.file = response.bookFile.data;
           })
         }

@@ -121,8 +121,8 @@ export class AuthorBooksComponent implements OnInit {
           })
         }
 
-        if (book.fileId) {
-          this.booksService.getBookFile(book.fileId).subscribe((response) => {
+        if (book.bookText) {
+          this.booksService.getBookFile(book.bookText).subscribe((response) => {
             book.file = response.bookFile.data;
           })
         }
@@ -150,16 +150,6 @@ export class AuthorBooksComponent implements OnInit {
           coverPromise('');
         }
       }),
-      new Promise((bookFilePromise) => {
-        if (this.bookFile) {
-          this.booksService.addBookFile(this.bookFile).subscribe((response: BookFileViewModel) => {
-            this.bookRequest.fileId = response.fileId;
-            bookFilePromise(response.fileId);
-          });
-        } else {
-          bookFilePromise('');
-        }
-      })
     )
 
     Promise.all(promises)

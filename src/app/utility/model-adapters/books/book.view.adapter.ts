@@ -18,6 +18,7 @@ export class BookViewAdapter implements ModelAdapter<BookViewModel> {
     adapt.users = data.users;
     adapt.genres = data.genres;
     adapt.coverId = data.coverId;
+    adapt.bookText = data.bookText;
     adapt.fileId = data.fileId;
     adapt.addedToReadList = data.addedToReadList;
 

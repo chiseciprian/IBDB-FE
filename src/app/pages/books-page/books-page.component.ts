@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { BooksService } from "../../services/books-service/books.service";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { BookRequest } from "../../utility/requests/books/book.request";
-import { GenresEnum } from "../../utility/enums/genres.enum";
-import { DomSanitizer } from "@angular/platform-browser";
-import { CoverViewModel } from "../../utility/models/books/cover.view.model";
-import { BookFileViewModel } from "../../utility/models/books/book-file.view.model";
-import { BookViewModel } from "../../utility/models/books/book.view.model";
-import { RatingsService } from "../../services/ratings-service/ratings.service";
-import { UserRoleEnum } from "../../utility/enums/authorization/user-role.enum";
-import { AuthorizationServiceRepository } from "../../services/authorization/authorization.service.repository";
-import { UserViewModel } from "../../utility/models/authorization/user.view.model";
+import {Component, OnInit} from '@angular/core';
+import {BooksService} from "../../services/books-service/books.service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {BookRequest} from "../../utility/requests/books/book.request";
+import {GenresEnum} from "../../utility/enums/genres.enum";
+import {DomSanitizer} from "@angular/platform-browser";
+import {CoverViewModel} from "../../utility/models/books/cover.view.model";
+import {BookFileViewModel} from "../../utility/models/books/book-file.view.model";
+import {BookViewModel} from "../../utility/models/books/book.view.model";
+import {RatingsService} from "../../services/ratings-service/ratings.service";
+import {UserRoleEnum} from "../../utility/enums/authorization/user-role.enum";
+import {AuthorizationServiceRepository} from "../../services/authorization/authorization.service.repository";
+import {UserViewModel} from "../../utility/models/authorization/user.view.model";
 
 @Component({
   selector: 'app-books-page',
@@ -26,9 +26,8 @@ export class BooksPageComponent implements OnInit {
   user: UserViewModel;
   selectedGenre = '';
   selectedImage = '';
-  selectedBookFile = '';
+  fileId = '';
   cover: any;
-  bookFile: any;
   showSpinner = true;
   selectedBookId = '';
 
@@ -73,19 +72,6 @@ export class BooksPageComponent implements OnInit {
       formData.append('image', file);
 
       this.cover = formData;
-    }
-  }
-
-  onBookFileSelected(event: any) {
-    const file: File = event.target.files[0];
-
-    if (file) {
-      this.selectedBookFile = file.name;
-      const formData = new FormData();
-      formData.append('title', this.bookRequest.title)
-      formData.append('bookFile', file);
-
-      this.bookFile = formData;
     }
   }
 
@@ -153,21 +139,18 @@ export class BooksPageComponent implements OnInit {
   addBook(modalReference: any) {
     this.bookRequest.authorName = this.user.firstName + ' ' + this.user.lastName;
     this.bookRequest.authorUsername = this.user.userName;
-    this.booksService.addBookFile(this.bookFile).subscribe((file: BookFileViewModel) => {
-      this.bookRequest.fileId = file.fileId;
-      this.booksService.addCover(this.cover).subscribe((response: CoverViewModel) => {
-        this.bookRequest.coverId = response.coverId;
-        console.log(this.bookRequest);
-        this.booksService.addBook(this.bookRequest).subscribe(() => {
-          this.getAllBooks();
+    this.booksService.addCover(this.cover).subscribe((response: CoverViewModel) => {
+      this.bookRequest.coverId = response.coverId;
+      console.log(this.bookRequest);
+      this.booksService.addBook(this.bookRequest).subscribe(() => {
+        this.getAllBooks();
 
-          modalReference.close();
-          setTimeout(() => {
-            this.clearBookRequest();
-          }, 200)
-        });
+        modalReference.close();
+        setTimeout(() => {
+          this.clearBookRequest();
+        }, 200)
       });
-    })
+    });
   }
 
   updateBook(modalReference: any) {
@@ -183,16 +166,6 @@ export class BooksPageComponent implements OnInit {
         } else {
           coverPromise('');
         }
-      }),
-      new Promise((bookFilePromise) => {
-        if (this.bookFile) {
-          this.booksService.addBookFile(this.bookFile).subscribe((response: BookFileViewModel) => {
-            this.bookRequest.fileId = response.fileId;
-            bookFilePromise(response.fileId);
-          });
-        } else {
-          bookFilePromise('');
-        }
       })
     )
 
@@ -200,13 +173,14 @@ export class BooksPageComponent implements OnInit {
       .then(() => {
         this.booksService.updateBook(this.bookRequest).subscribe(() => {
           this.getAllBooks();
-
+          console.log(this.bookRequest)
           modalReference.close();
           setTimeout(() => {
             this.clearBookRequest();
           }, 300);
         });
-      })  }
+      })
+  }
 
   deleteBook(modal: any) {
     this.closeModal(modal);
@@ -223,9 +197,8 @@ export class BooksPageComponent implements OnInit {
     this.bookRequest = new BookRequest();
     this.initializeAuthorsAndGenres();
     this.selectedImage = '';
-    this.selectedBookFile = '';
+    this.fileId = '';
     this.cover = null;
-    this.bookFile = null;
   }
 
   private initializeAuthorsAndGenres() {
