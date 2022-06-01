@@ -113,8 +113,8 @@
 
 
       <div class="text-center mt-2">
-        <p *ngIf="!accountNeeded">Need an account? <a (click)="signUp()">Sign up</a></p>
-        <p *ngIf="accountNeeded">Already have an account? <a (click)="signIn()">Sign in</a></p>
+        <p *ngIf="!accountNeeded">Need an account? <a class="anchor-tag pointer-cursor" (click)="signUp()">Sign up</a></p>
+        <p *ngIf="accountNeeded">Already have an account? <a class="anchor-tag pointer-cursor" (click)="signIn()">Sign in</a></p>
       </div>
     </div>
   </div>

@@ -42,17 +42,6 @@
   }
 }
 
-@media only screen and (min-width: 1024px) {
-  .card {
-    width: 15rem;
-    margin-right: 20px!important;
-    .card-img-top {
-      width: 225px;
-      height: 335px;
-    }
-  }
-}
-
 .star {
   position: relative;
   display: inline-block;
@@ -85,4 +74,41 @@
 
 .pointer-cursor {
   cursor: pointer;
+}
+
+@media only screen and (max-width: 480px) {
+  .books-container, .books-column {
+    padding: 0!important;
+  }
+
+  .books-column {
+    text-align: center;
+  }
+
+  .card-body {
+    text-align: left;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .card {
+    width: 15rem;
+    margin-right: 20px!important;
+    .card-img-top {
+      width: 225px;
+      height: 335px;
+    }
+  }
+}
+
+
+@media only screen and (min-width: 1024px) {
+  .card {
+    width: 15rem;
+    margin-right: 20px!important;
+    .card-img-top {
+      width: 225px;
+      height: 335px;
+    }
+  }
 }
