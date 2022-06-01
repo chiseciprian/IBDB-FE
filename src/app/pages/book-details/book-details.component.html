@@ -5,7 +5,7 @@
 </div>
 
 <div *ngIf="!showSpinner" class="container-fluid book-details-container">
-  <span (click)="goBack()"> <i class="fa-solid fa-circle-chevron-left  fa-2x mb-4"></i></span>
+  <span (click)="goBack()"> <i class="fa-solid fa-circle-chevron-left pointer-cursor fa-2x mb-4"></i></span>
 
   <div class="row">
     <div class="col-md-4 col-xs-12">
@@ -89,7 +89,7 @@
           </div>
           <div class="col-md-6 col-xs-12 mt-3">
             <div *ngIf="!username" class="top-layer">
-              <a (click)="login()" class="login-button">Login</a>
+              <a (click)="login()" class="login-button pointer-cursor">Login</a>
             </div>
 
             <div [ngClass]="!username ? 'review-container' : ''">
