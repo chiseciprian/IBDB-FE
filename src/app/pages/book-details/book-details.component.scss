@@ -13,7 +13,7 @@
   pointer-events: none;
 }
 
-.top-layer, .buy-book-first {
+.top-layer {
   position: absolute;
   top: 40%;
   left: 0;
@@ -28,7 +28,12 @@
   width: 13ch!important;
 }
 
-.login-button, .buy-book-first-button {
+.owned-book {
+  width: 24ch!important;
+  text-align: center;
+}
+
+.review-button-overlay, {
   font-weight: bold;
   color: rgba(0, 0, 0, .5);
 

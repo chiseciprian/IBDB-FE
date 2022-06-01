@@ -111,12 +111,24 @@
             </div>
           </div>
           <div class="col-md-6 col-xs-12 mt-3">
-            <div *ngIf="!username" class="top-layer">
-              <a (click)="login()" class="login-button pointer-cursor">Login</a>
-            </div>
+            <div class="top-layer"
+                 [ngClass]="user && user.role !== userRoles.ADMIN && username && book.users.indexOf(username) === -1 && book.authorUsername !== username ? 'buy-book-first' : 'owned-book' ">
+              <a *ngIf="!username" (click)="login()" class="review-button-overlay pointer-cursor">
+                Login
+              </a>
+              <a *ngIf="username && book.users.indexOf(username) === -1 && book.authorUsername !== username && user && user.role !== userRoles.ADMIN"
+                 class="review-button-overlay anchor-tag">
+                Buy book first
+              </a>
+              <a *ngIf="username && book.users.indexOf(username) === -1 && book.authorUsername === username && user && user.role !== userRoles.ADMIN"
+                 class="review-button-overlay anchor-tag">
+                Cannot leave a review on your own book
+              </a>
 
-            <div *ngIf="book.users.indexOf(username) === -1" class="buy-book-first">
-              <a class="buy-book-first-button anchor-tag">Buy book first</a>
+              <a *ngIf="user && user.role === userRoles.ADMIN"
+                 class="review-button-overlay anchor-tag">
+                Cannot leave a review with Admin role
+              </a>
             </div>
 
             <div [ngClass]="!username || book.users.indexOf(username) === -1 ? 'review-container' : ''">
