@@ -10,6 +10,8 @@ import { PurchasedBooksComponent } from "./pages/purchased-books/purchased-books
 import { AuthGuard } from "./guards/auth/auth.guard";
 import { AuthorBooksComponent } from "./pages/author-books/author-books.component";
 import { AccountSettingsComponent } from "./pages/account-settings/account-settings.component";
+import { UserRoleEnum } from "./utility/enums/authorization/user-role.enum";
+import { RolesGuard } from "./guards/roles/roles.guard";
 
 const routes: Routes = [
   {
@@ -33,22 +35,34 @@ const routes: Routes = [
   {
     path: 'library',
     component: PurchasedBooksComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, RolesGuard],
+    data: {
+      roles: [UserRoleEnum.USER, UserRoleEnum.WRITER]
+    }
   },
   {
     path: 'library/:bookId',
     component: BookDetailsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, RolesGuard],
+    data: {
+      roles: [UserRoleEnum.USER, UserRoleEnum.WRITER]
+    }
   },
   {
     path: 'my-books',
     component: AuthorBooksComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, RolesGuard],
+    data: {
+      roles: [UserRoleEnum.USER, UserRoleEnum.WRITER]
+    }
   },
   {
     path: 'my-books/:bookId',
     component: BookDetailsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, RolesGuard],
+    data: {
+      roles: [UserRoleEnum.USER, UserRoleEnum.WRITER]
+    }
   },
   {
     path: 'home',
