@@ -115,7 +115,11 @@
               <a (click)="login()" class="login-button pointer-cursor">Login</a>
             </div>
 
-            <div [ngClass]="!username ? 'review-container' : ''">
+            <div *ngIf="book.users.indexOf(username) === -1" class="buy-book-first">
+              <a class="buy-book-first-button anchor-tag">Buy book first</a>
+            </div>
+
+            <div [ngClass]="!username || book.users.indexOf(username) === -1 ? 'review-container' : ''">
               <h3 class="mb-4">{{editedMessage ? 'Edit' : 'Add'}} a review</h3>
               <form #ratingForm="ngForm">
                 <div class="mb-3">

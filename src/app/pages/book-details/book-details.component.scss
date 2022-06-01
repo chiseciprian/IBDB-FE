@@ -13,7 +13,7 @@
   pointer-events: none;
 }
 
-.top-layer {
+.top-layer, .buy-book-first {
   position: absolute;
   top: 40%;
   left: 0;
@@ -24,7 +24,11 @@
   z-index: 100;
 }
 
-.login-button {
+.buy-book-first {
+  width: 13ch!important;
+}
+
+.login-button, .buy-book-first-button {
   font-weight: bold;
   color: rgba(0, 0, 0, .5);
 
