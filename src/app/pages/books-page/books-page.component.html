@@ -3,7 +3,7 @@
     <div class="col-xs-12 col-md-6">
       <h1 class="book-details-title">The Book List</h1>
     </div>
-    <div class="col-xs-12 col-md-6 d-flex justify-content-end" *appShowForRoles="[userRoles.ADMIN, userRoles.WRITER]">
+    <div class="col-xs-12 col-md-6 d-flex justify-content-end" *appShowForRoles="[userRoles.ADMIN]">
       <button type="button" class="btn btn-add btn-add-book btn-primary mb-2 pl-5 pr-5 pt-0 pb-0"
               (click)="onAddPress(addModal)">
         &plus; Add Book
@@ -112,10 +112,10 @@
                   minlength="10"></textarea>
 
         <div *ngIf="bookText.invalid && (bookText.dirty || bookText.touched)" class="alert alert-danger">
-          <div *ngIf="description.errors?.required">
+          <div *ngIf="bookText.errors?.required">
             Book Text is required.
           </div>
-          <div *ngIf="description.errors?.minlength">
+          <div *ngIf="bookText.errors?.minlength">
             Book Text must be at least 10 characters long.
           </div>
         </div>

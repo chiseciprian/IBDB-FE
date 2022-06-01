@@ -1,16 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {BooksService} from "../../services/books-service/books.service";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {BookRequest} from "../../utility/requests/books/book.request";
-import {GenresEnum} from "../../utility/enums/genres.enum";
-import {DomSanitizer} from "@angular/platform-browser";
-import {CoverViewModel} from "../../utility/models/books/cover.view.model";
-import {BookFileViewModel} from "../../utility/models/books/book-file.view.model";
-import {BookViewModel} from "../../utility/models/books/book.view.model";
-import {RatingsService} from "../../services/ratings-service/ratings.service";
-import {UserRoleEnum} from "../../utility/enums/authorization/user-role.enum";
-import {AuthorizationServiceRepository} from "../../services/authorization/authorization.service.repository";
-import {UserViewModel} from "../../utility/models/authorization/user.view.model";
+import { Component, OnInit } from '@angular/core';
+import { BooksService } from "../../services/books-service/books.service";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { BookRequest } from "../../utility/requests/books/book.request";
+import { GenresEnum } from "../../utility/enums/genres.enum";
+import { DomSanitizer } from "@angular/platform-browser";
+import { CoverViewModel } from "../../utility/models/books/cover.view.model";
+import { BookViewModel } from "../../utility/models/books/book.view.model";
+import { RatingsService } from "../../services/ratings-service/ratings.service";
+import { UserRoleEnum } from "../../utility/enums/authorization/user-role.enum";
+import { AuthorizationServiceRepository } from "../../services/authorization/authorization.service.repository";
+import { UserViewModel } from "../../utility/models/authorization/user.view.model";
 
 @Component({
   selector: 'app-books-page',
@@ -141,7 +140,6 @@ export class BooksPageComponent implements OnInit {
     this.bookRequest.authorUsername = this.user.userName;
     this.booksService.addCover(this.cover).subscribe((response: CoverViewModel) => {
       this.bookRequest.coverId = response.coverId;
-      console.log(this.bookRequest);
       this.booksService.addBook(this.bookRequest).subscribe(() => {
         this.getAllBooks();
 

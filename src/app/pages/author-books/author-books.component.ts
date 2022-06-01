@@ -51,6 +51,11 @@ export class AuthorBooksComponent implements OnInit {
     this.username = AuthorizationServiceRepository.getCurrentUserValue().userName;
   }
 
+  onAddPress(modalReference: any) {
+    this.clearBookRequest();
+    this.triggerModal(modalReference);
+  }
+
   onEditPress(modalReference: any, book: any) {
     this.triggerModal(modalReference);
     this.bookRequest = {...book};
@@ -104,6 +109,23 @@ export class AuthorBooksComponent implements OnInit {
 
   trackByIndex(index: number, obj: any): any {
     return index;
+  }
+
+  addBook(modalReference: any) {
+    this.bookRequest.authorName = this.user.firstName + ' ' + this.user.lastName;
+    this.bookRequest.authorUsername = this.user.userName;
+    this.booksService.addCover(this.cover).subscribe((response: CoverViewModel) => {
+      this.bookRequest.coverId = response.coverId;
+      console.log(this.bookRequest);
+      this.booksService.addBook(this.bookRequest).subscribe(() => {
+        this.getBooksByAuthorUsername(this.username);
+
+        modalReference.close();
+        setTimeout(() => {
+          this.clearBookRequest();
+        }, 200)
+      });
+    });
   }
 
   getBooksByAuthorUsername(username: string) {

@@ -106,3 +106,17 @@ select {
   }
 }
 
+@media only screen and (max-width: 480px) {
+  .author-books-title {
+    text-align: center;
+  }
+
+  .nav-tabs {
+    justify-content: center;
+  }
+
+  .btn-add-book {
+    width: 100%;
+    padding: 12px!important;
+  }
+}
