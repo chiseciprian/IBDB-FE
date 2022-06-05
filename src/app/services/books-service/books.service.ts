@@ -51,13 +51,13 @@ export class BooksService {
   ) {
   }
 
-  getAllBooks(): Promise<BookViewModel[]> {
-    return this.getBookWithProperties(this.endpoints.getAllBooks());
-  }
-
   getBookById(bookId: string): Observable<BookModel> {
     return this.http.get<BookModel>(this.endpoints.getBookById(bookId))
       .pipe(map((book: any) => this.bookAdapter.adapt(book)));
+  }
+
+  getAllBooks(): Promise<BookViewModel[]> {
+    return this.getBookWithProperties(this.endpoints.getAllBooks());
   }
 
   getBooksAddedToReadList(username: string): Promise<BookViewModel[]> {
@@ -128,14 +128,6 @@ export class BooksService {
                       resolveBookCover(bookViewModel);
                     }, (error: HttpErrorResponse) => {
                       resolveBookCover(bookViewModel);
-                    });
-                  }),
-                  new Promise((resolveBookFile) => {
-                    this.getBookFile(bookViewModel.fileId).subscribe(response => {
-                      bookViewModel.file = response.bookFile.data;
-                      resolveBookFile(bookViewModel);
-                    }, (error: HttpErrorResponse) => {
-                      resolveBookFile(bookViewModel);
                     });
                   })
                 );

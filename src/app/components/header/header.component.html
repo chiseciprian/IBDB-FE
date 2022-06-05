@@ -14,7 +14,7 @@
       </li>
       <li class="nav-item ml-3 mr-3 pointer-cursor" [routerLink]="['/library']" [routerLinkActive]="['active']">
         <a class="nav-link"
-           *ngIf="user && user.role !== userRoles.ADMIN">Library</a>
+           *ngIf="!user || user && user.role !== userRoles.ADMIN">Library</a>
       </li>
       <li class="nav-item ml-3 mr-3 pointer-cursor"
           [routerLink]="['/my-books']"

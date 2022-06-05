@@ -56,13 +56,14 @@ export class AccountSettingsComponent implements OnInit {
   }
 
   editProfile(profileModal: any) {
-    this.accountRequest.role = this.roleAsWriter ? UserRoleEnum.WRITER : UserRoleEnum.USER;
+    this.accountRequest.role = this.user.role === UserRoleEnum.ADMIN ? UserRoleEnum.ADMIN : this.roleAsWriter ? UserRoleEnum.WRITER : UserRoleEnum.USER;
     this.loginService.updateAccount(this.user.id, this.accountRequest)
       .subscribe(
         () => {
           AuthorizationServiceRepository.setCurrentUserValue(this.getNewUserModel())
           this.closeModal(profileModal);
           this.authorizationService.currentTokenSubject.next(AuthorizationServiceRepository.getCurrentTokenValue());
+          this.user = AuthorizationServiceRepository.getCurrentUserValue();
         }
       )
   }

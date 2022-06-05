@@ -53,7 +53,7 @@ const routes: Routes = [
     component: AuthorBooksComponent,
     canActivate: [AuthGuard, RolesGuard],
     data: {
-      roles: [UserRoleEnum.USER, UserRoleEnum.WRITER]
+      roles: [UserRoleEnum.WRITER]
     }
   },
   {
@@ -61,7 +61,7 @@ const routes: Routes = [
     component: BookDetailsComponent,
     canActivate: [AuthGuard, RolesGuard],
     data: {
-      roles: [UserRoleEnum.USER, UserRoleEnum.WRITER]
+      roles: [UserRoleEnum.WRITER]
     }
   },
   {

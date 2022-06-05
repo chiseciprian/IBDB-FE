@@ -187,11 +187,16 @@
                [(ngModel)]="bookRequest.price"
                #price="ngModel"
                [ngClass]="{ 'is-invalid': price.invalid && (price.dirty || price.touched) }"
-               required>
+               required
+               min="5">
 
         <div *ngIf="price.invalid && (price.dirty || price.touched)" class="alert alert-danger">
           <div *ngIf="price.errors?.required">
             Price is required.
+          </div>
+
+          <div *ngIf="price.errors?.min">
+            Price should be at least 5 RON.
           </div>
         </div>
       </div>
@@ -348,11 +353,16 @@
                [(ngModel)]="bookRequest.price"
                #price="ngModel"
                [ngClass]="{ 'is-invalid': price.invalid && (price.dirty || price.touched) }"
-               required>
+               required
+               min="5">
 
         <div *ngIf="price.invalid && (price.dirty || price.touched)" class="alert alert-danger">
           <div *ngIf="price.errors?.required">
             Price is required.
+          </div>
+
+          <div *ngIf="price.errors?.min">
+            Price should be at least 5 RON.
           </div>
         </div>
       </div>
