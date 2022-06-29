@@ -4,7 +4,7 @@ import { BooksService } from "../../services/books-service/books.service";
 import { AuthorizationServiceRepository } from "../../services/authorization/authorization.service.repository";
 import { BookRequest } from "../../utility/requests/books/book.request";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { GenresEnum } from "../../utility/enums/genres.enum";
+import { GenresEnum } from "../../utility/enums/books/genres.enum";
 import { CoverViewModel } from "../../utility/models/books/cover.view.model";
 import { UserRoleEnum } from "../../utility/enums/authorization/user-role.enum";
 import { UserViewModel } from "../../utility/models/authorization/user.view.model";

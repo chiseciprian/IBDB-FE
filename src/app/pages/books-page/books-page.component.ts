@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BooksService } from "../../services/books-service/books.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { BookRequest } from "../../utility/requests/books/book.request";
-import { GenresEnum } from "../../utility/enums/genres.enum";
+import { GenresEnum } from "../../utility/enums/books/genres.enum";
 import { DomSanitizer } from "@angular/platform-browser";
 import { CoverViewModel } from "../../utility/models/books/cover.view.model";
 import { BookViewModel } from "../../utility/models/books/book.view.model";
