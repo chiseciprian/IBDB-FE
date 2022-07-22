@@ -38,9 +38,6 @@ export class StripePaymentComponent implements OnInit {
       locale: 'auto',
       token: (token: any) => {
         this.buyBook(this.username, this.bookIdParam);
-        setTimeout(() => {
-          this.bookBought.emit();
-        }, 300);
       }
     });
 
@@ -73,6 +70,10 @@ export class StripePaymentComponent implements OnInit {
   }
 
   private buyBook(username: string, bookId: string) {
-    this.booksService.buyBook(username, bookId).subscribe();
+    this.booksService.buyBook(username, bookId).subscribe(() => {
+      setTimeout(() => {
+        this.bookBought.emit();
+      }, 300);
+    });
   }
 }
